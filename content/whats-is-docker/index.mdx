@@ -1,0 +1,472 @@
+---
+title: "Docker nedir?"
+description: "Yazılım dünyasında önemli yer tutan dockere öğrenelim."
+image: "../../public/blogs/lauren-mancke-aOC7TSLb1o8-unsplash.jpg"
+publishedAt: "2023-11-15"
+updatedAt: "2023-11-15"
+author: "codebucks"
+isPublished: true
+tags:
+- docker
+- web development
+---
+
+- `docker run -p 8081:5000 -d  in28min/todo-rest-api-h2:1.0.0.RELEASE`
+    - **in28min/todo-rest-api-h2:1.0.0.RELEASE** image docker çalışma portu 5000 dir. ***-p*** komutu localde ***8081*** de çalıştı. ***-d*** debug botta arka planda çalışır
+-  `docker logs 07cffededc07`
+    - ***CONTAINER ID*** si ***07cffededc07*** olan containerın loglarını göster   
+-  `docker logs 07cffededc07 -f`
+    - ***CONTAINER ID*** si ***07cffededc07*** olan containerın loglarını takibine başlar
+
+-  `docker container ls` veya   `docker ps`
+   -  çalışan containerları gösterir
+
+- `docker container ls -a`
+   - aktif ve aktif olmayan bütün containerları gösterir
+
+- `docker tag in28min/todo-rest-api-h2:1.0.0.RELEASE in28min/todo-rest-api-h2:latest`
+   - ***tag*** etiketi latest olarak tanımladı ancak bu kullanım mevcut 
+  
+- `docker pull mysql`
+   - mysql bilintik bir imagesdir onu çekecektir. İmage indirir hem indirsin hem çalıştır dersek ***run***(varsa çalıştırır yoksa çeker) komutunu kullanmalıyız 
+  
+- `docker search mysql`
+  - mysql bulutta arar ilişkili olanları resmi veya remi değil diye gösterir
+
+-
+ ```powershell
+
+sefademirtas@Sefas-MacBook-Pro NOTE % docker image history 814e9d2807cc
+IMAGE          CREATED         CREATED BY                                      SIZE      COMMENT
+814e9d2807cc   15 months ago   ENTRYPOINT ["sh" "-c" "java $JAVA_OPTS -Djav…   0B        buildkit.dockerfile.v0
+<missing>      15 months ago   ENV JAVA_OPTS=                                  0B        buildkit.dockerfile.v0
+<missing>      15 months ago   ADD target/*.jar app.jar # buildkit             38.1MB    buildkit.dockerfile.v0
+<missing>      15 months ago   EXPOSE map[5000/tcp:{}]                         0B        buildkit.dockerfile.v0
+<missing>      15 months ago   VOLUME [/tmp]                                   0B        buildkit.dockerfile.v0
+<missing>      4 years ago     /bin/sh -c set -x  && apk add --no-cache   o…   97.7MB    
+<missing>      4 years ago     /bin/sh -c #(nop)  ENV JAVA_ALPINE_VERSION=8…   0B        
+<missing>      4 years ago     /bin/sh -c #(nop)  ENV JAVA_VERSION=8u212       0B        
+<missing>      4 years ago     /bin/sh -c #(nop)  ENV PATH=/usr/local/sbin:…   0B        
+<missing>      4 years ago     /bin/sh -c #(nop)  ENV JAVA_HOME=/usr/lib/jv…   0B        
+<missing>      4 years ago     /bin/sh -c {   echo '#!/bin/sh';   echo 'set…   87B       
+<missing>      4 years ago     /bin/sh -c #(nop)  ENV LANG=C.UTF-8             0B        
+<missing>      4 years ago     /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B        
+<missing>      4 years ago     /bin/sh -c #(nop) ADD file:66f49017dd7ba2956…   5.29MB  
+
+```
+
+```powershell
+sefademirtas@Sefas-MacBook-Pro NOTE % docker image inspect 814e9d2807cc
+[
+    {
+        "Id": "sha256:814e9d2807ccd6b79c8a1129d19b649d497c73f92494b0b4df3c95d0795de475",
+        "RepoTags": [
+            "in28min/todo-rest-api-h2:1.0.0.RELEASE",
+            "in28min/todo-rest-api-h2:latest"
+        ],
+        "RepoDigests": [
+            "in28min/todo-rest-api-h2@sha256:b50038f47a4ed68180ecf8d8efc8ec3ec25e97dd4232020ef03574384c48a23c"
+        ],
+        "Parent": "",
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2022-06-01T10:03:36.440135221Z",
+        "Container": "",
+        "ContainerConfig": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": null,
+            "Cmd": null,
+            "Image": "",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": null
+        },
+        "DockerVersion": "",
+        "Author": "",
+        "Config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "5000/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin",
+                "LANG=C.UTF-8",
+                "JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk",
+                "JAVA_VERSION=8u212",
+                "JAVA_ALPINE_VERSION=8.212.04-r0",
+                "JAVA_OPTS="
+            ],
+            "Cmd": null,
+            "ArgsEscaped": true,
+            "Image": "",
+            "Volumes": {
+                "/tmp": {}
+            },
+            "WorkingDir": "",
+            "Entrypoint": [
+                "sh",
+                "-c",
+                "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar"
+            ],
+            "OnBuild": null,
+            "Labels": null
+        },
+        "Architecture": "arm64",
+        "Os": "linux",
+        "Size": 141164502,
+        "VirtualSize": 141164502,
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/1675dbe8c882cb6a533b96c6459fd449530416c6c3c2aeaa7887c476062e892b/diff:/var/lib/docker/overlay2/0a5abce9010126ecb53c0e25a41bd542c56942ba6a9d1a9480d2d551222b5be5/diff:/var/lib/docker/overlay2/f2e524b92ce5d3ad4d9f845592286f2bbbefb483cf58e03ff69ba350df81a807/diff",
+                "MergedDir": "/var/lib/docker/overlay2/51b4a812460784838f02f3546f2a944db3f0508523ebb4422a8036f1949c04d5/merged",
+                "UpperDir": "/var/lib/docker/overlay2/51b4a812460784838f02f3546f2a944db3f0508523ebb4422a8036f1949c04d5/diff",
+                "WorkDir": "/var/lib/docker/overlay2/51b4a812460784838f02f3546f2a944db3f0508523ebb4422a8036f1949c04d5/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:6d626da635fcff8a8485691ff0156105a5fe75675870a779f0093a6aedce13f7",
+                "sha256:e996d291de6279b17b2eb57adcbe3013f2a04b1eec6f701dd7c27d8b5f955fe7",
+                "sha256:4a5a7c37ed83886f94598eb66ed4e566b5e182ce8052de3949cbc41649465b4e",
+                "sha256:66a4dd35368970e9a4f68bf2cdd5af3959668529613bc875d5bf4cfff55d026c"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2023-09-21T16:44:11.660999173Z"
+        }
+    }
+]
+
+```
+
+- `docker image remove 814e9d2807cc`
+   - ***images id*** si verilen images local den kaldırır.
+   - `docker rmi -f $(docker images -aq)` imageleri toplu siler
+
+- `docker container pause counter-id`
+  - ***container id*** si verilen  container duraklatır
+
+- `docker container pause counter-id`
+  - ***container id*** si duraklatılmış container ı tekrar başlatır
+
+```powershell
+ sefademirtas@Sefas-MacBook-Pro NOTE % docker run -p 8081:5000 -d  in28min/todo-rest-api-h2:1.0.0.RELEASE
+2ea038aeadc7823d0b941cf926571674d21ceea487c73f7cdad9c15f7a6cbd33
+sefademirtas@Sefas-MacBook-Pro NOTE % docker container pause 2ea038aea
+2ea038aea
+
+sefademirtas@Sefas-MacBook-Pro NOTE % docker logs -f 2ea038   
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.1.0.RELEASE)
+
+2023-09-22 08:41:46.892  INFO 1 --- [           main] c.i.r.w.r.RestfulWebServicesApplication  : Starting RestfulWebServicesApplication v1.0.0.RELEASE on 2ea038aeadc7 with PID 1 (/app.jar started by root in /)
+2023-09-22 08:41:46.894  INFO 1 --- [           main] c.i.r.w.r.RestfulWebServicesApplication  : No active profile set, falling back to default profiles: default
+2023-09-22 08:41:47.356  INFO 1 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2023-09-22 08:41:47.389  INFO 1 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 29ms. Found 1 repository interfaces.
+2023-09-22 08:41:47.597  INFO 1 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$e7f4a697] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-09-22 08:41:47.882  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 5000 (http)
+2023-09-22 08:41:47.899  INFO 1 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-09-22 08:41:47.900  INFO 1 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/9.0.12
+2023-09-22 08:41:47.907  INFO 1 --- [           main] o.a.catalina.core.AprLifecycleListener   : The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/usr/lib/jvm/java-1.8-openjdk/jre/lib/aarch64/server:/usr/lib/jvm/java-1.8-openjdk/jre/lib/aarch64:/usr/lib/jvm/java-1.8-openjdk/jre/../lib/aarch64:/usr/java/packages/lib/aarch64:/lib:/usr/lib]
+2023-09-22 08:41:47.963  INFO 1 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-09-22 08:41:47.963  INFO 1 --- [           main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1041 ms
+2023-09-22 08:41:47.986  INFO 1 --- [           main] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+2023-09-22 08:41:47.987  INFO 1 --- [           main] o.s.b.w.servlet.ServletRegistrationBean  : Servlet webServlet mapped to [/h2-console/*]
+2023-09-22 08:41:47.989  INFO 1 --- [           main] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2023-09-22 08:41:47.990  INFO 1 --- [           main] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2023-09-22 08:41:47.990  INFO 1 --- [           main] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'formContentFilter' to: [/*]
+2023-09-22 08:41:47.990  INFO 1 --- [           main] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2023-09-22 08:41:48.136  INFO 1 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-09-22 08:41:48.251  INFO 1 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-09-22 08:41:48.296  INFO 1 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2023-09-22 08:41:48.347  INFO 1 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.7.Final}
+2023-09-22 08:41:48.348  INFO 1 --- [           main] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2023-09-22 08:41:48.461  INFO 1 --- [           main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2023-09-22 08:41:48.601  INFO 1 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+Hibernate: drop table todo if exists
+Hibernate: drop sequence if exists hibernate_sequence
+Hibernate: create sequence hibernate_sequence start with 1 increment by 1
+Hibernate: create table todo (id bigint not null, description varchar(255), is_done boolean not null, target_date timestamp, username varchar(255), primary key (id))
+2023-09-22 08:41:48.993  INFO 1 --- [           main] o.h.t.schema.internal.SchemaCreatorImpl  : HHH000476: Executing import script 'org.hibernate.tool.schema.internal.exec.ScriptSourceInputNonExistentImpl@7c37508a'
+2023-09-22 08:41:48.995  INFO 1 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-09-22 08:41:49.313  INFO 1 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2023-09-22 08:41:49.347  WARN 1 --- [           main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-09-22 08:41:49.575  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 5000 (http) with context path ''
+2023-09-22 08:41:49.577  INFO 1 --- [           main] c.i.r.w.r.RestfulWebServicesApplication  : Started RestfulWebServicesApplication in 2.956 seconds (JVM running for 3.375)
+^C%  
+sefademirtas@Sefas-MacBook-Pro NOTE % docker ps 
+CONTAINER ID   IMAGE                                    COMMAND                  CREATED         STATUS                  PORTS                               NAMES
+2ea038aeadc7   in28min/todo-rest-api-h2:1.0.0.RELEASE   "sh -c 'java $JAVA_O…"   2 minutes ago   Up 2 minutes (Paused)   0.0.0.0:8081->5000/tcp              cranky_sinoussi
+sefademirtas@Sefas-MacBook-Pro NOTE % docker container unpause 2ea038aea
+2ea038aea
+sefademirtas@Sefas-MacBook-Pro NOTE % docker ps
+CONTAINER ID   IMAGE                                    COMMAND                  CREATED         STATUS         PORTS                               NAMES
+2ea038aeadc7   in28min/todo-rest-api-h2:1.0.0.RELEASE   "sh -c 'java $JAVA_O…"   2 minutes ago   Up 2 minutes   0.0.0.0:8081->5000/tcp              cranky_sinoussi
+sefademirtas@Sefas-MacBook-Pro NOTE % docker stop 491
+491
+```
+- `docker container prune`
+  - Daha önce başlatılmış ve dudurulmuş containarları siler
+
+```powershell
+  sefademirtas@Sefas-MacBook-Pro ~ % docker container ls -a
+CONTAINER ID   IMAGE                                    COMMAND                  CREATED          STATUS                        PORTS                                                                                                         NAMES
+c5a5c809a3d9   in28min/todo-rest-api-h2:1.0.0.RELEASE   "sh -c 'java $JAVA_O…"   2 minutes ago    Up 2 minutes                  0.0.0.0:8081->5000/tcp                                                                                        nostalgic_mirzakhani
+f26515db6a41   in28min/todo-rest-api-h2:1.0.0.RELEASE   "sh -c 'java $JAVA_O…"   4 minutes ago    Created                                                                                                                                     elated_visvesvaraya
+2ea038aeadc7   in28min/todo-rest-api-h2:1.0.0.RELEASE   "sh -c 'java $JAVA_O…"   22 minutes ago   Exited (143) 3 minutes ago                                                                                                                  cranky_sinoussi
+07cffededc07   in28min/todo-rest-api-h2:1.0.0.RELEASE   "sh -c 'java $JAVA_O…"   17 hours ago     Exited (255) 23 minutes ago   0.0.0.0:8081->5000/tcp                                                                                        elated_lumiere
+f1c138a40f27   in28min/todo-rest-api-h2:1.0.0.RELEASE   "sh -c 'java $JAVA_O…"   17 hours ago     Exited (143) 17 hours ago                                                                                                                   intelligent_noether
+653d03318578   in28min/todo-rest-api-h2:1.0.0.RELEASE   "sh -c 'java $JAVA_O…"   17 hours ago     Exited (143) 17 hours ago                                                                                                                   gifted_golick
+8bef96b6edf4   in28min/todo-rest-api-h2:1.0.0.RELEASE   "sh -c 'java $JAVA_O…"   17 hours ago     Created                                                                                                                                     stoic_goldstine
+d9b091e7decd   in28min/todo-rest-api-h2:1.0.0.RELEASE   "sh -c 'java $JAVA_O…"   17 hours ago     Created                                                                                                                                     epic_jemison
+63477ae9a91e   in28min/todo-rest-api-h2:1.0.0.RELEASE   "sh -c 'java $JAVA_O…"   17 hours ago     Created                                                                                                                                     practical_ritchie
+d748540b90aa   in28min/todo-rest-api-h2:1.0.0.RELEASE   "sh -c 'java $JAVA_O…"   17 hours ago     Created                                                                                                                                     focused_franklin
+07eb1af28f69   in28min/todo-rest-api-h2:1.0.0.RELEASE   "sh -c 'java $JAVA_O…"   17 hours ago     Created                                                                                                                                     focused_galois
+d015b5ff9eb4   in28min/todo-rest-api-h2:1.0.0.RELEASE   "sh -c 'java $JAVA_O…"   17 hours ago     Exited (143) 17 hours ago                                                                                                                   clever_easley
+404596dcd8dc   in28min/todo-rest-api-h2:1.0.0.RELEASE   "sh -c 'java $JAVA_O…"   17 hours ago     Created                                                                                                                                     brave_jackson
+65be7a3e236f   in28min/todo-rest-api-h2:1.0.0.RELEASE   "sh -c 'java $JAVA_O…"   17 hours ago     Created                                                                                                                                     lucid_dhawan
+16ce623f31ae   in28min/todo-rest-api-h2:1.0.0.RELEASE   "sh -c 'java $JAVA_O…"   17 hours ago     Created                                                                                                                                     sad_ganguly
+0d60dc417544   in28min/todo-rest-api-h2:1.0.0.RELEASE   "sh -c 'java $JAVA_O…"   17 hours ago     Created                                                                                                                                     practical_hoover
+49b45e19f9a5   in28min/todo-rest-api-h2:1.0.0.RELEASE   "sh -c 'java $JAVA_O…"   18 hours ago     Exited (143) 17 hours ago                                                                                                                   nervous_bassi
+6c267a43a7b6   cassandra:4.0                            "docker-entrypoint.s…"   2 weeks ago      Exited (255) 18 hours ago     7000-7001/tcp, 7199/tcp, 9160/tcp, 0.0.0.0:9042->9042/tcp                                                     docs-cassandra-1
+aebb3e6498dd   rabbitmq:3-management                    "docker-entrypoint.s…"   2 weeks ago      Exited (255) 18 hours ago     4369/tcp, 5671/tcp, 0.0.0.0:5672->5672/tcp, 15671/tcp, 15691-15692/tcp, 25672/tcp, 0.0.0.0:15672->15672/tcp   docs-msrabbitmq-1
+e33ed911a270   ghcr.io/openzipkin/zipkin-slim:latest    "start-zipkin"           2 weeks ago      Exited (255) 18 hours ago     0.0.0.0:9411->9411/tcp                                                                                        zipkin
+4914774cd57c   mysql                                    "docker-entrypoint.s…"   2 weeks ago      Exited (0) 19 minutes ago                                                                                                                   docs-mysql-1
+0f0e5f613ab4   elasticsearch:7.17.10                    "/bin/tini -- /usr/l…"   2 weeks ago      Exited (255) 18 hours ago     0.0.0.0:9200->9200/tcp, 0.0.0.0:9300->9300/tcp                                                                docs-elasticsearch-1
+sefademirtas@Sefas-MacBook-Pro ~ % docker container prune
+WARNING! This will remove all stopped containers.
+Are you sure you want to continue? [y/N] y
+Deleted Containers:
+f26515db6a41891ba283f1852d42daf8df6f831832ddecf36f685b6695086182
+2ea038aeadc7823d0b941cf926571674d21ceea487c73f7cdad9c15f7a6cbd33
+07cffededc0794493324a63997ab373d2cd715f787d08694f1547661a690354c
+f1c138a40f27fcc8e88e829ae712af9fd0bc43b02cb9c800c05425c1184c53e2
+653d03318578c642be3c1b4746d8a8a44f84700a307cb68b46b89ecac4ae4816
+8bef96b6edf4dc967fbe1ad5a9b0c7c897dfbb14e3dec31f64171b0603de5aff
+d9b091e7decd904a066ee5db79eb5db1cc82dc6b0cfe8c290ff74d4de6fc277f
+63477ae9a91ed59b0e4e8fb3ceda34bf1d05eda8807a747bc3843183410808be
+d748540b90aa709d4f926c015424ace6f7fedeabe900e97eb40c922ef09340a2
+07eb1af28f69197bef9f5943f6b957340878a8a056b8390f27ea5a4c2f0dca72
+d015b5ff9eb4aa56dbca4702baa8ee0475b7fba23a78c62b63b378059760cbf1
+404596dcd8dc4f0d956eb089030f767e757f582c17eb30547bc7fb6fcf9258d7
+65be7a3e236ffb9e009a6ef3b7e331d93907c36e323c53cdf58535a0d3e4f019
+16ce623f31ae04e3834efc4ad40710537c0cee973fccce8461a4b4d50c79ca88
+0d60dc4175446213dc91068809c7fd9fc186a4c364b377cf04286b58d114bfed
+49b45e19f9a5a7c408e529311f69739beacace0ff96216af51e51409f75b617b
+6c267a43a7b6936f9d827ce576e067b24c96893b902d0fd83f93511869ce9ea8
+aebb3e6498dd3e3d1321a40c2a8f412f8899ac0aca38a84b69f6a52c70a94fbd
+e33ed911a270b8867a39d051e9506dbb3256d5a895693dfcafeaa72d22745bcd
+4914774cd57cd4ebab8bbbd81bf6b18eb15ebe42e91a7eb34c176890de5cf8ae
+0f0e5f613ab49ea8fae242320bfffbbc36edea80cf5a0f9481ab891f7eaaf019
+
+Total reclaimed space: 154.9MB
+sefademirtas@Sefas-MacBook-Pro ~ % docker ps
+CONTAINER ID   IMAGE                                    COMMAND                  CREATED         STATUS         PORTS                    NAMES
+c5a5c809a3d9   in28min/todo-rest-api-h2:1.0.0.RELEASE   "sh -c 'java $JAVA_O…"   3 minutes ago   Up 3 minutes   0.0.0.0:8081->5000/tcp   nostalgic_mirzakhani
+sefademirtas@Sefas-MacBook-Pro ~ % docker container ls -a
+CONTAINER ID   IMAGE                                    COMMAND                  CREATED         STATUS         PORTS                    NAMES
+c5a5c809a3d9   in28min/todo-rest-api-h2:1.0.0.RELEASE   "sh -c 'java $JAVA_O…"   3 minutes ago   Up 3 minutes   0.0.0.0:8081->5000/tcp   nostalgic_mirzakhani
+ ```
+
+ - `docker kill container-id` ve `docker stop container-id`
+   - `docker kill $(docker ps -q)` bütün containerları durdurur.
+   - ***kill*** anahtar kelimesi container zaman tanımadan sonlandırır
+   - ***stop*** anahtar kelimesi programın kendisini kapatması için zaman tanır.
+
+- `docker run -p 8081:5000 -d --restart=always in28min/todo-rest-api-h2:1.0.0.RELEASE`
+  - ***--restart=always*** container docker aktif hale geldiğinde çalışmaya başlar. Database dockerla birlikte başlanması isteniyor olabilit `docker container prune` komutu ile container ***container*** kapatıldıktan sonra container kayıtlarını sileceğinden container tekrar başlama yapamaycaktır 
+
+- `docker events`
+  - docker olaylarını takip edebilirsiniz.
+
+```powershell
+sefademirtas@Sefas-MacBook-Pro ~ % docker events
+2023-09-22T12:56:58.290407342+03:00 volume create 9aa49a623b054bdd25ae56d7bc7c9e85b3bbf60264f5e48b99728214a9d6bfb2 (driver=local)
+2023-09-22T12:56:58.298947509+03:00 container create 411317dd40a18764a67327e17609fa4272378a30f4087e102a608dfa9705768f (image=in28min/todo-rest-api-h2:1.0.0.RELEASE, name=priceless_volhard)
+2023-09-22T12:56:58.340112509+03:00 network connect 1dcd82f362d62d8983f4e2a972673f01ea608e12f08a4b8ea93907029a9ba890 (container=411317dd40a18764a67327e17609fa4272378a30f4087e102a608dfa9705768f, name=bridge, type=bridge)
+2023-09-22T12:56:58.342206634+03:00 volume mount 9aa49a623b054bdd25ae56d7bc7c9e85b3bbf60264f5e48b99728214a9d6bfb2 (container=411317dd40a18764a67327e17609fa4272378a30f4087e102a608dfa9705768f, destination=/tmp, driver=local, propagation=, read/write=true)
+2023-09-22T12:56:58.510998050+03:00 container start 411317dd40a18764a67327e17609fa4272378a30f4087e102a608dfa9705768f (image=in28min/todo-rest-api-h2:1.0.0.RELEASE, name=priceless_volhard)
+```
+- `docker top container_name&&container_id`
+    - ***top*** komutu, Docker container'ların içinde çalışan işlemleri görüntülemek için kullanılan bir komuttur. Bu komut, container içindeki işlemlerin PID'lerini, kullanıcı adlarını, CPU ve bellek kullanımını gösterir. Bu komut, container içinde çalışan işlemlerin hangi işlemlerin en çok kaynak tükettiğini belirlemenizi sağlar.
+
+```powershell
+sefademirtas@Sefas-MacBook-Pro ~ % docker top 411
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+root                1916                1891                4                   09:56               ?                   00:00:11            java -Djava.security.egd=file:/dev/./urandom -jar /app.jar
+```
+Ancak, bu komut sadece çalışan containerlar için çalışır. Eğer container çalışmıyorsa bu komutun bir sonucu olmayacaktır.
+
+- `docker stats`
+
+```poershell
+docker run -p 8082:5000 -d  in28min/todo-rest-api-h2:1.0.0.RELEASE
+9d852c8386a9941f793878cdd0e2be4830be11ef7e12c9bec1c3e75ff984ba0b
+sefademirtas@Sefas-MacBook-Pro ~ % docker stats
+```
+- ***stats*** komutu, Docker daemon tarafından çalıştırılan container'lar için istatistikleri görüntülemekte kullanılan bir komuttur. Bu komut, container'ın CPU, bellek, disk, ağ ve diğer kaynakları kullanımını gösterir.
+
+`docker run -p 8083:5000 -d -m 512m --cpu-quota 50000 --restart=no in28min/todo-rest-api-h2:1.0.0.RELEASE`
+  - bellek ve CPU sınırlaması 
+  ```powershell
+CONTAINER ID   NAME                CPU %     MEM USAGE / LIMIT     MEM %     NET I/O       BLOCK I/O         PIDS
+ce187846fb59   lucid_brahmagupta   50.75%    475.3MiB / 512MiB     92.84%    796B / 0B     0B / 504kB        34
+9d852c8386a9   gifted_liskov       0.43%     449.4MiB / 7.666GiB   5.72%     1.01kB / 0B   61.4kB / 1.45MB   34
+411317dd40a1   priceless_volhard   0.62%     477.2MiB / 7.666GiB   6.08%     1.6kB / 0B    65MB / 2.6MB      34
+``````
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CONTAINER ID   NAME                CPU %     MEM USAGE / LIMIT     MEM %     NET I/O       BLOCK I/O         PIDS
+ce187846fb59   lucid_brahmagupta   50.75%    475.3MiB / 512MiB     92.84%    796B / 0B     0B / 504kB        34
+9d852c8386a9   gifted_liskov       0.43%     449.4MiB / 7.666GiB   5.72%     1.01kB / 0B   61.4kB / 1.45MB   34
+411317dd40a1   priceless_volhard   0.62%     477.2MiB / 7.666GiB   6.08%     1.6kB / 0B    65MB / 2.6MB      34
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CONTAINER ID   NAME                CPU %     MEM USAGE / LIMIT     MEM %     NET I/O       BLOCK I/O         PIDS
+ce187846fb59   lucid_brahmagupta   14.12%    473.3MiB / 512MiB     92.44%    796B / 0B     0B / 524kB        34
+9d852c8386a9   gifted_liskov       0.41%     449.4MiB / 7.666GiB   5.72%     1.01kB / 0B   61.4kB / 1.45MB   34
+411317dd40a1   priceless_volhard   0.46%     477.2MiB / 7.666GiB   6.08%     1.6kB / 0B    65MB / 2.6MB      34
