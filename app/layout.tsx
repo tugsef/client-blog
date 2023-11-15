@@ -12,10 +12,8 @@ const inter = Inter({
   variable: "--font-in",
 });
 
-export const metadata: Metadata = {
-  title: "This Blog create Sefa Demirtaş",
-  description: "Blog Web Site",
-};
+
+
 export default function RootLayout({
   children,
 }: {

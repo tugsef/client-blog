@@ -2,14 +2,65 @@ import { allBlogs } from "@/.contentlayer/generated"
 import BlogDetails from "@/components/Blog/BlogDetails";
 import RenderMdx from "@/components/Blog/RenderMdx";
 import Tag from "@/components/Element/tag";
+import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import Image from "next/image";
+import siteMetadata from "@/components/utils/siteMetadata";
 
+export async function generateStaticParams() {
+  return allBlogs.map((blog) => ({ slug: blog._raw.flattenedPath }));
+}
+
+export async function generateMetadata({ params }:{params:Params}) {
+  const blog = allBlogs.find((blog) => blog._raw.flattenedPath === params.slug);
+  if (!blog) {
+    return;
+  }
+
+  const publishedAt = new Date(blog.publishedAt).toISOString();
+  const modifiedAt = new Date(blog.updatedAt || blog.publishedAt).toISOString();
+
+  let imageList:any = [siteMetadata.socialBanner];
+  if (blog.image) {
+    imageList =
+      typeof blog.image.filePath === "string"
+        ? [siteMetadata.siteUrl + blog.image.filePath.replace("../public", "")]
+        : blog.image;
+  }
+  const ogImages = imageList.map((img:string) => {
+    return { url: img.includes("http") ? img : siteMetadata.siteUrl + img };
+  });
+
+  const authors = blog?.author ? [blog.author] : siteMetadata.author;
+
+  return {
+    title: blog.title,
+    description: blog.description,
+    openGraph: {
+      title: blog.title,
+      description: blog.description,
+      url: siteMetadata.siteUrl + blog.url,
+      siteName: siteMetadata.title,
+      locale: "en_US",
+      type: "article",
+      publishedTime: publishedAt,
+      modifiedTime: modifiedAt,
+      images: ogImages,
+      authors: authors.length > 0 ? authors : [siteMetadata.author],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: blog.title,
+      description: blog.description,
+      images: ogImages,
+    },
+  };
+}
 export default function BlogPage({params }:{params:{slug:string}}){
     const blog = allBlogs.find((blog) => blog._raw.flattenedPath === params.slug);
     if (!blog) {
       return;
     }
-      return  <article>
+      return <> <article>
       <div className="mb-8 text-center relative w-full h-[70vh] bg-dark">
         <div className="w-full z-10 flex flex-col items-center justify-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           <Tag
@@ -40,17 +91,44 @@ export default function BlogPage({params }:{params:{slug:string}}){
 
       <div className="grid grid-cols-12  gap-y-8 lg:gap-8 sxl:gap-16 mt-8 px-5 md:px-10">
         <div className="col-span-12  lg:col-span-3">
-          <details
+        <details
             className="border-[1px] border-solid border-dark dark:border-light text-dark dark:text-light rounded-lg p-4 sticky top-6 max-h-[80vh] overflow-hidden overflow-y-auto"
             open
           >
             <summary className="text-lg font-semibold capitalize cursor-pointer">
               Table Of Content
             </summary>
+            <ul className="mt-4 font-in text-base">
+              {blog.toc.map((heading:any) => {
+                return (
+                  <li key={`#${heading.slug}`} className="py-1">
+                    <a
+                      href={`#${heading.slug}`}
+                      data-level={heading.level}
+                      className="data-[level=two]:pl-0  data-[level=two]:pt-2
+                                       data-[level=two]:border-t border-solid border-dark/40
+                                       data-[level=three]:pl-4
+                                       sm:data-[level=three]:pl-6
+                                       flex items-center justify-start
+                                       "
+                    >
+                      {heading.level === "three" ? (
+                        <span className="flex w-1 h-1 rounded-full bg-dark mr-2">
+                          &nbsp;
+                        </span>
+                      ) : null}
+
+                      <span className="hover:underline">{heading.text}</span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
           </details>
         </div>
         <RenderMdx blog={blog}/>
 
       </div>
     </article>
+    </>
 }

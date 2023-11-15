@@ -34,7 +34,7 @@
     ".contentlayer/generated",
     "utilities/siteMetadata/siteMetaData.js",
     "utilities/siteMetadata/index.js",
-    "components/utils/siteMetadata/index.js"
+    "components/utils/siteMetadata/index.tsx"
   ],
   "exclude": ["node_modules"]
 }

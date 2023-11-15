@@ -25,6 +25,7 @@ export type Blog = {
   body: MDX
   url: string
   readingTime: json
+  toc: json
 }  
 
 /** Nested types */
