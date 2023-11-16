@@ -1,11 +1,11 @@
 import { Blog } from "@/.contentlayer/generated";
 import Tag from "@/components/Element/tag";
-import Link from "next/link";
+import { slug } from "github-slugger";
 import React from "react";
 
 export default function BlogLayoutRight({ blogs }: { blogs: Blog[] }) {
   const wordMap = new Map();
-  const words = blogs.map((blog) => blog.tags?.map((tag) => tag));
+  const words = blogs.map((blog) => blog.tags?.map((tag) =>slug(tag)));
   words.forEach((word) =>
     word?.map((text) => {
       // Kelimenin karakter sayısı 4'ten büyükse kelimeyi ayrıştırır.
@@ -24,7 +24,7 @@ export default function BlogLayoutRight({ blogs }: { blogs: Blog[] }) {
         Topics that might interest you
       </span>
       {Array.from(wordMap).map(([key, value]) => (
-        <Tag link={`/categories/${key}`} name={key} key={key} value={value} />
+        <Tag link={`/categories/${key.replace(" ","-")}`} name={key} key={key} value={value} />
       ))}
     </div>
   );

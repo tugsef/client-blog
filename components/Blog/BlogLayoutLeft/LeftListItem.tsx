@@ -4,8 +4,10 @@ import React from "react";
 import profileImg from "@/public/images/me.jpg";
 import Link from "next/link";
 import { format } from "date-fns";
+import { slug } from "github-slugger";
 
 export default function LeftListItem({ blog }: { blog: Blog }) {
+  const slugTag = blog.tags?.[0]
   return (
     <>
       <figure className="grid grid-cols-12 justify-items-stretch py-4 lg:py-8">
@@ -25,6 +27,7 @@ export default function LeftListItem({ blog }: { blog: Blog }) {
           <article className="flex items-start">
             <div className="min-w-0 relative flex-auto">
               <dl className="mt-2 flex flex-wrap text-sm leading-6 font-medium">
+                <Link href={blog.url}>
                 <div>
                   <dt className="sr-only">Title</dt>
                   <dd className="lg:font-extrabold font-bold text-sm sm:text-xl ">
@@ -37,6 +40,9 @@ export default function LeftListItem({ blog }: { blog: Blog }) {
                     {blog.description.slice(0, 120)}...
                   </dd>
                 </div>
+                
+                </Link>
+        
 
                 <div className="flex-none w-full mt-2 font-normal">
                   <dt className="sr-only">Runtime</dt>
@@ -44,7 +50,7 @@ export default function LeftListItem({ blog }: { blog: Blog }) {
                     {format(new Date(blog.publishedAt), "MMM dd")}·
                     {blog.readingTime.text}·
                     <Link
-                      href={"/"}
+                      href={`/categories/${slug(slugTag as string )}`}
                       className="px-1.5 ring-1 ring-slate-200 rounded-full"
                     >
                       {blog.tags?.[0]}

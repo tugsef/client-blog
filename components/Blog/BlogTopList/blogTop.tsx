@@ -48,7 +48,7 @@ export default function BlogTop({
               {format(new Date(blog.publishedAt), "MMM dd")}·
               {blog.readingTime.text}·
               <Link
-                href={"/"}
+                href={`/categories/${blog.tags?.[0].replace(" ","-")}`}
                 className="px-1.5   ring-1 ring-slate-200 rounded-full"
               >
                 {blog.tags?.[0]}

@@ -1,6 +1,5 @@
-import { Metadata } from "next";
 
-const siteMetadata= {
+ const siteMetadata= {
     title:
       "Frontend Next.js Blog With Tailwind CSS, Backend Nestjs and Contentlayer",
     author: "focusSpark",

@@ -12,7 +12,7 @@ const BlogDetails = ({ blog, slug }:{blog:Blog,slug:string}) => {
       </time>
     
       <div className="m-3">{blog.readingTime.text}</div>
-      <Link href={`/categories/${blog.tags?.[0]}`} className="m-3">
+      <Link href={`/categories/${blog.tags?.[0].replace(" ","-")}`} className="m-3">
         #{blog.tags?.[0]}
       </Link>
     </div>
