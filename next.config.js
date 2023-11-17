@@ -5,6 +5,8 @@ const nextConfig = {
     compiler: {
         removeConsole: true,
     }, 
+    reactStrictMode: true,
+  
 }
 
 module.exports = withContentlayer({ ...nextConfig });

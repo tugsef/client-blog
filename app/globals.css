@@ -61,6 +61,7 @@ code[data-line-numbers-max-digits='3'] > [data-line]::before {
   position: relative;
 }
 
+
 [data-rehype-pretty-code-title]{
   position: absolute;
   right: 0;
@@ -79,3 +80,5 @@ code[data-line-numbers-max-digits='3'] > [data-line]::before {
   font-size: 1rem;
   color: #747474;
 }
+
+

@@ -27,3 +27,11 @@ export const emailSendSchema = yup.object({
     .email("Email must be a valid email")
     .nullable(),
 });
+
+export const contactSendSchema = yup.object({
+  yourName: yup
+  .string(),
+  email: yup.string().email().required(),
+  yourPhone: yup.string(),
+  about: yup.string().required().max(200)
+});

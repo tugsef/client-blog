@@ -7,7 +7,7 @@ import { format } from "date-fns";
 import { slug } from "github-slugger";
 
 export default function LeftListItem({ blog }: { blog: Blog }) {
-  const slugTag = blog.tags?.[0]
+  const slugTag = blog.tags?.[0];
   return (
     <>
       <figure className="grid grid-cols-12 justify-items-stretch py-4 lg:py-8">
@@ -28,21 +28,19 @@ export default function LeftListItem({ blog }: { blog: Blog }) {
             <div className="min-w-0 relative flex-auto">
               <dl className="mt-2 flex flex-wrap text-sm leading-6 font-medium">
                 <Link href={blog.url}>
-                <div>
-                  <dt className="sr-only">Title</dt>
-                  <dd className="lg:font-extrabold font-bold text-sm sm:text-xl ">
-                    {blog.title}
-                  </dd>
-                </div>
-                <div className="my-1 lg:my-3">
-                  <dt className="sr-only">description</dt>
-                  <dd className="hidden md:inline-flex text-lg">
-                    {blog.description.slice(0, 120)}...
-                  </dd>
-                </div>
-                
+                  <div>
+                    <dt className="sr-only">Title</dt>
+                    <dd className="lg:font-extrabold font-bold text-sm sm:text-xl ">
+                      {blog.title}
+                    </dd>
+                  </div>
+                  <div className="my-1 lg:my-3">
+                    <dt className="sr-only">description</dt>
+                    <dd className="hidden md:inline-flex text-lg">
+                      {blog.description.slice(0, 120)}...
+                    </dd>
+                  </div>
                 </Link>
-        
 
                 <div className="flex-none w-full mt-2 font-normal">
                   <dt className="sr-only">Runtime</dt>
@@ -50,7 +48,7 @@ export default function LeftListItem({ blog }: { blog: Blog }) {
                     {format(new Date(blog.publishedAt), "MMM dd")}·
                     {blog.readingTime.text}·
                     <Link
-                      href={`/categories/${slug(slugTag as string )}`}
+                      href={`/categories/${slug(slugTag as string)}`}
                       className="px-1.5 ring-1 ring-slate-200 rounded-full"
                     >
                       {blog.tags?.[0]}
@@ -62,15 +60,17 @@ export default function LeftListItem({ blog }: { blog: Blog }) {
           </article>
         </div>
         <div className="col-span-3 lg:col-span-4 justify-self-center">
-          <Image
-            src={blog.image?.filePath.replace("../public", "") as string}
-            placeholder="blur"
-            blurDataURL={blog.image?.blurhashDataUrl}
-            alt={blog.title}
-            width={blog.image?.width}
-            height={blog.image?.height}
-            
-          />
+          <Link href={blog.url}>
+            <Image
+              src={blog.image?.filePath.replace("../public", "") as string}
+              placeholder="blur"
+              blurDataURL={blog.image?.blurhashDataUrl}
+              alt={blog.title}
+              width={blog.image?.width}
+              height={blog.image?.height}
+              className="rounded-lg mx-3 animate-fade"
+            />
+          </Link>
         </div>
       </figure>
     </>

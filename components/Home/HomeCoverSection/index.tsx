@@ -53,7 +53,7 @@ export default function HomeCoverSection() {
             whileTap={{ scale: 0.8 }}
             className="inline-block rounded-full px-2 py-2 lg:px-3 lg:p-3  bg-transparent border-black dark:border-white border-2 font-mono  lg:mt-5 mt-3  "
           >
-            <Link href={"/categories/all"} className="text-sm lg:text-xl">Now reading</Link>
+            <Link href={"/categories/all"} className="text-sm lg:text-xl "><span >Now reading</span></Link>
           </motion.div>
         </motion.div>
         <div className="hidden xl:block">

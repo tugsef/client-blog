@@ -1,5 +1,4 @@
-import type { Metadata } from "next";
-import { Inter, Manrope } from "next/font/google";
+import { Inter} from "next/font/google";
 import "./globals.css";
 import { Toaster } from 'react-hot-toast';
 import Header from "@/components/Header";
@@ -24,7 +23,10 @@ export default function RootLayout({
       <body className={cx(inter.variable, "font-mono dark:bg-dark bg-light")}>
         <Header />
         {children}
+        <hr className="border-2  border-black dark:bg-light  mt-12 lg:16"  />
+
         <Footer/>
+ 
         <Toaster
   position="bottom-center"
   reverseOrder={false}

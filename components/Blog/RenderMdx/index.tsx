@@ -3,6 +3,7 @@ import React from 'react'
 import { useMDXComponent } from 'next-contentlayer/hooks'
 import Image from 'next/image'
 import { Blog } from '@/.contentlayer/generated'
+import SocialMediaContact from '../SocialMediaContact'
 
 
 const mdxComponents = {
@@ -14,7 +15,7 @@ const RenderMdx = ({blog}:{blog:Blog}) => {
     const MDXContent = useMDXComponent(blog.body.code)
 
   return (
-    <div className='col-span-12  lg:col-span-8 font-in prose sm:prose-base md:prose-lg max-w-max
+    <div className='col-span-12  lg:col-span-9 font-in prose sm:prose-base md:prose-lg max-w-max
     prose-blockquote:bg-accent/20 
     prose-blockquote:p-2
     prose-blockquote:px-6
@@ -36,6 +37,8 @@ const RenderMdx = ({blog}:{blog:Blog}) => {
 
     '> 
         <MDXContent components={mdxComponents}/>
+        <SocialMediaContact/>
+
     </div>
   )
 }

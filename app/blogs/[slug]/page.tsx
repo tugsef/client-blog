@@ -5,6 +5,7 @@ import Tag from "@/components/Element/tag";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import Image from "next/image";
 import siteMetadata from "@/components/utils/siteMetadata"; 
+import SocialMediaContact from "@/components/Blog/SocialMediaContact";
 
 export async function generateStaticParams() {
   return allBlogs.map((blog) => ({ slug: blog._raw.flattenedPath }));
@@ -63,7 +64,7 @@ export default function BlogPage({ params }: { params: { slug: string } }) {
   return (
     <>
       {" "}
-      <article>
+      <article >
         <div className="mb-8 text-center relative w-full h-[70vh] bg-dark">
           <div className="w-full z-10 flex flex-col items-center justify-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             <Tag
@@ -92,7 +93,7 @@ export default function BlogPage({ params }: { params: { slug: string } }) {
         </div>
         <BlogDetails blog={blog} slug={params.slug} />
 
-        <div className="grid grid-cols-12  gap-y-8 lg:gap-8 sxl:gap-16 mt-8 px-5 md:px-10">
+        <div className="grid grid-cols-12  gap-y-8 lg:gap-8 sxl:gap-16 mt-8 px-5 md:container md:mx-auto md:px-0">
           <div className="col-span-12  lg:col-span-3">
             <details
               className="border-[1px] border-solid border-dark dark:border-light text-dark dark:text-light rounded-lg p-4 sticky top-6 max-h-[80vh] overflow-hidden overflow-y-auto"
