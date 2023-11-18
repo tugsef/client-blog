@@ -1,7 +1,9 @@
 
- const siteMetadata= {
+
+ const siteMetadata =
+ {
     title:
-      "Frontend Next.js Blog With Tailwind CSS, Backend Nestjs and Contentlayer",
+      "Frontend Next.js Blog With Tailwind CSS, Backend Nestjs and Contentlayer,Framer-motion",
     author: "focusSpark",
     headerTitle: "Next.js and Nestjs Blog",
     description:
@@ -9,11 +11,11 @@
     language: "en-us",
     theme: "system", // system, dark or light
     siteUrl: "", // your website URL
-    siteLogo: "/public/images/me.jpg",
-    socialBanner: "/social-banner.png", // add social banner in the public folder
+    siteLogo: '/logo.png',
+    socialBanner: '/social-banner.png', // add social banner in the public folder
     email: "sefa.demirtas91@gmail.com",
     github: "https://github.com/tugsef",
-    twitter: "@tug_sef",
+    twitter: "https://twitter.com/tug_sef",
     facebook: "https://www.facebook.com/tugsef",
     youtube: "https://www.youtube.com/@tugsef",
     linkedin: "https://www.linkedin.com/in/sefa-demirtas",

@@ -33,7 +33,7 @@ const RenderMdx = ({blog}:{blog:Blog}) => {
     first-letter:text-3xl
     sm:first-letter:text-5xl
     
-
+order-2 md:order-none
 
     '> 
         <MDXContent components={mdxComponents}/>

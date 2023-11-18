@@ -21,11 +21,11 @@ export default function BlogLayoutRight({ blogs }: { blogs: Blog[] }) {
       <span className="block text-lg font-extrabold  p-0  mb-3 lg:mb-0 lg:p-6">
         # Topics that might interest you
       </span>
-      {displayedItems.map((tag) => (
+      {displayedItems.map((tag,index) => (
         <Tag
           link={`/categories/${tag.name.replace(" ", "-") as string} `}
           name={tag.name}
-          key={tag.name}
+          key={index}
           value={tag.count}
         />
       ))}

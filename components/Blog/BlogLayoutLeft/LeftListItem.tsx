@@ -1,12 +1,17 @@
 import { Blog } from "@/.contentlayer/generated";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import React from "react";
 import profileImg from "@/public/images/me.jpg";
 import Link from "next/link";
 import { format } from "date-fns";
 import { slug } from "github-slugger";
-
+import siteImg from "@/public/logo.png"
 export default function LeftListItem({ blog }: { blog: Blog }) {
+  let selectImg:StaticImageData = profileImg;
+
+  if(blog?.author.toLowerCase()==="focusspark"){
+    selectImg=siteImg;
+  }
   const slugTag = blog.tags?.[0];
   return (
     <>
@@ -14,7 +19,7 @@ export default function LeftListItem({ blog }: { blog: Blog }) {
         <div className=" col-span-9 lg:col-span-8 justify-self-start">
           <div className="flex gap-2">
             <Image
-              src={profileImg}
+              src={selectImg}
               alt={blog.author}
               width="30"
               height="30"

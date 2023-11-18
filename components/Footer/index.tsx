@@ -5,7 +5,7 @@ import { FaSquareXTwitter } from "react-icons/fa6";
 import { ErrorMessage, Field, Form, Formik, FormikProps } from "formik";
 import { EmailSend } from "@/api/other/values";
 import { emailSendSchema } from "../utils/custom/valitaions";
-import siteMetadata from "../utils/siteMetadata";
+import siteMetadata from "../utils/siteMetadata/index.js";
 import { FaLinkedin } from "react-icons/fa";
 import { FaGithubSquare } from "react-icons/fa";
 import { FaDribbbleSquare } from "react-icons/fa";

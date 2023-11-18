@@ -2,12 +2,14 @@
 import BlogLogo from "@/components/Header/logo";
 import { MoonIcon, SunIcon } from "@/components/Icons";
 import { cx } from "@/components/utils";
-import siteMetadata from "@/components/utils/siteMetadata";
 import Link from "next/link";
 import React, { useState } from "react";
 import LoginAuth from "./loginAuth";
+import { useThemeSwitch } from "../Hooks";
+import { useTheme } from "next-themes";
 
 export default function Header() {
+  const { theme, setTheme } = useTheme();
   const [click, setClick] = useState(false);
 
   const toggle = () => {
@@ -58,9 +60,9 @@ export default function Header() {
 
       <nav
         className=" w-max py-3 px-6 sm:px-8 border border-solid border-dark rounded-full font-medium capitalize  items-center flex  sm:hidden
-    fixed top-4 right-1/2 translate-x-1/2  backdrop-blur-sm z-50
-    transition-all ease duration-300
-    "
+        fixed top-6 right-1/2 translate-x-1/2 bg-light/80 backdrop-blur-sm z-50
+        transition-all ease duration-300
+        "
         style={{
           top: click ? "1rem" : "-5rem",
         }}
@@ -75,18 +77,24 @@ export default function Header() {
           Contact
         </Link>
         <button
+          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
           className={cx(
-            "w-6 h-6 ease ml-2 flex items-center justify-center rounded-full p-1 bg-dark text-light"
+            "w-6 h-6 ease ml-2 flex items-center justify-center rounded-full p-1",
+            theme === "light" ? "bg-dark text-light" : "bg-light text-dark"
           )}
           aria-label="theme-switcher"
         >
-          <MoonIcon className={"fill-dark"} />
+          {theme === "light" ? (
+            <MoonIcon className={"fill-dark"} />
+          ) : (
+            <SunIcon className={"fill-dark"} />
+          )}
         </button>
       </nav>
 
       <nav
         className=" w-max py-3 px-8 border border-solid border-dark rounded-full font-medium capitalize  items-center hidden sm:flex
-    fixed top-4 right-1/2 translate-x-1/2  backdrop-blur-sm z-50"
+        fixed top-6 right-1/2 translate-x-1/2 bg-light/80 backdrop-blur-sm z-50"
       >
         <Link href="/" className="mr-2">
           Home
@@ -98,12 +106,18 @@ export default function Header() {
           Contact
         </Link>
         <button
+          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
           className={cx(
-            "w-6 h-6 ease ml-2 flex items-center justify-center rounded-full p-1"
+            "w-6 h-6 ease ml-2 flex items-center justify-center rounded-full p-1",
+            theme === "light" ? "bg-dark text-light" : "bg-light text-dark"
           )}
           aria-label="theme-switcher"
         >
-          <SunIcon className={"fill-dark"} />
+          {theme === "light" ? (
+            <MoonIcon className={"fill-dark"} />
+          ) : (
+            <SunIcon className={"fill-dark"} />
+          )}
         </button>
       </nav>
       <div className=" hidden sm:flex items-center">

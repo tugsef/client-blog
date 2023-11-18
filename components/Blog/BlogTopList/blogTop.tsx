@@ -1,10 +1,10 @@
 import React from "react";
 import profileImg from "@/public/images/me.jpg";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { Blog } from "@/.contentlayer/generated";
 import { format } from "date-fns";
 import Link from "next/link";
-
+import siteImg from "@/public/logo.png"
 export default function BlogTop({
   blog,
   sequence,
@@ -12,10 +12,15 @@ export default function BlogTop({
   blog: Blog;
   sequence: number;
 }) {
+  let selectImg:StaticImageData = profileImg;
+
+  if(blog?.author.toLowerCase()==="focusspark"){
+    selectImg=siteImg;
+  }
   return (
     <article className="flex  items-start space-x-3">
       <Image
-        src={profileImg}
+        src={selectImg}
         alt=""
         width="30"
         height="30"

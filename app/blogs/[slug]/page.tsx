@@ -4,7 +4,10 @@ import RenderMdx from "@/components/Blog/RenderMdx";
 import Tag from "@/components/Element/tag";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import Image from "next/image";
-import siteMetadata from "@/components/utils/siteMetadata"; 
+import siteMetadata from "@/components/utils/siteMetadata";
+import { slug } from "github-slugger";
+import siteImg from "@/public/logo.png";
+import profileImg from "@/public/images/me.jpg";
 
 export async function generateStaticParams() {
   return allBlogs.map((blog) => ({ slug: blog._raw.flattenedPath }));
@@ -26,7 +29,7 @@ export async function generateMetadata({ params }: { params: Params }) {
         ? [siteMetadata.siteUrl + blog.image.filePath.replace("../public", "")]
         : blog.image;
   }
-  const ogImages = imageList.map((img: string) => {
+  const ogImages = imageList.map((img: any) => {
     return { url: img.includes("http") ? img : siteMetadata.siteUrl + img };
   });
 
@@ -55,24 +58,69 @@ export async function generateMetadata({ params }: { params: Params }) {
     },
   };
 }
+
 export default function BlogPage({ params }: { params: { slug: string } }) {
   const blog = allBlogs.find((blog) => blog._raw.flattenedPath === params.slug);
+  let selectImg = profileImg;
+  if (blog?.author === "focusspark") {
+    selectImg = siteImg;
+  }
   if (!blog) {
     return;
   }
+
+  let imageList:any= [siteMetadata.socialBanner];
+  if (blog.image) {
+    imageList=
+      typeof blog.image?.filePath === "string"
+        ? [siteMetadata.siteUrl + blog.image?.filePath.replace("../public", "")]
+        : blog.image;
+        
+  }
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": blog.title,
+    "description": blog.description,
+    "image": imageList,
+    "datePublished": new Date(blog.publishedAt).toISOString(),
+    "dateModified": new Date(blog.updatedAt || blog.publishedAt).toISOString(),
+    "author": [{
+        "@type": "Person",
+        "name": blog?.author ? [blog.author] : siteMetadata.author,
+        "url": siteMetadata.twitter,
+      }]
+  }
   return (
     <>
-      {" "}
-      <article >
-        <div className="mb-8 text-center relative w-full h-[70vh] bg-dark">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />{" "}
+      <article>
+        <div className="mb-8 text-center relative w-full h-[70vh] bg-dark ">
           <div className="w-full z-10 flex flex-col items-center justify-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="flex gap-2 p-10 items-center">
+              <Image
+                src={selectImg}
+                alt={blog.author}
+                width="40"
+                height="40"
+                className="rounded-full bg-slate-100"
+              />
+              <h2 className="font-semiboldtruncate text-white">
+                {blog.author}
+              </h2>
+            </div>
             <Tag
               name={blog.tags?.[0]}
-              link={`/categories/${blog.tags?.[0].replace(" ","-")}`}
+              link={`/categories/${blog.tags?.[0].replace(" ", "-")}`}
               className="px-6 text-sm py-2"
             >
               #
             </Tag>
+
             <h1 className="inline-block mt-6 font-semibold capitalize text-light text-2xl md:text-3xl lg:text-5xl !leading-normal relative w-5/6">
               {blog.title}
             </h1>
@@ -93,9 +141,24 @@ export default function BlogPage({ params }: { params: { slug: string } }) {
         <BlogDetails blog={blog} slug={params.slug} />
 
         <div className="grid grid-cols-12  gap-y-8 lg:gap-8 sxl:gap-16 mt-8 px-5 md:container md:mx-auto md:px-0">
-        <RenderMdx    blog={blog} />
+          <RenderMdx blog={blog} />
 
-          <div className="col-span-12  lg:col-span-3">
+          <div className="col-span-12  lg:col-span-3 ">
+            <div className="w-full text-center mb-3 md:mb-10 order-1 md:order-none">
+              <span className="block text-lg font-extrabold  p-0  mb-3 lg:mb-0 lg:p-6">
+                # Related categories
+              </span>
+              {blog.tags?.map((tag, index) => (
+                <Tag
+                  link={`/categories/${slug(tag)} `}
+                  name={tag}
+                  key={index.toString().replace("", "-")}
+                  className="px-6 text-sm py-2"
+                />
+              ))}
+              <br />
+            </div>
+
             <details
               className="border-[1px] border-solid border-dark dark:border-light text-dark dark:text-light rounded-lg p-4 sticky top-6 max-h-[80vh] overflow-hidden overflow-y-auto"
               open
@@ -106,7 +169,10 @@ export default function BlogPage({ params }: { params: { slug: string } }) {
               <ul className="mt-4 font-in text-base">
                 {blog.toc.map((heading: any) => {
                   return (
-                    <li key={`#${heading.slug}`} className="py-1">
+                    <li
+                      key={`#${heading.slug}.`.replace("", ".")}
+                      className="py-1"
+                    >
                       <a
                         href={`#${heading.slug}`}
                         data-level={heading.level}

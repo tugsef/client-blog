@@ -35,6 +35,6 @@
     "utilities/siteMetadata/siteMetaData.js",
     "utilities/siteMetadata/index.js",
     "components/utils/siteMetadata/index.js"
-  ],
+, "components/utils/siteMetadata/index.ts"  ],
   "exclude": ["node_modules"]
 }
