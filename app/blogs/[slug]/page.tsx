@@ -5,7 +5,6 @@ import Tag from "@/components/Element/tag";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import Image from "next/image";
 import siteMetadata from "@/components/utils/siteMetadata"; 
-import SocialMediaContact from "@/components/Blog/SocialMediaContact";
 
 export async function generateStaticParams() {
   return allBlogs.map((blog) => ({ slug: blog._raw.flattenedPath }));
@@ -94,6 +93,8 @@ export default function BlogPage({ params }: { params: { slug: string } }) {
         <BlogDetails blog={blog} slug={params.slug} />
 
         <div className="grid grid-cols-12  gap-y-8 lg:gap-8 sxl:gap-16 mt-8 px-5 md:container md:mx-auto md:px-0">
+        <RenderMdx    blog={blog} />
+
           <div className="col-span-12  lg:col-span-3">
             <details
               className="border-[1px] border-solid border-dark dark:border-light text-dark dark:text-light rounded-lg p-4 sticky top-6 max-h-[80vh] overflow-hidden overflow-y-auto"
@@ -130,7 +131,6 @@ export default function BlogPage({ params }: { params: { slug: string } }) {
               </ul>
             </details>
           </div>
-          <RenderMdx blog={blog} />
         </div>
       </article>
     </>

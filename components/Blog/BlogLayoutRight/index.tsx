@@ -1,31 +1,44 @@
+"use client";
 import { Blog } from "@/.contentlayer/generated";
 import Tag from "@/components/Element/tag";
-import { slug } from "github-slugger";
-import React from "react";
+import React, { useState } from "react";
+import { ITag, tagMapList } from "./service";
+
+let increment = 3;
+let starItem = 3;
 
 export default function BlogLayoutRight({ blogs }: { blogs: Blog[] }) {
-  const wordMap = new Map();
-  const words = blogs.map((blog) => blog.tags?.map((tag) =>slug(tag)));
-  words.forEach((word) =>
-    word?.map((text) => {
-      // Kelimenin karakter sayısı 4'ten büyükse kelimeyi ayrıştırır.
-      // kelimenin sağındaki ve solundaki değerleri dikkate almaz
-      const cleanedWord = text?.toLowerCase();
-      if (wordMap.has(cleanedWord)) {
-        wordMap.set(cleanedWord, wordMap.get(cleanedWord) + 1);
-      } else {
-        wordMap.set(cleanedWord, 1);
-      }
-    })
-  );
+  const tagList:ITag[] = tagMapList(blogs);
+  const [currentTotal, setCurrentTotal] = useState(starItem);
+  const totalItems = tagList.length;
+
+  const onNextClick = () => {
+    setCurrentTotal(currentTotal + increment);
+  };
+  const displayedItems = tagList.slice(0, currentTotal);
   return (
-    <div>
+    <div className="w-full text-center">
       <span className="block text-lg font-extrabold  p-0  mb-3 lg:mb-0 lg:p-6">
-        Topics that might interest you
+        # Topics that might interest you
       </span>
-      {Array.from(wordMap).map(([key, value]) => (
-        <Tag link={`/categories/${key.replace(" ","-")}`} name={key} key={key} value={value} />
+      {displayedItems.map((tag) => (
+        <Tag
+          link={`/categories/${tag.name.replace(" ", "-") as string} `}
+          name={tag.name}
+          key={tag.name}
+          value={tag.count}
+        />
       ))}
+      <br />
+      {displayedItems.length < totalItems && (
+        <button
+          onClick={onNextClick}
+          className="mt-1 text-sky-900 font-sans text-lg hover:border-2 hover:border-dark rounded-full py-2 px-3 hover:text-dark" 
+        >
+          Load more...
+        </button>
+      )}
     </div>
   );
 }
+
