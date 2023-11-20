@@ -29,10 +29,10 @@ export default function BlogLayoutLeft({
           <button
             onClick={onNextClick}
             className={cx(
-              "text-lg text-slate-500 border-y-2 border-y-stone-700 hover:text-dark "
+              "text-lg   opacity-60 border-y-stone-700 hover:text-[#FF9119]"
             )}
           >
-            Load more
+            Load more...
           </button>
         </div>
       )}

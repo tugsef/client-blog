@@ -25,7 +25,7 @@ export default function LeftListItem({ blog }: { blog: Blog }) {
               height="30"
               className="flex-none rounded-full bg-slate-100"
             />
-            <h2 className="font-semibold text-slate-900 truncate pr-20">
+            <h2 className="font-semibold text-slate-900 truncate pr-20 opacity-60 dark:text-light">
               {blog.author}
             </h2>
           </div>
@@ -41,7 +41,7 @@ export default function LeftListItem({ blog }: { blog: Blog }) {
                   </div>
                   <div className="my-1 lg:my-3">
                     <dt className="sr-only">description</dt>
-                    <dd className="hidden md:inline-flex text-lg">
+                    <dd className="hidden md:inline-flex text-lg text-gray">
                       {blog.description.slice(0, 120)}...
                     </dd>
                   </div>

@@ -8,6 +8,7 @@ import siteMetadata from "@/components/utils/siteMetadata";
 import { slug } from "github-slugger";
 import siteImg from "@/public/logo.png";
 import profileImg from "@/public/images/me.jpg";
+import Link from "next/link";
 
 export async function generateStaticParams() {
   return allBlogs.map((blog) => ({ slug: blog._raw.flattenedPath }));
@@ -113,13 +114,12 @@ export default function BlogPage({ params }: { params: { slug: string } }) {
                 {blog.author}
               </h2>
             </div>
-            <Tag
-              name={blog.tags?.[0]}
-              link={`/categories/${blog.tags?.[0].replace(" ", "-")}`}
-              className="px-6 text-sm py-2"
+            <Link
+              href={`/categories/${slug(blog.tags?.[0] as string)}`}
+              className="px-6  py-1.5 lg:py-2.5 text-light  lg:.px-5  me-2 mb-2 text-sm font-medium dark:text-light focus:outline-none  rounded-full border border-gray-400 hover:bg-gray-200 hover:text-blue-300 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-300   dark:hover:text-white dark:hover:bg-gray-700 hover:scale-105 transition-all ease duration-200"
             >
-              #
-            </Tag>
+             #{blog.tags?.[0]}
+            </Link>
 
             <h1 className="inline-block mt-6 font-semibold capitalize text-light text-2xl md:text-3xl lg:text-5xl !leading-normal relative w-5/6">
               {blog.title}

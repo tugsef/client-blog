@@ -36,25 +36,27 @@ export default function HomeCoverSection() {
           }}
           className="flex-1"
         >
-          <span className="font-mono lg:text-6xl text-2xl ">
+          <span className="font-mono lg:text-6xl text-2xl text-light">
             Reading or writing?
           </span>
           <br />
           <br />
-          <span className="font-mono lg:text-3xl text-xl opacity-50">
+          <span className="font-mono lg:text-3xl text-xl opacity-50 text-light">
             Follow authors and features <br />
             in the software field.{" "}
           </span>
           <br />
           <br />
           <button className=""></button>
+          <Link href={"/categories/all"} className="text-sm lg:text-xl ">
           <motion.div
             whileHover={{ scale: 1.2 }}
             whileTap={{ scale: 0.8 }}
-            className="inline-block rounded-full px-2 py-2 lg:px-3 lg:p-3  bg-transparent border-black dark:border-white border-2 font-mono  lg:mt-5 mt-3  "
+            className="inline-block rounded-full px-2 py-2 lg:px-3 lg:p-3  bg-transparent border-light text-light dark:border-white border-2 font-mono  lg:mt-5 mt-3  "
           >
-            <Link href={"/categories/all"} className="text-sm lg:text-xl "><span >Now reading</span></Link>
+           <span >Now reading</span>
           </motion.div>
+          </Link>
         </motion.div>
         <div className="hidden xl:block">
           <div className="flex-1">
@@ -79,6 +81,7 @@ export default function HomeCoverSection() {
                         duration: 2,
                         repeat: Infinity,
                       }}
+                      className="text-light"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

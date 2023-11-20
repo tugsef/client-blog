@@ -8,7 +8,7 @@ let increment = 3;
 let starItem = 3;
 
 export default function BlogLayoutRight({ blogs }: { blogs: Blog[] }) {
-  const tagList:ITag[] = tagMapList(blogs);
+  const tagList: ITag[] = tagMapList(blogs);
   const [currentTotal, setCurrentTotal] = useState(starItem);
   const totalItems = tagList.length;
 
@@ -21,7 +21,7 @@ export default function BlogLayoutRight({ blogs }: { blogs: Blog[] }) {
       <span className="block text-lg font-extrabold  p-0  mb-3 lg:mb-0 lg:p-6">
         # Topics that might interest you
       </span>
-      {displayedItems.map((tag,index) => (
+      {displayedItems.map((tag, index) => (
         <Tag
           link={`/categories/${tag.name.replace(" ", "-") as string} `}
           name={tag.name}
@@ -33,12 +33,11 @@ export default function BlogLayoutRight({ blogs }: { blogs: Blog[] }) {
       {displayedItems.length < totalItems && (
         <button
           onClick={onNextClick}
-          className="mt-1 text-sky-900 font-sans text-lg hover:border-2 hover:border-dark rounded-full py-2 px-3 hover:text-dark" 
+          className="mt-1 opacity-60   font-sans text-lg   rounded-full py-2 px-3 hover:text-[#FF9119]"
         >
-          Load more...
+          Show more...
         </button>
       )}
     </div>
   );
 }
-

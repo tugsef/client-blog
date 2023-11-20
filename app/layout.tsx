@@ -58,7 +58,7 @@ export default function RootLayout({
         <NextThemeProvider>
           <Header />
           {children}
-          <hr className="border-2  border-black dark:bg-light  mt-12 lg:16" />
+          <hr className="border-1   dark:bg-light border-gray  mt-12 " />
           <Footer />
           <Toaster position="bottom-center" reverseOrder={false} />
         </NextThemeProvider>

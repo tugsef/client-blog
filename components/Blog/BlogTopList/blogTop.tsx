@@ -27,7 +27,7 @@ export default function BlogTop({
         className="lg:flex-none rounded-full bg-slate-100"
       />
       <div className="min-w-0 relative flex-auto">
-        <h2 className="font-semibold text-slate-900 truncate pr-20">
+        <h2 className="font-semibold text-slate-900 truncate pr-20 opacity-60 dark:text-light">
           {blog.author}
         </h2>
         <dl className="mt-2 flex flex-wrap text-sm leading-6 font-medium">

@@ -5,11 +5,7 @@ import { useEffect, useState } from "react";
 export function useThemeSwitch() {
   const preferDarkQuery = "(prefers-color-schema:dark)";
   const storageKey = "theme";
-  if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    document.documentElement.classList.add('dark')
-  } else {
-    document.documentElement.classList.remove('dark')
-  }
+
   const toggleTheme = (theme:any) => {
     if (theme === "dark") {
       document.documentElement.classList.add("dark");
