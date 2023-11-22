@@ -1,6 +1,6 @@
 "use client";
 import AnimatedText from "@/components/About/AnimatedText";
-import { LinkArrow } from "@/components/About/Icons/index";
+import { LinkArrow } from "@/components/Icons";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -54,7 +54,7 @@ export default function About() {
             </Link>
 
             <Link
-              href="mailto:sefa.demirtas91@gmail.com"
+              href="mailto:sefa.demirtas91"
               className="ml-4 text-lg font-medium capitalize text-dark underline 
                   dark:text-light md:text-base"
             >
