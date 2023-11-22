@@ -5,8 +5,8 @@ import { cx } from "@/components/utils";
 import Link from "next/link";
 import React, { useState } from "react";
 import LoginAuth from "./loginAuth";
-import { useThemeSwitch } from "../Hooks";
 import { useTheme } from "next-themes";
+import NavbarUp from "./loginAuth/navbar";
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
@@ -17,8 +17,10 @@ export default function Header() {
   };
   return (
     <header className="w-full p-4  px-5 sm:px-10 flex items-center justify-between">
-      <BlogLogo />
-
+      <div className="flex gap-10">
+        <BlogLogo />
+        <div></div>
+      </div>
       <button
         className="inline-block sm:hidden z-50"
         onClick={toggle}
@@ -59,9 +61,9 @@ export default function Header() {
       </button>
 
       <nav
-        className=" w-max py-3 px-6 sm:px-8 border border-solid border-dark rounded-full font-medium capitalize  items-center flex  sm:hidden
+        className=" w-max py-3 px-6 sm:px-8 border border-solid border-dark rounded-full dark:bg-gray font-medium capitalize  items-center flex  sm:hidden
         fixed top-6 right-1/2 translate-x-1/2 bg-light/80 backdrop-blur-sm z-50
-        transition-all ease duration-300
+        transition-all ease duration-300 
         "
         style={{
           top: click ? "1rem" : "-5rem",
@@ -73,9 +75,7 @@ export default function Header() {
         <Link href="/about" className="mx-2">
           About
         </Link>
-        <Link href="/contact" className="mx-2">
-          Contact
-        </Link>
+        <NavbarUp/>
         <button
           onClick={() => setTheme(theme === "light" ? "dark" : "light")}
           className={cx(
@@ -94,7 +94,7 @@ export default function Header() {
 
       <nav
         className=" w-max py-3 px-8 border border-solid border-dark rounded-full font-medium capitalize  items-center hidden sm:flex
-        fixed top-6 right-1/2 translate-x-1/2 bg-light/80 backdrop-blur-sm z-50"
+        fixed top-4 right-1/2 translate-x-1/2 bg-light/80 backdrop-blur-sm z-50 dark:bg-gray"
       >
         <Link href="/" className="mr-2">
           Home
@@ -102,9 +102,7 @@ export default function Header() {
         <Link href="/about" className="mx-2">
           About
         </Link>
-        <Link href="/contact" className="mx-2">
-          Contact
-        </Link>
+       
         <button
           onClick={() => setTheme(theme === "light" ? "dark" : "light")}
           className={cx(

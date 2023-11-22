@@ -70,29 +70,30 @@ export default function BlogPage({ params }: { params: { slug: string } }) {
     return;
   }
 
-  let imageList:any= [siteMetadata.socialBanner];
+  let imageList: any = [siteMetadata.socialBanner];
   if (blog.image) {
-    imageList=
+    imageList =
       typeof blog.image?.filePath === "string"
         ? [siteMetadata.siteUrl + blog.image?.filePath.replace("../public", "")]
         : blog.image;
-        
   }
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
-    "headline": blog.title,
-    "description": blog.description,
-    "image": imageList,
-    "datePublished": new Date(blog.publishedAt).toISOString(),
-    "dateModified": new Date(blog.updatedAt || blog.publishedAt).toISOString(),
-    "author": [{
+    headline: blog.title,
+    description: blog.description,
+    image: imageList,
+    datePublished: new Date(blog.publishedAt).toISOString(),
+    dateModified: new Date(blog.updatedAt || blog.publishedAt).toISOString(),
+    author: [
+      {
         "@type": "Person",
-        "name": blog?.author ? [blog.author] : siteMetadata.author,
-        "url": siteMetadata.twitter,
-      }]
-  }
+        name: blog?.author ? [blog.author] : siteMetadata.author,
+        url: siteMetadata.twitter,
+      },
+    ],
+  };
   return (
     <>
       <script
@@ -118,7 +119,7 @@ export default function BlogPage({ params }: { params: { slug: string } }) {
               href={`/categories/${slug(blog.tags?.[0] as string)}`}
               className="px-6  py-1.5 lg:py-2.5 text-light  lg:.px-5  me-2 mb-2 text-sm font-medium dark:text-light focus:outline-none  rounded-full border border-gray-400 hover:bg-gray-200 hover:text-blue-300 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-300   dark:hover:text-white dark:hover:bg-gray-700 hover:scale-105 transition-all ease duration-200"
             >
-             #{blog.tags?.[0]}
+              #{blog.tags?.[0]}
             </Link>
 
             <h1 className="inline-block mt-6 font-semibold capitalize text-light text-2xl md:text-3xl lg:text-5xl !leading-normal relative w-5/6">
@@ -160,7 +161,7 @@ export default function BlogPage({ params }: { params: { slug: string } }) {
             </div>
 
             <details
-              className="border-[1px] border-solid border-dark dark:border-light text-dark dark:text-light rounded-lg p-4 sticky top-6 max-h-[80vh] overflow-hidden overflow-y-auto"
+              className="border-[1px] border-solid border-accent dark:border-accentDark text-dark dark:text-light rounded-lg p-4 sticky top-6 max-h-[80vh] overflow-hidden overflow-y-auto"
               open
             >
               <summary className="text-lg font-semibold capitalize cursor-pointer">

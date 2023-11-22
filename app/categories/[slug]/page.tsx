@@ -2,9 +2,11 @@ import { allBlogs } from "@/.contentlayer/generated";
 import LeftListItem from "@/components/Blog/BlogLayoutLeft/LeftListItem";
 import Categories from "@/components/Blog/Categories";
 import GithubSlugger, { slug } from "github-slugger";
+import { useState } from "react";
 
 const slugger = new GithubSlugger();
-
+let increment = 4;
+let starItem = 8;
 export async function generateStaticParams() {
   const categories: string[] = [];
   const paths = [{ slug: "all" }];
@@ -20,6 +22,7 @@ export async function generateStaticParams() {
       });
     }
   });
+  
 
   return paths;
 }
@@ -66,7 +69,9 @@ const CategoryPage = ({ params }: any) => {
             <LeftListItem blog={blog} />
           </article>
         ))}
+
       </div>
+      
     </article>
   );
 };

@@ -54,7 +54,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cx(inter.variable, "font-mono dark:bg-dark bg-light")}>
+      <body className={cx(inter.variable, "font-mono dark:bg-dark bg-light")} suppressHydrationWarning={true}>
         <NextThemeProvider>
           <Header />
           {children}

@@ -72,7 +72,7 @@ export default function SignInModal() {
                       <Form className="space-y-6" noValidate autoComplete="off">
                         <div>
                           <label
-                            htmlFor="email"
+                            htmlFor="_email"
                             className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
                           >
                             Email address
@@ -80,12 +80,12 @@ export default function SignInModal() {
                           <div className="mt-2">
                             <Field
                               type="text"
-                              name="email"
-                              id="email"
+                              name="_email"
+                              id="_email"
                               className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                             />
                             <ErrorMessage
-                              name="email"
+                              name="_email"
                               component="div"
                               className="mt-3 text-rose-600"
                             />

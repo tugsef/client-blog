@@ -20,10 +20,10 @@ const Footer = () => {
   return (
     <footer className="bg-blue-300 dark:bg-dark   flex flex-col items-center text-light">
       <h3 className="mt-16 font-medium dark:font-bold text-center capitalize text-2xl sm:text-3xl lg:text-4xl px-4">
-        We are renewed every day | Updates | Guides
+        We are renewed every day | Updates 
       </h3>
       <p className="mt-5 px-4 text-center w-full sm:w-3/5 font-light dark:font-medium text-sm sm:text-base">
-        Subscribe to learn about new technology and updates. Join over 5000+
+        Subscribe to learn about new technology and updates. Join 
         members community to stay up to date with latest news.
       </p>
       <Formik
@@ -41,20 +41,20 @@ const Footer = () => {
             <div className="flex relative z-0 mt-3">
               <Field
                 type="text"
-                name="email"
-                id="email"
+                name="email_"
+                id="email_"
                 placeholder=" "
                 className="py-2.5 px-0 w-[300px] text-white text-base bg-transparent border-0 border-b-2 border-white appearance-none dark:text-white dark:border-gray-600 dark:focus:border-G-DARK focus:outline-none focus:ring-0 focus:border-bg-dark peer"
               />
               <label
-                htmlFor="email"
+                htmlFor="email_"
                 className="absolute text-sm  text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-white peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
               >
                 example@example.com
               </label>
             </div>
             <ErrorMessage
-              name="email"
+              name="email_"
               component="div"
               className="mt-3 text-rose-600"
             />

@@ -46,7 +46,7 @@ export default function SignUpModal() {
           >
             <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white/80 p-6 text-black backdrop-blur-xl dark:border-neutral-700 dark:bg-black/80 dark:text-white md:w-[440px]">
               <div className="flex items-center justify-between">
-                <p className="text-lg font-semibold">Sign In</p>
+                <p className="text-lg font-semibold">Sign Up</p>
 
                 <button aria-label="Close cart" onClick={closeCart}>
                   <CloseModal />
@@ -54,13 +54,12 @@ export default function SignUpModal() {
               </div>
               <div className="flex min-h-full flex-1 flex-col  px-6 py-12 lg:px-8 justify-center">
                 {" "}
-                  <div className="flex mx-auto">
+                <div className="flex mx-auto">
                   <BlogLogo />
-                  </div>
-                   
-                  <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">
-                    Sign up to your account
-                  </h2>
+                </div>
+                <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">
+                  Sign up to your account
+                </h2>
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
                   <Formik
                     initialValues={{
@@ -129,7 +128,7 @@ export default function SignUpModal() {
                           </div>
                           <div className="mt-2">
                             <Field
-                              type="password  "
+                              type="password"
                               name="passwordConfirm"
                               id="passwordConfirm"
                               className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"

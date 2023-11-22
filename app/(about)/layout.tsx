@@ -2,13 +2,27 @@ import InsightRoll from "@/components/About/InsightRoll";
 
 
 const insights = [
-    "20+ Projects Completed",
+  "Software Developer",
+    "5+ Projects Completed",
     "3+ Years of Freelancing",
-    "99% Client Satisfaction",
-    "20K+ Subscribers",
+    "500+ Subscribers",
     "Authored In-Depth Course on Educative",
-    "Contributed as a Technical Course Reviewer 📝",
-    "Recipient of the Hackernoon Noonies Award 🏆",
+    "Java",
+    "Nextjs",
+    "Nestjs",
+    "Docker",
+    "Node",
+    "CSS",
+    "HTML",
+    "Typescript",
+    "JavaScript",
+    "SpringBoot",
+    "GIT",
+    "OOP",
+    "TailwindCSS",
+    "Kubernates",
+    "React",
+    "Angular"
   ];
 
 export default function AboutLayout({
@@ -17,7 +31,7 @@ export default function AboutLayout({
     children: React.ReactNode;
   }) {
   return (
-    <main className="w-full flex flex-col items-center justify-between">
+    <main className="w-full flex flex-col items-center justify-between ">
       <InsightRoll insights={insights} />
       {children}
     </main>

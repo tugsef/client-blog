@@ -24,7 +24,6 @@ const RenderMdx = ({blog}:{blog:Blog}) => {
     prose-blockquote:rounded-r-lg
 
     prose-li:marker:text-accent
-
     dark:prose-invert
     dark:prose-blockquote:border-accentDark
     dark:prose-blockquote:bg-accentDark/20

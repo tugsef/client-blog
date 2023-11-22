@@ -7,20 +7,21 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   darkMode: 'class',
-
+ 
   theme: {
     extend: {
       colors: {
         dark: "#1b1b1b",
         light: "#fff",
-        accent: "#7B00D3",
-        accentDark: "#ffdb4d",
+        accent: "#2557D6",
+        accentDark: "#FF9119",
         gray: "#747474",
       },
       fontFamily: {
         mr: ["var(--font-mr)"],
         in: ["var(--font-in)"]
       },
+      
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -40,7 +41,8 @@ const config: Config = {
         // @media (min-width: 1180px){...}
         xs: "480px"
         // @media (min-width: 480px){...}
-      }
+      },
+   
     },
   },
   plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")],
