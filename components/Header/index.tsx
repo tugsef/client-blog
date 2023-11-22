@@ -1,12 +1,13 @@
 "use client";
 import BlogLogo from "@/components/Header/logo";
-import { MoonIcon, SunIcon } from "@/components/Icons";
 import { cx } from "@/components/utils";
 import Link from "next/link";
 import React, { useState } from "react";
 import LoginAuth from "./loginAuth";
 import { useTheme } from "next-themes";
 import NavbarUp from "./loginAuth/navbar";
+import { WiDaySunny } from "react-icons/wi";
+import { GiNightSky } from "react-icons/gi";
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
@@ -85,9 +86,8 @@ export default function Header() {
           aria-label="theme-switcher"
         >
           {theme === "light" ? (
-            <MoonIcon className={"fill-dark"} />
-          ) : (
-            <SunIcon className={"fill-dark"} />
+             <GiNightSky />   ) : (
+ <WiDaySunny />      
           )}
         </button>
       </nav>
@@ -111,10 +111,9 @@ export default function Header() {
           )}
           aria-label="theme-switcher"
         >
-          {theme === "light" ? (
-            <MoonIcon className={"fill-dark"} />
-          ) : (
-            <SunIcon className={"fill-dark"} />
+         {theme === "light" ? (
+             <GiNightSky />   ) : (
+ <WiDaySunny />      
           )}
         </button>
       </nav>
