@@ -40,7 +40,8 @@ export default function BlogTop({
           <Link href={blog.url}>
             <div>
               <dt className="sr-only">title</dt>
-              <dd className="font-extrabold text-sm lg:text-lg">
+              <dd className="font-extrabold text-sm lg:text-lg bg-gradient-to-r from-accent to-accent bg-[length:0px_6px] dark:from-accentDark/50 dark:to-accentDark/50
+                group-hover:bg-[length:100%_6px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500">
                 {" "}
                 {blog.title}
               </dd>
