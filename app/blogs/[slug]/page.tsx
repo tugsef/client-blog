@@ -139,7 +139,7 @@ export default function BlogPage({ params }: { params: { slug: string } }) {
             sizes="100vw"
           />
         </div>
-        <BlogDetails blog={blog} slug={params.slug} />
+        <BlogDetails blog={blog} slugBlog={params.slug} />
 
         <div className="grid grid-cols-12  gap-y-8 lg:gap-8 sxl:gap-16 mt-8 px-5 md:container md:mx-auto md:px-0">
           <RenderMdx blog={blog} />
