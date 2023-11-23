@@ -9,13 +9,25 @@ import { LoginValues } from "@/api/auth/values/loginValues";
 import OpenModalSignUp from "./open-modal-signup";
 import { SignUpValues } from "@/api/auth/values/signUpValues";
 import { signUpSchema } from "../utils/custom/valitaions";
-
+import { cx } from "../utils";
+import toast from "react-hot-toast";
+const tokenExample = {
+  access_token:
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE2LCJyb2xlcyI6W3siaWQiOjE3LCJyb2xlIjoiVVNFUiIsInVzZXJJZCI6MTZ9XSwiZW1haWwiOiJleGFtcGxlQGV4YW1wbGUuY29tIiwiaWF0IjoxNzAwNzM0NzA4LCJleHAiOjE3MDA3MzU2MDh9.OV9HwwBmeUWkp5MKopUdr7tynrWX8o90bGnrimtntX4",
+  refresh_token:
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE2LCJyb2xlcyI6W3siaWQiOjE3LCJyb2xlIjoiVVNFUiIsInVzZXJJZCI6MTZ9XSwiZW1haWwiOiJleGFtcGxlQGV4YW1wbGUuY29tIiwiaWF0IjoxNzAwNzM0NzA4LCJleHAiOjE3MDEzMzk1MDh9.3MDzsI1eMR6sUWER4TswYitvIDJtfTxJvGLh5XjqbK4",
+};
 export default function SignUpModal() {
+  const [send, setSend] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
 
-  async function handleSubmit(values: LoginValues, bag: any): Promise<void> {}
+  async function handleSubmit(values: LoginValues): Promise<void> {
+    console.info(values);
+    toast.success(`${values.email} Successfully email!`);
+    setSend(true);
+  }
 
   return (
     <>
@@ -46,7 +58,9 @@ export default function SignUpModal() {
           >
             <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white/80 p-6 text-black backdrop-blur-xl dark:border-neutral-700 dark:bg-black/80 dark:text-white md:w-[440px]">
               <div className="flex items-center justify-between">
-                <p className="text-lg font-semibold">Sign Up</p>
+                <div className="h-8 w-8">
+                  <BlogLogo />
+                </div>
 
                 <button aria-label="Close cart" onClick={closeCart}>
                   <CloseModal />
@@ -54,13 +68,10 @@ export default function SignUpModal() {
               </div>
               <div className="flex min-h-full flex-1 flex-col  px-6 py-12 lg:px-8 justify-center">
                 {" "}
-                <div className="flex mx-auto">
-                  <BlogLogo />
-                </div>
                 <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">
                   Sign up to your account
                 </h2>
-                <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
+                <div className="mt-5 lg:mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
                   <Formik
                     initialValues={{
                       email: "",
@@ -68,14 +79,17 @@ export default function SignUpModal() {
                       passwordConfirm: "",
                     }}
                     validationSchema={signUpSchema}
-                    onSubmit={handleSubmit}
+                    onSubmit={async (values, { resetForm }) => {
+                      handleSubmit(values);
+                      resetForm();
+                    }}
                   >
                     {(formikProps: FormikProps<SignUpValues>) => (
                       <Form className="space-y-6" noValidate autoComplete="off">
                         <div>
                           <label
                             htmlFor="email"
-                            className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
+                            className="block text-sm font-medium leading-6 dark:text-dark  dark:text-white"
                           >
                             Email address
                           </label>
@@ -84,7 +98,13 @@ export default function SignUpModal() {
                               type="email"
                               name="email"
                               id="email"
-                              className="peer block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                              className={cx(
+                                "block w-full rounded-md border-0 p-1.5 dark:text-dark  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6",
+                                formikProps.errors.email &&
+                                  formikProps.touched.email
+                                  ? "focus:ring-2 focus:ring-inset focus:ring-red-600"
+                                  : "focus:ring-2 focus:ring-inset focus:ring-blue-600"
+                              )}
                             />
                             <ErrorMessage
                               name="email"
@@ -108,7 +128,13 @@ export default function SignUpModal() {
                               type="password"
                               name="password"
                               id="password"
-                              className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                              className={cx(
+                                "block w-full rounded-md border-0 py-1.5 dark:text-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6",
+                                formikProps.errors.password &&
+                                  formikProps.touched.password
+                                  ? "focus:ring-2 focus:ring-inset focus:ring-red-600"
+                                  : "focus:ring-2 focus:ring-inset focus:ring-blue-600"
+                              )}
                             />
                             <ErrorMessage
                               name="password"
@@ -131,7 +157,13 @@ export default function SignUpModal() {
                               type="password"
                               name="passwordConfirm"
                               id="passwordConfirm"
-                              className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                              className={cx(
+                                "block w-full rounded-md border-0 py-1.5 dark:text-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6",
+                                formikProps.errors.passwordConfirm &&
+                                  formikProps.touched.passwordConfirm
+                                  ? "focus:ring-2 focus:ring-inset focus:ring-red-600"
+                                  : "focus:ring-2 focus:ring-inset focus:ring-blue-600"
+                              )}
                             />
                             <ErrorMessage
                               name="passwordConfirm"
@@ -162,8 +194,21 @@ export default function SignUpModal() {
                       Start a ... day free trial
                     </a>
                   </p>
-                  <div className="h-32"></div>
+                  {send && (
+                  <div className="overflow-auto	">
+                    <span className="text-red-600">
+                      JWT Token Example(Demo→)
+                    </span>{" "}
+                    <br />
+                    <span className="text-green-500">reflesh_token:</span>
+                    {JSON.stringify(tokenExample.access_token)} <br />{" "}
+                    <span className="text-green-500">access_token:</span>
+                    {JSON.stringify(tokenExample.refresh_token)}
+                  </div>
+                )}
+                  <div className="h-24 lg:h-32 "></div>
                 </div>
+            
               </div>
             </Dialog.Panel>
           </Transition.Child>

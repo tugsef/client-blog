@@ -10,7 +10,7 @@
       "A blog created with Next.js, Tailwind.css , Nestjs and contentlayer.",
     language: "en-us",
     theme: "system", // system, dark or light
-    siteUrl: "", // your website URL
+    siteUrl: "http://localhost:3000", // your website URL
     siteLogo: '/logo.png',
     socialBanner: '/social-banner.png', // add social banner in the public folder
     email: "sefa.demirtas91@gmail.com",

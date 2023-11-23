@@ -27,6 +27,7 @@ export default function About() {
             alt="FocusShark"
             className="h-full w-full  rounded-full drop-shadow-2xl	"
             sizes="90vw"
+            placeholder="blur"
           />
         </div>
         <div className="flex flex-col items-center self-center lg:w-full text-center">

@@ -76,7 +76,7 @@ export default function Header() {
         <Link href="/about" className="mx-2">
           About
         </Link>
-        <NavbarUp/>
+        <NavbarUp />
         <button
           onClick={() => setTheme(theme === "light" ? "dark" : "light")}
           className={cx(
@@ -85,10 +85,8 @@ export default function Header() {
           )}
           aria-label="theme-switcher"
         >
-          {theme === "light" ? (
-             <GiNightSky />   ) : (
- <WiDaySunny />      
-          )}
+
+          {theme === "light" ? <GiNightSky /> : <WiDaySunny />}
         </button>
       </nav>
 
@@ -102,7 +100,7 @@ export default function Header() {
         <Link href="/about" className="mx-2">
           About
         </Link>
-       
+
         <button
           onClick={() => setTheme(theme === "light" ? "dark" : "light")}
           className={cx(
@@ -111,10 +109,8 @@ export default function Header() {
           )}
           aria-label="theme-switcher"
         >
-         {theme === "light" ? (
-             <GiNightSky />   ) : (
- <WiDaySunny />      
-          )}
+          {theme === "" || theme===undefined ||theme=== null && <GiNightSky />}
+          {theme === "light" ? <GiNightSky /> : <WiDaySunny />}
         </button>
       </nav>
       <div className=" hidden sm:flex items-center">

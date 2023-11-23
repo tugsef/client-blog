@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { ErrorMessage, Field, Form, Formik, FormikProps } from "formik";
@@ -10,21 +10,24 @@ import { FaLinkedin } from "react-icons/fa";
 import { FaGithubSquare } from "react-icons/fa";
 import { FaDribbbleSquare } from "react-icons/fa";
 import toast from "react-hot-toast";
+import { incrementView } from "../Blog/ViewCounter/viewEmail";
+import { cx } from "../utils";
 
 const Footer = () => {
   async function handleSubmit(values: EmailSend): Promise<void> {
     console.info(values);
+    incrementView(values.email);
     toast.success(`${values.email} Successfully email!`);
   }
 
   return (
     <footer className="bg-blue-300 dark:bg-dark   flex flex-col items-center text-light">
       <h3 className="mt-16 font-medium dark:font-bold text-center capitalize text-2xl sm:text-3xl lg:text-4xl px-4">
-        We are renewed every day | Updates 
+        We are renewed every day | Updates
       </h3>
       <p className="mt-5 px-4 text-center w-full sm:w-3/5 font-light dark:font-medium text-sm sm:text-base">
-        Subscribe to learn about new technology and updates. Join 
-        members community to stay up to date with latest news.
+        Subscribe to learn about new technology and updates. Join members
+        community to stay up to date with latest news.
       </p>
       <Formik
         initialValues={{
@@ -41,10 +44,15 @@ const Footer = () => {
             <div className="flex relative z-0 mt-3">
               <Field
                 type="text"
-                name="email_"
+                name="email"
                 id="email_"
                 placeholder=" "
-                className="py-2.5 px-0 w-[300px] text-white text-base bg-transparent border-0 border-b-2 border-white appearance-none dark:text-white dark:border-gray-600 dark:focus:border-G-DARK focus:outline-none focus:ring-0 focus:border-bg-dark peer"
+                className={cx(
+                  "py-2.5 px-0 w-[300px] text-white text-base bg-transparent border-0 border-b-2 border-white appearance-none dark:text-white dark:border-gray-600  peer",
+                  formikProps.errors.email && formikProps.touched.email
+                    ? "dark:focus:border-red-600 focus:outline-none focus:ring-0 focus:border-red-500"
+                    : "dark:focus:border-G-DARK focus:outline-none focus:ring-0 focus:border-bg-dark"
+                )}
               />
               <label
                 htmlFor="email_"
@@ -54,7 +62,7 @@ const Footer = () => {
               </label>
             </div>
             <ErrorMessage
-              name="email_"
+              name="email"
               component="div"
               className="mt-3 text-rose-600"
             />

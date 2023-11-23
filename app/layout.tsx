@@ -54,7 +54,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cx(inter.variable, "font-mono dark:bg-dark bg-light")} suppressHydrationWarning={true}>
+      <body
+        className={cx(inter.variable, "font-mono dark:bg-dark bg-light")}
+        suppressHydrationWarning={true}
+      >
         <NextThemeProvider>
           <Header />
           {children}
@@ -62,6 +65,7 @@ export default function RootLayout({
           <Footer />
           <Toaster position="bottom-center" reverseOrder={false} />
         </NextThemeProvider>
+        <Toaster position="bottom-center" reverseOrder={false} />
       </body>
     </html>
   );
