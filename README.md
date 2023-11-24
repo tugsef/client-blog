@@ -19,16 +19,16 @@ The website is hosted for the purpose of keeping the work together and enabling 
  - [Formik](https://formik.org/docs/tutorial)
  - [Gencraft](https://gencraft.com/generate)
 
-<Image
-  src="/blogs/focusspark-page.png"
-  width="718"
-  height="404"
-  alt="Image"
-  sizes="100vw"
-/>
+## Home Page
+
+![/blogs/focusspark-page.png](https://github.com/tugsef/client-blog/blob/main/public/blogs/focusspark-page.png)
+
+## Responsive Home Page
+
+![](https://github.com/tugsef/client-blog/blob/main/public/blogs/focusspark-responsive-page.png)
+
 
 This is a [`Nextjs`](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 ## Getting Started
 
 First, run the development server:
