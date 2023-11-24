@@ -22,7 +22,11 @@ The website is hosted for the purpose of keeping the work together and enabling 
 ![/blogs/focusspark-page.png](https://github.com/tugsef/client-blog/blob/main/public/blogs/focusspark-page.png)
 
 
+## Home Page
 This is a [`Nextjs`](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+## Responsive Home Page
+![](https://github.com/tugsef/client-blog/blob/main/public/blogs/focusspark-responsive-page.png)
 
 ## Getting Started
 
