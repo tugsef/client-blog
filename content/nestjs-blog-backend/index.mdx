@@ -1,0 +1,363 @@
+---
+title: "Nestjs Backen Blog Projesi"
+description: "Blogve kullanılan araçlar"
+image: "../../public/blogs/focusspark-nestjs-blog.png"
+publishedAt: "2023-11-24"
+updatedAt: "2023-11-24"
+author: "Sefa Demirtaş"
+isPublished: true
+tags:
+  - nestjs
+  - backend
+  - postgresql
+  - typescript
+  - Nodejs
+---
+
+<div className="flex flex-row-reverse gap-1">
+  <a href="http://nestjs.com/" target="blank"><img src="https://img.shields.io/github/commit-activity/t/tugsef/backend-blog/main?labelColor=rgb(39, 40, 41)&color=yellow"  alt="Nest Logo" /></a>
+  <a href="http://nestjs.com/" target="blank"><img src="https://img.shields.io/github/last-commit/tugsef/backend-blog/main?labelColor=rgb(39, 40, 41)&color=yellow"  alt="Nest Logo" /></a>
+  <a href="http://nestjs.com/" target="blank"><img src="https://img.shields.io/github/forks/tugsef/backend-blog?labelColor=rgb(39, 40, 41)&color=yellow"  alt="Nest Logo" /></a>
+  <a href="http://nestjs.com/" target="blank"><img src="https://img.shields.io/github/languages/count/tugsef/backend-blog?labelColor=rgb(39, 40, 41)&color=yellow"  alt="Nest Logo" /></a>
+  <a href="http://nestjs.com/" target="blank"><img src="https://img.shields.io/github/license/tugsef/backend-blog?color=yellow" /></a>
+ <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg??labelColor=rgb(39, 40, 41)&color=red" alt="NPM Version" /></a>
+
+</div>
+
+# Nestjs Blog Backend
+
+## Project Files
+[Nestjs Blog](https://github.com/tugsef/backend-blog)
+
+## Prisma Schema
+
+<Image
+  src="/blogs/backend-blog-prisma.png"
+  width="718"
+  height="404"
+  alt="Image"
+  sizes="100vw"
+/>
+
+## About the project
+
+- User can register and login Brearer Token
+- User can register and login through Brearer Token
+- Author can register.
+- The author can write an article or edit her own article.
+- Unregistered users cannot edit.
+- Admin cannot access authors' articles directly
+- Safe exit
+
+> The project is coded with nestjs, which is the node.js Framework. Nestjs typescript was used
+
+## 🔨 Run the App
+
+```powershell
+ npm install
+```
+
+## Running the app
+
+### Docker
+
+- Install [`Docker Desktop{:html}`](https://docs.docker.com/docker-for-windows/install/)
+- Open Terminal under resources folder to run [`PostgreSQL{:html}`](https://www.postgresql.org/) and [`PgAdmin{:html}`](https://www.pgadmin.org/docs/pgadmin4/development/getting_started.html) on Docker Container
+
+```powershell
+ development
+ docker-compose up -d
+```
+
+### Nestjs
+
+- Installation
+
+  ```powershell
+   npm install
+  ```
+
+- Run
+
+  ```powershell
+   //development
+   npm run start
+
+  // watch mode
+   npm run start:dev
+
+  // production mode
+   npm run start:prod
+  ```
+
+## Test
+
+<div className="flex gap-1">
+  <img src="https://img.shields.io/badge/-Swagger-%23Clojure?&logo=swagger&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Postman-FF6C37?&logo=postman&logoColor=white"/>
+</div>
+
+<details>
+  <summary>
+    <b>Swagger Screenshot </b>
+  </summary>
+  <Image
+    src="/blogs/nestjs-backend-swagger-test.png"
+    width="718"
+    height="404"
+    alt="Image"
+    sizes="100vw"
+  />
+</details>
+
+`http://localhost:3333/api{:html}`
+
+Explore Rest APIs
+
+| Method | Url               | Description                                   |
+| ------ | ----------------- | --------------------------------------------- |
+| POST   | auth/local/signup | Sign Up for User , Admin and Moderator        |
+| POST   | auth/local/signin | Sign Up for User , Admin and Moderator        |
+| POST   | auth/logout       | Logout                                        |
+| GET    | auth/profile/(id) | Displays user profiles                        |
+| POST   | auth/refresh      | Gets refresh-token and generates access-token |
+| DELETE | auth              | Delete of User                                |  
+| GET    | auth/getAllUser   | Get all advertisements From Admin of User     |  
+| GET    | posts/(id)        | Post by id is all users or client             |  
+| DELETE | posts/(id)        | Post MODERATOR deletes                        |  
+| GET    | auth              | Delete of User                                | 
+| POST   | posts/update/(id) | Get post by Id From MODERATOR                 |  
+| POST   | posts/addPost     | Get post by Id From MODERATOR                 |  
+| GET    | categories        | Get all client                                |  
+|POST    | categories        | Create category                               |
+|DELETE  | categories/(id)   | Delete category by id                         |
+|POST    | moderator         | Careate Author is user and profile            |
+
+
+
+  
+
+
+## Valid Request Body
+
+##### Sign Up for User, Admin and Moderator
+
+```js
+// http://localhost:3333/auth/local/signup
+
+{
+  "email": "sefa.demirtas91@gmail.com",
+  "password": "test",
+  "roles": [
+    "ADMIN",
+    "MODERATOR",
+    "USER"
+  ]
+}
+```
+
+##### Login
+
+[`JWT Token{:html}`](https://jwt.io/)
+
+```js
+// http://localhost:3333/auth/local/login
+   // Request
+
+    Bearer Token : Access Token of User
+    {
+         "email": "sefa.demirtas91@gmail.com",
+         "password": "string",
+    }
+
+    // Response
+
+    {
+         "access_token":
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGVzIjpbeyJpZCI6MSwicm9sZSI6IlVTRVIiLCJ1c2VySWQiOjF9XSwiZW1haWwiOiJzZWZhLmRlbWlydGFzOTFAZ21haWwuY29tIiwiaWF0IjoxNjk4NzQ1NzY2LCJleHAiOjE2OTg3NDY2NjZ9.4Mtzi7SdLOqLVX5O911fbtKOIt9akuGmmzlhA_34GAo",
+         "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGVzIjpbeyJpZCI6MSwicm9sZSI6IlVTRVIiLCJ1c2VySWQiOjF9XSwiZW1haWwiOiJzZWZhLmRlbWlydGFzOTFAZ21haWwuY29tIiwiaWF0IjoxNjk4NzQ1NzY2LCJleHAiOjE2OTkzNTA1NjZ9.JzBJ64ykxlXi_uqIGiRKcjgUJd4ZJemi9V9W8pPs5RY"
+    }
+```
+
+##### Sign Up for User, Admin and Moderator
+
+```js
+// http://localhost:3333/posts/addPost
+{
+  "title": "string",
+  "published": true,
+  "authorId": 0,
+  "approve": 0,
+  "hashtag": "string",
+  "story": "string",
+  "categories": [
+    "string"
+  ]
+}
+```
+
+##### Create category of ADMIN
+
+```js
+  // http://localhost:3333/categories
+{
+  "name": "string"
+}
+  // Bearer Token : Access Token of ADMIN @GetCurrentUserId() decorator id anr @Role decorator is role ADMIN
+
+```
+
+##### Careate Author is user and profileN
+
+```js
+  // http://localhost:3333/moderator
+{
+  "updatedAt": "2023-10-31T11:38:16.182Z",
+  "userName": "string",
+  "email": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "profileBio": "string"
+}
+  // Bearer Token : Access Token of MODERATOR @GetCurrentUserId() decorator id and @Role decorator is role MODERATOR
+
+```
+
+## Valid Request Params
+
+##### Get post by Id From all User(Public)
+
+```
+   http://localhost:3333/posts/{id}
+```
+
+##### Profile
+
+```
+   http://localhost:3333/auth/profile/{id}
+    All client or client
+```
+
+##### Delete by id
+
+```
+   http://localhost:3333/auth/profile/(id)
+The moderator is a Autor.@Role(MODERATOR)
+```
+
+##### Profile
+
+```
+http://localhost:3333/categories/(id)
+Bearer Token : Access Token of ADMIN @@GetCurrentUserId() decorator id anr @Role decorator is role ADMIN
+
+```
+
+## Valid Request Params and Body
+
+##### Get post by Id From MODERATOR
+
+```js
+//  http://localhost:3333/posts/update/(id)
+{
+  "updatedAt": "2023-10-31T11:07:05.591Z",
+  "title": "string",
+  "published": true,
+  "authorId": 0,
+  "approve": 0,
+  "hashtag": "string",
+  "story": "string"
+}
+//  Bearer Token : Access Token of MODERATOR @Role(MODERATOR)
+```
+
+## No Request or Params
+
+##### Logout
+
+```
+   http://localhost:3333/auth/logout
+   Bearer Token : Access Token of Admin , User or Moderator
+```
+
+##### Refresh
+
+```
+   http://localhost:3333/auth/refresh
+   Bearer Token : Refresh Token of Admin , User or Moderator
+```
+
+##### User Delete
+
+```
+   http://localhost:3333/auth/auth
+   Bearer Token : Access Token of Admin , User , Admin or Moderator @@GetCurrentUserId() decorator id
+```
+
+##### all advertisements From Admin of User
+
+```
+   http://localhost:3333/auth/getAllUser
+   Bearer Token : Access Token of ADMIN @@GetCurrentUserId() decorator id anr @Role decorator is role ADMIN
+```
+
+##### Get all posts is client or user
+
+```
+   http://localhost:3333/posts
+  All user or all clienr
+```
+
+##### Get all posts is client or user(Public)
+
+```
+   http://localhost:3333/categories
+   All user or all client
+```
+
+## Support
+
+Projeck Blog is an MIT-licensed open source project.
+
+## License
+
+Project is [MIT licensed](LICENSE).
+
+<div className="flex flex-row-reverse gap-1">
+  <a href="https://linkedin.com/in/sefa-demirtas">
+    <img
+      alt="LinkedIn"
+      src="https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white"
+    />
+  </a>
+  <a href="https://medium.com/@tugsef">
+    <img
+      alt="Medium"
+      src="https://img.shields.io/badge/Medium-12100E?logo=medium&logoColor=white"
+    />
+  </a>
+  <a href="https://stackoverflow.com/users/14768745">
+    <img
+      alt="Stack Overflow"
+      src="https://img.shields.io/badge/-Stackoverflow-FE7A16?logo=stack-overflow&logoColor=white"
+    />
+  </a>
+  <a href="https://twitter.com/SefaDemirtas91">
+    <img
+      alt="Twitter"
+      src="https://img.shields.io/badge/Twitter-%231DA1F2.svg?logo=Twitter&logoColor=white"
+    />
+  </a>
+  <a href="https://www.youtube.com/@sefa-demirtas">
+    <img
+      alt="YouTube"
+      src="https://img.shields.io/badge/YouTube-%23FF0000.svg?logo=YouTube&logoColor=white"
+    />
+  </a>
+  <a href="https://instagram.com/sefademirtas944">
+    <img
+      alt="Instagram"
+      src="https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white"
+    />
+  </a>
+</div>
