@@ -1,4 +1,33 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+# FocusSpark
+
+The website is hosted for the purpose of keeping the work together and enabling other people to benefit from my articles. FocusSpark is a statically designed website. I will work on launching it as a dynamic website. I integrated my notes, which I prepared using [`Markdown`](https://www.markdownguide.org/) , into my site as an [`.mdx`](https://mdxjs.com/) file using the contentlayer infrastructure.
+
+**Demo FocusSpark** 
+[FocusSpark](https://main--focusspark.netlify.app/)
+
+**Starter Code Files** 
+[FocusSpark](https://github.com/tugsef/client-blog)
+[FocusSpark](https://github.com/tugsef/client-blog)
+ ## Kullanılan Araçlar
+ - [React](https://react.dev/)
+ - [Nextjs](https://nextjs.org/)
+ - [TailwindCSS](https://tailwindcss.com/)
+ - [TypeScript](https://www.typescriptlang.org/)
+ - [Framer Motion](https://www.framer.com/motion/)
+ - [Content Layer](https://contentlayer.dev/)
+ - [Formik](https://formik.org/docs/tutorial)
+ - [Gencraft](https://gencraft.com/generate)
+
+<Image
+  src="/blogs/focusspark-page.png"
+  width="718"
+  height="404"
+  alt="Image"
+  sizes="100vw"
+/>
+
+This is a [`Nextjs`](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
 
@@ -6,12 +35,8 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+npx next start
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -29,8 +54,4 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
