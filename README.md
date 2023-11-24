@@ -19,13 +19,8 @@ The website is hosted for the purpose of keeping the work together and enabling 
  - [Formik](https://formik.org/docs/tutorial)
  - [Gencraft](https://gencraft.com/generate)
 
-<Image
-  src="/blogs/focusspark-page.png"
-  width="718"
-  height="404"
-  alt="Image"
-  sizes="100vw"
-/>
+<img  src="/blogs/focusspark-page.png"/>
+
 
 This is a [`Nextjs`](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
