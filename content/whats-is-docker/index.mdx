@@ -1,40 +1,43 @@
 ---
-title: "Docker nedir?"
+title: "Docker Cheat Sheet"
 description: "Yazılım dünyasında önemli yer tutan dockere öğrenelim."
 image: "../../public/blogs/docker-photo-mdx.png"
 publishedAt: "2023-11-15"
 updatedAt: "2023-11-15"
-author: "focusspark"
+author: "Sefa Demirtaş"
 isPublished: true
 tags:
 - docker
 - web development
 ---
-![Static Badge](https://img.shields.io/badge/:badgeContent)
 
--  docker run -p ß8081:5000 -d  in28min/todo-rest-api-h2:1.0.0.RELEASE
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+
+# Docker
+Docker kullanırken ihtiyacımız olması muhtemel komutları örnekleri ile birlikte yazmaya çalıştım.
+### docker run -p 8081:5000 -d  in28min/todo-rest-api-h2:1.0.0.RELEASE
     - **in28min/todo-rest-api-h2:1.0.0.RELEASE** image docker çalışma portu 5000 dir. ***-p*** komutu localde ***8081*** de çalıştı. ***-d*** debug botta arka planda çalışır
--  `docker logs 07cffededc07`
+### docker logs 07cffededc07
     - ***CONTAINER ID*** si ***07cffededc07*** olan containerın loglarını göster   
--  `docker logs 07cffededc07 -f`
+### docker logs 07cffededc07 -f
     - ***CONTAINER ID*** si ***07cffededc07*** olan containerın loglarını takibine başlar
 
--  `docker container ls` veya   `docker ps`
+### docker container veya   docker ps
    -  çalışan containerları gösterir
 
-- `docker container ls -a`
+### docker container ls -a
    - aktif ve aktif olmayan bütün containerları gösterir
 
-- `docker tag in28min/todo-rest-api-h2:1.0.0.RELEASE in28min/todo-rest-api-h2:latest`
+### docker tag in28min/todo-rest-api-h2:1.0.0.RELEASE in28min/todo-rest-api-h2:latest
    - ***tag*** etiketi latest olarak tanımladı ancak bu kullanım mevcut 
   
-- `docker pull mysql`
+### docker pull mysql
    - mysql bilintik bir imagesdir onu çekecektir. İmage indirir hem indirsin hem çalıştır dersek ***run***(varsa çalıştırır yoksa çeker) komutunu kullanmalıyız 
   
-- `docker search mysql`
+### docker search mysql
   - mysql bulutta arar ilişkili olanları resmi veya remi değil diye gösterir
 
--
+
  ```powershell
 
 sefademirtas@Sefas-MacBook-Pro NOTE % docker image history 814e9d2807cc
@@ -159,14 +162,14 @@ sefademirtas@Sefas-MacBook-Pro NOTE % docker image inspect 814e9d2807cc
 
 ```
 
-- `docker image remove 814e9d2807cc`
+### docker image remove 814e9d2807cc
    - ***images id*** si verilen images local den kaldırır.
    - `docker rmi -f $(docker images -aq)` imageleri toplu siler
 
-- `docker container pause counter-id`
+### docker container pause counter-id
   - ***container id*** si verilen  container duraklatır
 
-- `docker container pause counter-id`
+###  docker container pause counter-id
   - ***container id*** si duraklatılmış container ı tekrar başlatır
 
 ```powershell
@@ -233,7 +236,7 @@ CONTAINER ID   IMAGE                                    COMMAND                 
 sefademirtas@Sefas-MacBook-Pro NOTE % docker stop 491
 491
 ```
-- `docker container prune`
+### docker container prune
   - Daha önce başlatılmış ve dudurulmuş containarları siler
 
 ```powershell
@@ -301,10 +304,10 @@ c5a5c809a3d9   in28min/todo-rest-api-h2:1.0.0.RELEASE   "sh -c 'java $JAVA_O…"
    - ***kill*** anahtar kelimesi container zaman tanımadan sonlandırır
    - ***stop*** anahtar kelimesi programın kendisini kapatması için zaman tanır.
 
-- `docker run -p 8081:5000 -d --restart=always in28min/todo-rest-api-h2:1.0.0.RELEASE`
+### docker run -p 8081:5000 -d --restart=always in28min/todo-rest-api-h2:1.0.0.RELEASE
   - ***--restart=always*** container docker aktif hale geldiğinde çalışmaya başlar. Database dockerla birlikte başlanması isteniyor olabilit `docker container prune` komutu ile container ***container*** kapatıldıktan sonra container kayıtlarını sileceğinden container tekrar başlama yapamaycaktır 
 
-- `docker events`
+### docker events
   - docker olaylarını takip edebilirsiniz.
 
 ```powershell
@@ -315,7 +318,7 @@ sefademirtas@Sefas-MacBook-Pro ~ % docker events
 2023-09-22T12:56:58.342206634+03:00 volume mount 9aa49a623b054bdd25ae56d7bc7c9e85b3bbf60264f5e48b99728214a9d6bfb2 (container=411317dd40a18764a67327e17609fa4272378a30f4087e102a608dfa9705768f, destination=/tmp, driver=local, propagation=, read/write=true)
 2023-09-22T12:56:58.510998050+03:00 container start 411317dd40a18764a67327e17609fa4272378a30f4087e102a608dfa9705768f (image=in28min/todo-rest-api-h2:1.0.0.RELEASE, name=priceless_volhard)
 ```
-- `docker top container_name&&container_id`
+### docker top container_name&&container_id
     - ***top*** komutu, Docker container'ların içinde çalışan işlemleri görüntülemek için kullanılan bir komuttur. Bu komut, container içindeki işlemlerin PID'lerini, kullanıcı adlarını, CPU ve bellek kullanımını gösterir. Bu komut, container içinde çalışan işlemlerin hangi işlemlerin en çok kaynak tükettiğini belirlemenizi sağlar.
 
 ```powershell
@@ -325,7 +328,7 @@ root                1916                1891                4                   
 ```
 Ancak, bu komut sadece çalışan containerlar için çalışır. Eğer container çalışmıyorsa bu komutun bir sonucu olmayacaktır.
 
-- `docker stats`
+###  docker stats
 
 ```poershell
 docker run -p 8082:5000 -d  in28min/todo-rest-api-h2:1.0.0.RELEASE
@@ -334,11 +337,7 @@ sefademirtas@Sefas-MacBook-Pro ~ % docker stats
 ```
 - ***stats*** komutu, Docker daemon tarafından çalıştırılan container'lar için istatistikleri görüntülemekte kullanılan bir komuttur. Bu komut, container'ın CPU, bellek, disk, ağ ve diğer kaynakları kullanımını gösterir.
 
-`docker run -p 8083:5000 -d -m 512m --cpu-quota 50000 --restart=no in28min/todo-rest-api-h2:1.0.0.RELEASE`
+###  docker run -p 8083:5000 -d -m 512m --cpu-quota 50000 --restart=no in28min/todo-rest-api-h2:1.0.0.RELEASE
   - bellek ve CPU sınırlaması 
 
 
-
-
-<p>swojpoş</p>
-  <img alt="html" src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white"/>

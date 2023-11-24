@@ -12,7 +12,7 @@
     theme: "system", // system, dark or light
     siteUrl: "https://focusspark.netlify.app", // your website URL
     siteLogo: '/logo.png',
-    socialBanner: '/social-banner.png', // add social banner in the public folder
+    alBanner: '/social-banner.png', // add social banner in the public folder
     email: "sefa.demirtas91@gmail.com",
     github: "https://github.com/tugsef",
     twitter: "https://twitter.com/tug_sef",
