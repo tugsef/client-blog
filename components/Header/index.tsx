@@ -5,9 +5,10 @@ import Link from "next/link";
 import React, { useState } from "react";
 import LoginAuth from "./loginAuth";
 import { useTheme } from "next-themes";
-import NavbarUp from "./loginAuth/navbar";
+import NavbarUp from "./navbar/index";
 import { WiDaySunny } from "react-icons/wi";
 import { GiNightSky } from "react-icons/gi";
+import OpenSearchModal from "../SearchBar/open-search-model";
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
@@ -18,9 +19,12 @@ export default function Header() {
   };
   return (
     <header className="w-full p-4  px-5 sm:px-10 flex items-center justify-between">
-      <div className="flex gap-10">
+      <div className="flex gap-2 lg:gap-10">
         <BlogLogo />
-        <div></div>
+
+        <div className="flex items-center">
+          <OpenSearchModal />
+        </div>
       </div>
       <button
         className="inline-block sm:hidden z-50"
@@ -62,7 +66,7 @@ export default function Header() {
       </button>
 
       <nav
-        className=" w-max py-3 px-6 sm:px-8 border border-solid border-dark rounded-full dark:bg-gray font-medium capitalize  items-center flex  sm:hidden
+        className=" w-max py-3 px-6 sm:px-8 border border-solid border-dark rounded-full dark:bg-dark/80 font-medium capitalize  items-center flex  sm:hidden
         fixed top-6 right-1/2 translate-x-1/2 bg-light/80 backdrop-blur-sm z-50
         transition-all ease duration-300 
         "
@@ -85,14 +89,13 @@ export default function Header() {
           )}
           aria-label="theme-switcher"
         >
-
           {theme === "light" ? <GiNightSky /> : <WiDaySunny />}
         </button>
       </nav>
 
       <nav
         className=" w-max py-3 px-8 border border-solid border-dark rounded-full font-medium capitalize  items-center hidden sm:flex
-        fixed top-4 right-1/2 translate-x-1/2 bg-light/80 backdrop-blur-sm z-50 dark:bg-gray"
+        fixed top-4 right-1/2 translate-x-1/2 bg-light/80 backdrop-blur-sm z-50 dark:bg-dark/80"
       >
         <Link href="/" className="mr-2">
           Home
@@ -109,7 +112,9 @@ export default function Header() {
           )}
           aria-label="theme-switcher"
         >
-          {theme === "" || theme===undefined ||theme=== null && <GiNightSky />}
+          {theme === "" ||
+            theme === undefined ||
+            (theme === null && <GiNightSky />)}
           {theme === "light" ? <GiNightSky /> : <WiDaySunny />}
         </button>
       </nav>

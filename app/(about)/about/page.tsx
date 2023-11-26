@@ -19,7 +19,7 @@ export default function About() {
         Showcase your skills as a full-stack developer and software engineer."
         />
       </Head>
-<TransitionEffect/>
+      <TransitionEffect />
       <div className="inline-block  w-full  justify-center items-center py-4 lg:flex pt-8 lg:pe-32 lg:ps-20 lg:mt-14 lg:mb-2">
         <div className=" md:inline-block md:w-full">
           <Image

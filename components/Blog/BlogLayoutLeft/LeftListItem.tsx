@@ -15,7 +15,7 @@ export default function LeftListItem({ blog }: { blog: Blog }) {
   const slugTag = blog.tags?.[0];
   return (
     <>
-      <figure className="grid grid-cols-12 justify-items-stretch py-4 lg:py-8">
+      <figure className="grid grid-cols-12 justify-items-stretch py-2 lg:py-4">
         <div className=" col-span-9 lg:col-span-8 justify-self-start">
           <div className="flex gap-2">
             <Image
@@ -47,7 +47,7 @@ export default function LeftListItem({ blog }: { blog: Blog }) {
                   </div>
                 </Link>
 
-                <div className="flex-none w-full mt-2 font-normal">
+                <div className="flex-none w-full font-normal">
                   <dt className="sr-only">Runtime</dt>
                   <dd className="text-slate-400 text-xs lg:text-base">
                     {format(new Date(blog.publishedAt), "MMM dd")}·
