@@ -9,7 +9,7 @@ The website is hosted for the purpose of keeping the work together and enabling 
 **Starter Code Files** 
 [FocusSpark](https://github.com/tugsef/client-blog)
 [FocusSpark](https://github.com/tugsef/client-blog)
- ## Kullanılan Araçlar
+ ## Skills/Tools
  - [React](https://react.dev/)
  - [Nextjs](https://nextjs.org/)
  - [TailwindCSS](https://tailwindcss.com/)
