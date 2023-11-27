@@ -32,7 +32,7 @@ const SearchBar: React.FC<{ blogs: Blog[]; closeSearch: () => void }> = ({
 
   return (
     <div>
-      {isOpen && (
+      {isOpen && 
         <div className="fixed top-0 left-0 z-[200] flex h-[100vh] w-[100vw] cursor-auto flex-col backdrop-blur-sm backdrop-filter box-border border-0 border-solid py-20 px-2 lg:p-20">
           <div
             className="top-0 left-0 absolute w-full h-full bg-transparent"
@@ -72,7 +72,7 @@ const SearchBar: React.FC<{ blogs: Blog[]; closeSearch: () => void }> = ({
                     value={query}
                     onChange={handleChange}
                     id="default-search"
-                    className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:text-gray"
+                    className="block w-full p-4 ps-10 text-sm dark:bg-slate-800 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:text-light "
                     
                   />
                   <button
@@ -116,7 +116,7 @@ const SearchBar: React.FC<{ blogs: Blog[]; closeSearch: () => void }> = ({
             </footer>
           </div>
         </div>
-      )}
+      }
     </div>
   );
 };

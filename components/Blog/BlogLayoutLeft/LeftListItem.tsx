@@ -5,12 +5,12 @@ import profileImg from "@/public/images/me.jpg";
 import Link from "next/link";
 import { format } from "date-fns";
 import { slug } from "github-slugger";
-import siteImg from "@/public/logo.png"
+import siteImg from "@/public/logo.png";
 export default function LeftListItem({ blog }: { blog: Blog }) {
-  let selectImg:StaticImageData = profileImg;
+  let selectImg: StaticImageData = profileImg;
 
-  if(blog?.author.toLowerCase()==="focusspark"){
-    selectImg=siteImg;
+  if (blog?.author.toLowerCase() === "focusspark") {
+    selectImg = siteImg;
   }
   const slugTag = blog.tags?.[0];
   return (
