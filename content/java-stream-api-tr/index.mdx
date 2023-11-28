@@ -1,0 +1,424 @@
+---
+title: "Java Stream Api"
+description: "Java Stream Api nedir?"
+image: "../../public/blogs/java-stream-api.png"
+publishedAt: "2023-11-28"
+updatedAt: "2023-11-28"
+author: "Sefa Demirtaş"
+isPublished: true
+tags:
+  - java
+  - stream
+---
+
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+
+#  Java Stream Api
+## Genel Bakış
+Bu yazımda Java stream apinin oluşturulmasından paralel yürütme aşamasına kadar pratik kullanımlarını inceleyeceğim
+
+
+Konuyu daha iyi anlamak için okuyucuların Java 8 *(lambda expressions, Optional, method references)* ve Stream API hakkında temel bilgiye sahip olmaları gerekir.
+
+### Stream Oluşturma
+
+Farklı kaynakların örneğinin oluşturulmanın bir çok yolu vardır. Örnek oluşturulduktan sonra `kaynağını değiştirmez.{:html}` dolayısıyla tekbir kaynaktan birden çok örneğin oluşturulmasına olanak tanır.
+
+### Empty Stream
+
+Boş bir stream oluşturulması durumunda `empty(){:html}` metodunu kullanmalıyız.
+
+
+```java
+Stream<String> streamEmpty = Stream.empty();
+```
+
+Öğe içermeyen streamler için null değerini döndürmekten kaçınmak için genellikle oluşturma sırasında `empty(){:html}` yöntemi kullanılır.
+
+```java
+public Stream<String> streamOf(List<String> list) {
+    return list == null || list.isEmpty() ? Stream.empty() : list.stream();
+}
+```
+### Collection ile Stream
+
+Herhangi bir koleksiyon *türünden(Collection, List, Set)* stream oluşturabiliriz.
+
+```java
+Collection<String> collection = Arrays.asList("a", "b", "c");
+Stream<String> streamOfCollection = collection.stream();
+```
+
+### Array ile Strream
+ Bir array aynı zamanda bir stream in kaynağıda olabilir.
+
+ ```java
+ Stream<String> streamOfArray = Stream.of("a", "b", "c");
+ ```
+ Ayrıca mevcut bir array den veya array in bir kısmından bir stream oluşturabilirsiniz.
+ 
+```java
+String[] arr = new String[]{"a", "b", "c"};
+Stream<String> streamOfArrayFull = Arrays.stream(arr);
+Stream<String> streamOfArrayPart = Arrays.stream(arr, 1, 3);
+ ```
+
+ ### Stream.builder()
+
+ **builder kullanıldığında, istenilen tür ifadenin sağ kısmında ek olarak belirtilmelidir**, aksi takdirde **build()** yöntemi `Stream<Object>{:html}` örneğini oluşturacaktır.
+ 
+```java
+ Stream<String> streamBuilder =
+ Stream.<String>builder().add("a").add("b").add("c").build();
+```
+
+### Stream.generate()
+
+**created()** yöntemi, öğe üretimi için bir `Supplier<T>{:html}`'yi kabul eder. Ortaya çıkan stream sonsuz olduğundan geliştiricinin istenen boyutu belirtmesi gerekir, aksi takdirde **created()** yöntemi bellek sınırına ulaşana kadar çalışacaktır:
+```java
+Stream<String> streamGenerated =
+Stream.generate(() -> "element").limit(10);
+```
+Yukarıdaki kod, `"element"{:html}` değerine sahip on dizeden oluşan bir dizi oluşturur.
+
+
+### Stream.iterate()
+
+**Sonsuz bir stream oluşturmanın başka bir yolu iterate()** yöntemini kullanmaktır :
+
+```java
+Stream<Integer> streamIterated = Stream.iterate(20, n -> n + 2).limit(20);
+```
+Ortaya çıkan stream ilk öğesi **iterate()** yönteminin ilk parametresidir. Sonraki her öğeyi oluştururken, belirtilen işlev önceki öğeye uygulanır. Yukarıdaki örnekte ikinci eleman 42 olacaktır.
+
+### Primitive Streamler
+
+Java 8, üç temel türden stream oluşturma olanağı sunar: **int, long ve double**. `Stream<T>{:html}` genel bir arayüz olduğundan ve temel değerleri jeneriklerle birlikte bir tür parametresi olarak kullanmanın bir yolu olmadığından, üç yeni özel arayüz oluşturuldu: `IntStream{:html}`, `LongStream{:html}`, `DoubleStream{:html}`.
+
+Yeni arayüzlerin kullanılması gereksiz otomatik kutulamayı ortadan kaldırır ve bu da verimliliğin artmasına olanak tanır:
+
+```java
+IntStream intStream = IntStream.range(1, 3);
+LongStream longStream = LongStream.rangeClosed(1, 3);
+```
+
+**range (int startInclusive, int endExclusive)** yöntemi, ilk parametreden ikinci parametreye sıralı bir stream oluşturur. Sonraki elemanların değerini 1'e eşit adımlarla artırır. Sonuç, son parametreyi içermez, yalnızca dizinin bir üst sınırıdır.
+
+**rangeClosed(int startInclusive, int endInclusive)**  yöntemi aynı şeyi tek bir farkla yapar, ikinci öğe dahil edilir. Bu iki yöntemi, üç tür ilkel stream herhangi birini oluşturmak için kullanabiliriz.
+
+Java 8'den beri Random sınıfı, ilkel streamler oluşturmak için geniş bir yöntem yelpazesi sunmaktadır. Örneğin, aşağıdaki kod üç öğeye sahip bir DoubleStream oluşturur:
+
+```java
+Random random = new Random();
+DoubleStream doubleStream = random.doubles(3);
+```
+
+### String ile Stream
+
+String sınıfının **chars()** yönteminin yardımıyla bir stream oluşturmak için  String'i kaynak olarak da kullanabiliriz . JDK'da **CharStream** için bir arayüz olmadığından , bunun yerine bir karakter streamleri temsil etmek için **IntStream**'i kullanırız.
+
+```java
+IntStream streamOfChars = "abc".chars();
+```
+Aşağıdaki örnek, belirtilen **RegEx'e** göre bir String'i alt dizelere böler 
+
+```java
+Stream<String> streamOfString =
+Pattern.compile(", ").splitAsStream("a, b, c");
+```
+### Dosya ile Stream 
+
+Ayrıca, **Java NIO** sınıfı Dosyalar , **lines()** yöntemi aracılığıyla bir metin dosyasının `Stream<String>{:html}` dosyasını oluşturmamıza olanak tanır . Metnin her satırı stream bir öğesi haline gelir.
+
+```java
+Path path = Paths.get("C:\\file.txt");
+Stream<String> streamOfStrings = Files.lines(path);
+Stream<String> streamWithCharset = 
+  Files.lines(path, Charset.forName("UTF-8"));
+```
+Karakter Kümesi, **lines ()** yönteminin bir argümanı olarak belirtilebilir .
+
+## Stream referans verme
+
+Yalnızca ara işlemler çağrıldığı sürece bir stream başlatabilir ve ona erişilebilir bir referansa sahip olabiliriz. Bir terminal işleminin yürütülmesi, stream i erişilemez hale getirir .
+
+Bunu göstermek için, en iyi uygulamanın işlem sırasını zincirlemek olduğunu bir süreliğine unutacağız. Gereksiz ayrıntının yanı sıra teknik olarak aşağıdaki kod geçerlidir:
+
+```java
+Stream<String> stream = 
+  Stream.of("a", "b", "c").filter(element -> element.contains("b"));
+Optional<String> anyElement = stream.findAny();
+```
+
+Ancak, terminal işlemini çağırdıktan sonra aynı referansı yeniden kullanma girişimi **IllegalStateException**'ı tetikleyecektir 
+
+```java
+Optional<String> firstElement = stream.findFirst();
+```
+
+**IllegalStateException** bir **RuntimeException** olduğundan , derleyici bir sorun hakkında sinyal vermez. Bu nedenle **Java 8 streamlerin yeniden kullanılamayacağını unutmamak çok önemlidir** .
+
+Bu tür davranışlar mantıklıdır. Akışları, öğeleri depolamak için değil, öğelerin kaynağına işlevsel bir tarzda sınırlı sayıda işlem uygulayacak şekilde tasarladık.
+
+Bu nedenle önceki kodun düzgün çalışmasını sağlamak için bazı değişiklikler yapılmalıdır:
+
+```java
+List<String> elements =
+  Stream.of("a", "b", "c").filter(element -> element.contains("b"))
+    .collect(Collectors.toList());
+Optional<String> anyElement = elements.stream().findAny();
+Optional<String> firstElement = elements.stream().findFirst();
+```
+
+## Stream Pipeline
+
+Ara işlemler yeni bir değiştirilmiş stream döndürür. Örneğin, az sayıda öğe olmadan mevcut stream in yeni bir stream oluşturmak için skip() yöntemi kullanılmalıdır:
+
+```java
+Stream<String> onceModifiedStream =
+  Stream.of("abcd", "bbcd", "cbcd").skip(1);
+```
+
+Birden fazla modifikasyona ihtiyacımız varsa ara işlemleri zincirleyebiliriz. Geçerli `Stream<String>{:html}'`in her öğesini ilk birkaç karakterden oluşan bir alt dizeyle değiştirmemiz gerektiğini varsayalım . Bunu **skip()** ve **map()** yöntemlerini zincirleyerek yapabiliriz:
+
+```java
+Stream<String> twiceModifiedStream =
+  stream.skip(1).map(element -> element.substring(0, 3));
+```
+
+Bir akıntı tek başına değersizdir; Kullanıcı, bir tür değer veya stream in her öğesine uygulanan bir eylem olabilen terminal işleminin sonucuyla ilgilenir. **Her stream için yalnızca bir terminal işlemi kullanabiliriz.**
+
+Akışları kullanmanın doğru ve en uygun yolu , stream kaynağı, ara işlemler ve terminal işleminden oluşan bir zincir olan stream **pipeline** dır:
+
+```java
+List<String> list = Arrays.asList("abc1", "abc2", "abc3");
+long size = list.stream().skip(1)
+  .map(element -> element.substring(0, 3)).sorted().count();
+```
+
+## Lazy Invocation(Temmel Çağrı)
+
+**Ara işlemler tembeldir.** **Bu , yalnızca terminal işleminin yürütülmesi için gerekli olması durumunda çağrılacakları** anlamına gelir .
+
+Örneğin, her çağrıldığında bir iç sayacı artıran wasCalled () yöntemini çağıralım :
+
+```java
+private long counter;
+ 
+private void wasCalled() {
+    counter++;
+}
+```
+
+Şimdi **filter()** işleminden **wasCalled()** yöntemini çağıralım :
+
+```java
+List<String> list = Arrays.asList(“abc1”, “abc2”, “abc3”);
+counter = 0;
+Stream<String> stream = list.stream().filter(element -> {
+    wasCalled();
+    return element.contains("2");
+});
+```
+Üç elemanlı bir kaynağımız olduğundan, **filter()** yönteminin üç kez çağrılacağını ve sayaç değişkeninin değerinin 3 olacağını varsayabiliriz. Ancak bu kodu çalıştırmak sayacı hiçbir şekilde değiştirmez, hala sıfır, dolayısıyla **filter()** yöntemi bir kez bile çağrılmadı. Terminal işleminin eksik olmasının nedeni.
+
+Bir harita() işlemi ve bir terminal işlemi olan **findFirst()**' ı ekleyerek bu kodu biraz yeniden yazalım . Ayrıca, günlüğe kaydetme yardımıyla yöntem çağrılarının sırasını takip etme özelliğini de ekleyeceğiz:
+
+```java
+Optional<String> stream = list.stream().filter(element -> {
+    log.info("filter() was called");
+    return element.contains("2");
+}).map(element -> {
+    log.info("map() was called");
+    return element.toUpperCase();
+}).findFirst();
+```
+
+Ortaya çıkan günlük , **filter()** yöntemini iki kez ve **map()** yöntemini bir kez çağırdığımızı gösterir . Bunun nedeni pipeline dikey olarak yürütülmesidir. Örneğimizde stream in ilk öğesi filtrenin yüklemini karşılamadı. Daha sonra filtreyi geçen ikinci eleman için **filter()** metodunu çağırdık . Üçüncü öğe için **filter()** öğesini çağırmadan , boru hattından **map()** yöntemine geçtik .
+
+**findFirst()** işlemi yalnızca bir öğeyle karşılanır. Bu özel örnekte, tembel çağrı, biri **filter()** ve diğeri de **map()** için olmak üzere iki yöntem çağrısından kaçınmamızı sağladı .
+
+## Order of Execution
+
+Performans açısından bakıldığında **doğru sıra, stream hattındaki zincirleme operasyonların en önemli yönlerinden biridir:**
+
+```java
+long size = list.stream().map(element -> {
+    wasCalled();
+    return element.substring(0, 3);
+}).skip(2).count();
+```
+
+Bu kodun çalıştırılması sayacın değerini üç kat artıracaktır. Bu, stream in **map()** yöntemini üç kez çağırdığımız ancak boyutun değerinin bir olduğu anlamına gelir. Sonuçta ortaya çıkan streamin yalnızca bir öğesi var ve üç seferin ikisinde pahalı **map()** işlemlerini sebepsiz yere gerçekleştirdik .
+
+**skip()** ve **map()** yöntemlerinin sırasını değiştirirsek sayaç yalnızca bir artacaktır. Bu yüzden **map()** yöntemini yalnızca bir kez çağıracağız :
+
+```java
+long size = list.stream().skip(2).map(element -> {
+    wasCalled();
+    return element.substring(0, 3);
+}).count();
+```
+
+Bu bizi şu kurala getiriyor: Akışın boyutunu küçülten ara işlemler, her bir öğeye uygulanan işlemlerden önce yerleştirilmelidir. Bu nedenle **skip()**, **filter()** ve **Different()** gibi yöntemleri stream hattımızın en üstünde tutmamız gerekiyor .
+
+## Stream Reduction
+### reduce() Metodu
+
+Bu yöntemin, imzalarına ve döndürme türlerine göre farklılık gösteren üç çeşidi vardır. Aşağıdaki parametrelere sahip olabilirler:
+
+**identity** – bir akümülatörün başlangıç ​​değeri veya bir stream boşsa ve toplanacak hiçbir şey yoksa varsayılan değer
+
+**accumulator** – öğelerin toplanmasının mantığını belirten bir işlev. Akümülatör her azaltma adımında yeni bir değer oluşturduğundan, yeni değerlerin miktarı stream in boyutuna eşit olur ve yalnızca son değer faydalıdır. Bu performans açısından pek iyi değil
+
+**combiner** – akümülatörün sonuçlarını toplayan bir işlev. Farklı iş parçacıklarından gelen akümülatörlerin sonuçlarını azaltmak için yalnızca birleştiriciyi paralel modda çağırıyoruz.
+
+Şimdi bu üç yöntemin uygulanmasına bakalım:
+
+```java
+OptionalInt reduced =
+  IntStream.range(1, 4).reduce((a, b) -> a + b);
+```
+
+reduced = 6 (1 + 2 + 3)
+
+```java
+int reducedTwoParams =
+  IntStream.range(1, 4).reduce(10, (a, b) -> a + b);
+```
+
+reducedTwoParams = 16 (10 + 1 + 2 + 3)
+
+```java
+int reducedParams = Stream.of(1, 2, 3)
+  .reduce(10, (a, b) -> a + b, (a, b) -> {
+     log.info("combiner was called");
+     return a + b;
+  });
+```
+Sonuç önceki örnekteki (16) ile aynı olacaktır ve oturum açma işlemi yapılmayacaktır, bu da birleştiricinin çağrılmadığı anlamına gelir. Birleştiricinin çalışması için streamin paralel olması gerekir:
+
+```java
+int reducedParallel = Arrays.asList(1, 2, 3).parallelStream()
+    .reduce(10, (a, b) -> a + b, (a, b) -> {
+       log.info("combiner was called");
+       return a + b;
+    });
+```
+
+Buradaki sonuç farklıdır (36) ve birleştirici iki kez çağrılmıştır. Burada indirgeme aşağıdaki algoritmaya göre çalışır: akümülatör, streamin her öğesini kimliğe ekleyerek üç kez çalıştı . Bu eylemler paralel olarak yapılıyor. Sonuç olarak (10 + 1 = 11; 10 + 2 = 12; 10 + 3 = 13;) var. Artık birleştirici bu üç sonucu birleştirebilir. Bunun için iki yinelemeye ihtiyaç vardır (12 + 13 = 25; 25 + 11 = 36).
+
+### collect() Metodu
+
+Bir streamin azaltılması, başka bir terminal işlemi olan **Collect()** yöntemiyle de gerçekleştirilebilir . İndirgeme mekanizmasını belirten *Collector* türünde bir argümanı kabul eder . En yaygın işlemler için zaten oluşturulmuş, önceden tanımlanmış toplayıcılar vardır. Bunlara Kollektörler tipinin yardımıyla erişilebilir .
+
+Bu bölümde tüm streamler için kaynak olarak aşağıdaki **List** kullanacağız :
+
+```java
+List<Product> productList = Arrays.asList(new Product(23, "potatoes"),
+  new Product(14, "orange"), new Product(13, "lemon"),
+  new Product(23, "bread"), new Product(13, "sugar"));
+```
+
+**Bir stream Koleksiyona ( Koleksiyon , Liste veya Set ) dönüştürme:**
+```java
+List<String> collectorCollection = 
+  productList.stream().map(Product::getName).collect(Collectors.toList());
+```
+
+**String'e Azaltma :**
+
+```java
+String listToString = productList.stream().map(Product::getName)
+  .collect(Collectors.joining(", ", "[", "]"));
+```
+**joiner()** yöntemi bir ila üç parametreye (sınırlayıcı, önek, sonek) sahip olabilir. **joiner()** kullanmanın en kullanışlı yanı, geliştiricinin, son eki uygulamak ve sınırlayıcı uygulamamak için streamin sonuna ulaşıp ulaşmadığını kontrol etmesine gerek olmamasıdır. Koleksiyoner bununla ilgilenecektir.
+
+**Akışın tüm sayısal öğelerinin ortalama değeri işleniyor:**
+
+```java
+double averagePrice = productList.stream()
+  .collect(Collectors.averagingInt(Product::getPrice));
+```
+
+**Akışın tüm sayısal öğelerinin toplamı işleniyor:**
+
+```java
+int summingPrice = productList.stream()
+  .collect(Collectors.summingInt(Product::getPrice));
+```
+
+Geliştirici, *IntSummaryStatistics* türünün ortaya çıkan örneğini kullanarak , *toString()* yöntemini uygulayarak bir istatistiksel rapor oluşturabilir. Sonuç , *"IntSummaryStatistics{count=5, sum=86, min=13, average=17,200000, max=23}"* ile ortak olan bir String olacaktır .
+
+*getCount(), getSum(), getMin(), getAverage() ve getMax()* yöntemlerini uygulayarak bu nesneden count, sum, min ve ortalama için ayrı değerler çıkarmak da kolaydır . Bu değerlerin tümü tek bir boru hattından çıkarılabilir.
+
+**Stream öğelerinin belirtilen işleve göre gruplandırılması:**
+```java
+Map<Integer, List<Product>> collectorMapOfLists = productList.stream()
+  .collect(Collectors.groupingBy(Product::getPrice));
+```
+
+Yukarıdaki örnekte *stream, tüm ürünleri fiyatlarına göre gruplandıran *Map* indirgenmiştir.
+
+**Stream öğelerini bazı yüklemlere göre gruplara bölmek:**
+
+```java
+Map<Boolean, List<Product>> mapPartioned = productList.stream()
+  .collect(Collectors.partitioningBy(element -> element.getPrice() > 15));
+```
+
+**Ek dönüşüm gerçekleştirmek için toplayıcıyı itmek(push):**
+
+```java
+Set<Product> unmodifiableSet = productList.stream()
+  .collect(Collectors.collectingAndThen(Collectors.toSet(),
+  Collections::unmodifiableSet));
+```
+
+Bu özel durumda, toplayıcı bir streamin *Set*'e dönüştürdü ve ardından bunun içinden değiştirilemez *Set*'i yarattı.
+
+Herhangi bir nedenle özel bir toplayıcının oluşturulması gerekiyorsa, bunu yapmanın en kolay ve en az ayrıntılı yolu **Collector** ***of()*** yöntemini kullanmaktır .
+
+```java
+Collector<Product, ?, LinkedList<Product>> toLinkedList =
+  Collector.of(LinkedList::new, LinkedList::add, 
+    (first, second) -> { 
+       first.addAll(second); 
+       return first; 
+    });
+
+LinkedList<Product> linkedListOfPersons =
+  productList.stream().collect(toLinkedList);
+```
+
+Bu örnekte, **Collector**'ın bir örneği `LinkedList <Persone>{:html}` 'ye indirgenmiştir .
+
+## Paralel Streamler
+
+API, işlemleri paralel modda gerçekleştiren paralel streamler oluşturmamıza olanak tanır. Bir stream kaynağı bir Koleksiyon veya dizi olduğunda, buna **paralelStream()** yönteminin yardımıyla ulaşılabilir :
+
+```java
+Stream<Product> streamOfCollection = productList.parallelStream();
+boolean isParallel = streamOfCollection.isParallel();
+boolean bigPrice = streamOfCollection
+  .map(product -> product.getPrice() * 12)
+  .anyMatch(price -> price > 200);
+```
+
+Bir stream kaynağı Koleksiyon veya dizi dışında bir şeyse **parallel()** yöntemi kullanılmalıdır:
+
+```java
+IntStream intStreamParallel = IntStream.range(1, 150).parallel();
+boolean isParallel = intStreamParallel.isParallel();
+```
+
+Akışları paralel modda kullanırken işlemleri engellemekten kaçının. Görevlerin yürütülmesi için benzer süreye ihtiyaç duyulduğunda paralel modu kullanmak en iyisidir. Bir görev diğerinden çok daha uzun sürerse uygulamanın iş stream tamamı yavaşlayabilir.
+
+Paralel moddaki stream , **sequential()** yöntemi kullanılarak tekrar sıralı moda dönüştürülebilir :
+
+```java
+IntStream intStreamSequential = intStreamParallel.sequential();
+boolean isParallel = intStreamSequential.isParallel();
+```
+
+> Stream API, öğe dizisini işlemeye yönelik güçlü ancak anlaşılması kolay bir araç kümesidir. Doğru kullanıldığında, büyük miktarda standart kodu azaltmamıza, daha okunabilir programlar oluşturmamıza ve bir uygulamanın üretkenliğini artırmamıza olanak tanır.
