@@ -1,0 +1,147 @@
+---
+title: "Java Lambda Expressions"
+description: "Java Lambda İfadeleri"
+image: "../../public/blogs/java-search.png"
+publishedAt: "2023-11-28"
+updatedAt: "2023-11-28"
+author: "Sefa Demirtaş"
+isPublished: true
+tags:
+  - java
+  - lambda expressions
+---
+
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+
+# Java Lambda Expressions
+
+Lambda ifadeleri Java 8 le birlikte kullanılmaya başlandı.
+
+Lambda ifadesi, parametreleri alan ve bir değer döndüren kısa bir kod bloğudur. Lambda ifadeleri metodlara enzer ancak bir isme ihtiyaç duymazlar ve doğrudan bir metodun gövdesine uygulanabilirler.
+
+## Syntax
+ 
+ En basit lambda ifadesi tek bir parametre ve bir ifade içerir.
+
+ > `parametre -> expression{:html}`
+
+ Birden fazla parametre kullanmak için parantez içine alırız
+
+ > `(parametre1, parametre2) -> expression{:html}`
+
+ İfadeler sınırlıdır. Hemen bir değer döndürmeleri gerekir değişkenler, atamalar veya ifadeler içermezler `if{:html}` ve/veya `for{:html}`.
+ Daha karmaşık işlemler yapabilmek için küme parantezleri içeren bir kod bloğu kullanabilirler. Lambda ifadesinin bir değer döndürmesi gerekiyorsa kod bloğunda bir `return{:html}` ifadesi bulunmalıdır.
+
+ > `(parameter1, parameter2) -> { CodeBlog }{:html}`
+
+ ## Lambda İfadelerini Kullanma
+
+- Listedeki her öğeyi yazdırmak için `ArrayList{:html}` yönteminde bir lambda ifadesi kullanılır: `forEach(){:html}`
+  
+ ```java title="Main.java" caption="Java Metod"
+ import java.util.ArrayList;
+
+public class Main {
+  public static void main(String[] args) {
+    ArrayList<Integer> numbers = new ArrayList<Integer>();
+    numbers.add(5);
+    numbers.add(9);
+    numbers.add(8);
+    numbers.add(1);
+    numbers.forEach( (n) -> { System.out.println(n); } );
+  }
+}
+ ```
+**Çıktı**
+
+```java title="console" caption="Console Çıktısı"
+5
+9
+8
+1
+```
+
+- Değişkenin türü yalnızca bir yönteme sahip bir arayüz ise, Lambda ifadeleri değişkenlerde saklanabilir. Lambda ifadesi, bu yöntemle aynı sayıda parametreye ve aynı dönüş türüne sahip olmalıdır. `Consumer{:html}` Java, listeler tarafından kullanılan arayğxz gibi bu tür arayüzlerin çoğunu yerleşik olarak içerir.
+  - `Consumer{:html}` Bir lambda ifadesini bir değişkende saklamak için Java'nın arayüzünü kullanın :
+
+ ```java title="Main.java" caption="Java Metod"
+ import java.util.ArrayList;
+
+public class Main {
+  public static void main(String[] args) {
+    ArrayList<Integer> numbers = new ArrayList<Integer>();
+    numbers.add(5);
+    numbers.add(9);
+    numbers.add(8);
+    numbers.add(1);
+    numbers.forEach( (n) -> { System.out.println(n); } );
+  }
+}
+ ```
+**Çıktı**
+
+```java title="console" caption="Console Çıktısı"
+5
+9
+8
+1
+```
+
+- Bir yöntemde lambda ifadesi kullanmak için yöntemin türü olarak tek yöntemli arayüze sahip bir parametreye sahip olması gerekir. Arayüzün yöntemini çağırmak lambda ifadesini çalıştıracaktır:
+
+```java title="Main.java" caption="Java Metod"
+interface StringFunction {
+  String run(String str);
+}
+
+public class Main {
+  public static void main(String[] args) {
+    StringFunction exclaim = (s) -> s + "!";
+    StringFunction ask = (s) -> s + "?";
+    printFormatted("Focus", exclaim);
+    printFormatted("Spark", ask);
+  }
+  public static void printFormatted(String str, StringFunction format) {
+    String result = format.run(str);
+    System.out.println(result);
+  }
+}
+ ```
+
+ 
+```java title="console" caption="Console Çıktısı"
+Focus!
+Spark?
+```
+
+## SORULAR VE CEVAPLAR
+
+1. Lambda ne tür bir Java ifadesidir?
+   
+   > Java Lambda İfadeleri, girişi parametre olarak kabul eden ve sonuç değerini döndüren kısa kod bloğudur.
+
+2. Java'da lambda ifadelerini kullanmak gerekir mi?
+   > Evet, lambda ifadelerinin kullanılması diğer API'lerin kullanımını ve desteklenmesini kolaylaştırır.
+
+3. Java lambda'nın dezavantajları nelerdir?
+   > Java lambda işlevleri yalnızca işlevsel arayüzlerle kullanılabilir.
+
+4. Az önce gösterilen sözdizimi kurallarına göre aşağıdakilerden hangisi geçerli lambda ifadeleri DEĞİLDİR?
+    1. `() -> {}{:html}`
+    2. `() -> “focusspark”{:html}`
+    3. `() -> { return “focusspark”}{:html}`
+    4. `(Integer i) -> return “focusspark” + i;{:html}`
+    5. `(String s) -> {focusforfocus}{:html}`
+   
+   > **4.** ve **5.** geçersiz lambdalardır, geri kalanı geçerlidir. 
+
+    > *1.* Bu lambdanın hiçbir parametresi yoktur ve void değerini döndürür. Boş gövdeli bir yönteme benzer: `public void run() { }{:html}`.
+
+    > *2.* Bu lambdanın hiçbir parametresi yoktur ve ifade olarak bir String döndürür.
+
+    > *3.* Bu lambdanın hiçbir parametresi yoktur ve bir String döndürür (bir blok içinde açık bir return ifadesi kullanarak).
+
+    > *4.* return bir kontrol akışı ifadesidir. Bu lambdayı geçerli kılmak için küme parantezleri aşağıdaki gibi gereklidir: `(Integer i) -> { return “focusspark” + i; }{:html}`
+    
+    > *5.* "Focus for focus " bir ifade değil, bir ifadedir. Bu lambdayı geçerli kılmak için küme parantezlerini ve noktalı virgülü şu şekilde > kaldırabilirsiniz: (String s) -> “focus for focus”.. Veya isterseniz aşağıdaki gibi açık bir return ifadesi kullanabiliriz : 
+   `(String s) -> { return focus for focus”; }{:html}`.
