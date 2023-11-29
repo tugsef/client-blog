@@ -16,11 +16,14 @@ const SearchBar: React.FC<{ blogs: Blog[]; closeSearch: () => void }> = ({
   const handleSearch = async () => {
     await setIsOpen(true);
 
-    await blogs.map((blog) => {
-      if (blog.description.includes(query)) {
-        lists.push(blog);
-      }
-    });
+    let lists = blogs.filter((obje) =>
+      Object.values(obje).some(
+        (value) =>
+          typeof value === "string" &&
+          value.toLowerCase().includes(query.toLowerCase())
+      )
+    );
+
     await setResults(lists);
   };
 
@@ -32,7 +35,7 @@ const SearchBar: React.FC<{ blogs: Blog[]; closeSearch: () => void }> = ({
 
   return (
     <div>
-      {isOpen && 
+      {isOpen && (
         <div className="fixed top-0 left-0 z-[200] flex h-[100vh] w-[100vw] cursor-auto flex-col backdrop-blur-sm backdrop-filter box-border border-0 border-solid py-20 px-2 lg:p-20">
           <div
             className="top-0 left-0 absolute w-full h-full bg-transparent"
@@ -73,10 +76,9 @@ const SearchBar: React.FC<{ blogs: Blog[]; closeSearch: () => void }> = ({
                     onChange={handleChange}
                     id="default-search"
                     className="block w-full p-4 ps-10 text-sm dark:bg-slate-800 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:text-light "
-                    
                   />
                   <button
-                  onClick={closeSearch}
+                    onClick={closeSearch}
                     type="submit"
                     className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   >
@@ -116,7 +118,7 @@ const SearchBar: React.FC<{ blogs: Blog[]; closeSearch: () => void }> = ({
             </footer>
           </div>
         </div>
-      }
+      )}
     </div>
   );
 };
