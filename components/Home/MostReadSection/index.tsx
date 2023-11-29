@@ -18,7 +18,7 @@ export default function MostreadSection({ blogs }: { blogs: Blog[] }) {
   const displayedItems = blogs.slice(0, currentTotal);
   return (
     <article>
-      <div className="container mx-auto grid grid-cols-12  gap-y-8 lg:gap-8 sxl:gap-16 mt-8 px-5 md:px-1">
+      <div className="container mx-auto grid grid-cols-12  gap-y-4 lg:gap-4 sxl:gap-16 mt-8 px-5 md:px-1">
         <BlogLayoutLeft
           displayedItems={displayedItems}
           onNextClick={onNextClick}
