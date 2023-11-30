@@ -61,9 +61,9 @@ const CategoryPage = ({ params }: any) => {
       </div>
       <Categories categories={allCategories} currentSlug={params.slug} />
 
-      <div className="grid  grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 grid-rows-2 gap-8  mt-5 sm:mt-5 md:mt-12 sxl:mt-16 px-5 sm:px-10 md:px-12 sxl:px-16">
+      <div className="grid  grid-cols-1 sm:grid-cols-2   grid-rows-2 gap-4  mt-5 sm:mt-5 md:mt-12 sxl:mt-16 px-5 sm:px-10 md:px-12 sxl:px-16">
         {blogs.map((blog, index) => (
-          <article key={index} className="col-span-1  row-span-1 relative">
+          <article key={index} >
             <LeftListItem blog={blog} />
           </article>
         ))}
