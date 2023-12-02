@@ -5,7 +5,7 @@ import { FiTrendingUp } from "react-icons/fi";
 
 function BlogTopList({ blogs }: { blogs: Blog[] }) {
   return (
-    <div className="container px-6 lg-p-0 mt-5 lg:mx-auto">
+    <div className="container px-6 lg-p-0 mt-5 md:mx-auto">
       <div className="flex items-center gap-x-2 lg:gap-x-4 mb-3   lg:mb-4 lg:text-lg text-base font-bold">
       <FiTrendingUp className="h-6 w-6" />
         <span>

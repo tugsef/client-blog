@@ -12,7 +12,7 @@ const BlogDetails = ({ blog ,slugBlog}: { blog: Blog; slugBlog: string }) => {
       <time className="m-3">
         {format(parseISO(blog.publishedAt), "LLLL d, yyyy")}
       </time>
-      <ViewCounter slug={slugBlog} /> 
+       <ViewCounter slug={slugBlog} /> 
       <div className="m-3">{blog.readingTime.text}</div>
       <Link
         href={`/categories/${blog.tags?.[0].replace(" ", "-")}`}
