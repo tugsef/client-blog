@@ -1,0 +1,411 @@
+---
+title: "Temal Git Cheat Sheet komutlar"
+description: "Versiyon control sistemi nedir?"
+
+image: "../../public/blogs/git-basic-cheat-sheet.png"
+publishedAt: "2023-12-02"
+updatedAt: "2023-12-02"
+author: "Sefa Demirtaş"
+isPublished: true
+tags:
+  - git
+  - web development
+  - control versiyon
+  - cheat-sheet
+---
+
+
+Projeler gerçekleşirken proje üstünde çalışmalar yapar. Hatalar yaparız yada güncelleme gerektiren durumlarla karşılaşırız. Projemizin belli bir plan doğrultusunda ilerlemesini ister değişimlerin takibini amaçlarız. Bu  noktada **Kontrol Versiyon Sistemi** yani **git** devreye girer. Dosyamızı belirlediğimiz kurallar çerçevesinde aşama aşama kayıtlar oluşarak ilerler gelişen duruma göre de tekrardan yapılandırabiliriz. Bu yazımda işinize yarayabilecek belli başlı **git** komutlarını ele almaya çalıştım.
+## git init
+
+Yaptığımız değişiklikleri kayıt altında versiyon olarak tutmak istediğimizde kullanırız. Her komut kendine ait numaralandırılmış satır içerir.
+
+Adım adım ilerleyelim.
+
+1. Masaüstünde bir dosya oluşturuyorum. `my-project{:html}` **mkdir** kodu ile dosyayı oluşturduk. **cd my-project** kodu ile proje dizinini açtık.
+
+```log  title="~/Desktop" caption="terminal"
+ ❯ mkdir my-project
+ ❯ cd my-project
+```
+
+2. Artık **my-project** dosyasının içerisindeyiz git komutu çalıştırmayı deniyorum. `git status{:html}` kodunu 
+
+```terminal title="~/Desktop/my-project" caption="terminal"
+❯ git status
+❯ git status
+fatal: not a git repository (or any of the parent directories): .git
+```
+
+terminal hata fırlatacaktır çünkü git komutunu harekete geçirecek `.git{:html}` dosyası mevcut değil.
+
+3. git kullanılabilmesi için dosya dizininde **.git** dosyasını oluşturacak olan `git init{:html}` komutunu kullanıyorum ve **ls -al** kullanarak dosyanın oluştuğunu görebilirim. **.git** dosyası gizli olarak oluşur. **ls -la** komutu gizli olan dosyalarıda gösterir. Görüldüğü gibi dosyamız oluşmuş.
+
+```powershell title="~/Desktop/my-project" caption="terminal"
+❯ git init
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint: 
+hint: 	git config --global init.defaultBranch <name>
+hint: 
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint: 
+hint: 	git branch -m <name>
+
+❯ ls -al
+drwxr-xr-x  12 sefademirtas  staff  384 Dec  2 17:03 .git
+```
+## git status
+
+4. Şimdi **my-project** dosyası içerisinde **index.md** dosyası oluşturacağım ve `git status{:html}` komutunu kullanacağım. Bu komut bana takipte olduğum ve bu dosya içerisinde takip etmek istediğim bütün dosyaların durumunu gösterecektir. Şimdilik bizim eklemiş olduğumuz **index.md** dosyası var.
+
+```powershell title="~/Desktop/my-project master" caption="terminal"
+❯ git status
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	index.md
+
+nothing added to commit but untracked files present (use "git add" to track)
+```
+5. Dosya oluştu. **git status** komutu kullanılarak takip edilen dosya içerisindeki **index.md** dosyasının **Untracked** durumda olduğu görünüyor. Dosya eklenmiş ancak commitlenmeye hazır değil anlamına geliyor.
+
+## git add
+
+6. **git add** komutu dosyayı **Untracked** durumundan commit için hazır hale getirmiş oluyoruz. Tekrar **git status** komutunu kullanırsak görüyoruzki takip edilen dosyanın durumu değişmiş.
+
+```powershell title="~/Desktop/my-project master" caption="terminal"
+❯ git add index.md
+❯ git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+	new file:   index.md
+```
+
+
+## git commit
+
+7. Dosyamız artık commitlenmeye hazır. `git commit -m"Commit Messajı"{:html}` kullanarak daha sonrada bu commit mesajının bize hatırlatıcı olarak kalacağını hesap ederek bir açıklama ekliyoruz. Bir dosyanın değiştiğini ve o dosya içersinde değişik olmadığını ifade eden not görünür. İlk commitimiz oluşmuş oldu.
+
+```powershell title="~/Desktop/my-project master" caption="terminal"
+❯ git commit -m"Master 1 ~İlk commit"
+[master (root-commit) 821c729] Master 1 ~İlk commit
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 index.md
+```
+
+## git log
+
+8. Artık bir commitimiz var ve nasıl görüntüleyeceğiz. Tüm commitleri görüntülemek için **git log** komutunu kullanırız.
+
+Artık her commite özel numaralı bir commit oluştu commit id si bizim için önemli. Commite özel yapacağımız işlemler için kullanacağız. Yazarı, branch, zaman saat ve mesaj gibi özellikleri commite ait görmüş olduk. **log ekranınıdan** klavyeden **q** basarak çıkabilirsiniz.
+
+```powershell title="~/Desktop/my-project master" caption="terminal"
+❯ git log
+
+commit 821c729da6a0b9f2c2f04544580a10750c60f6c9 (HEAD -> master)
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 17:03:41 2023 +0300
+
+    Master 1 ~İlk commit
+(END)
+``` 
+
+9. Commit sayılarımı artırmak için 
+    - **header.md**
+    - **footer.md**
+    - **index.md** dosyasına **Hello World yazılarını ayrı ayrı ekleyip farklı 3 commit oluşturuyorum.
+
+```powershell title="~/Desktop/my-project master" caption="terminal"
+❯ touch header.md
+❯ git add header.md
+❯ git commit -m"Master 2 ~header.md oluşturuldu."
+[master 4548be2] Master 2 ~header.md oluşturuldu.
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 header.md
+
+❯ touch footer.md
+❯ git add footer.md
+❯ git commit -m"Master 3 ~footer.md oluşturuldu."
+[master be80a75] Master 3 ~footer.md oluşturuldu.
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 footer.md
+
+❯ echo "Hello World">index.md
+❯ cat index.md
+Hello World
+❯ git add index.md
+❯ git commit -m"Master ìndex.md Hello World eklandi"
+[master ff28cac] Master ìndex.md Hello World eklandi
+ 1 file changed, 1 insertion(+)
+
+
+ ❯ git log
+
+commit ff28cacd2b3475b7419ac22d5399c0759c6b471d (HEAD -> master)
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 18:07:22 2023 +0300
+
+    Master ìndex.md Hello World eklandi
+
+commit be80a7571cdfc9f85fd7d87388bd00a0790e4fe0
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 18:05:06 2023 +0300
+
+    Master 3 ~footer.md oluşturuldu.
+
+commit 4548be20291283b906e2ddc46f51808599d66fcc
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 18:03:38 2023 +0300
+
+    Master 2 ~header.md oluşturuldu.
+
+commit 821c729da6a0b9f2c2f04544580a10750c60f6c9
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 17:03:41 2023 +0300
+
+    Master 1 ~İlk commit
+(END)
+```
+
+## git --amend
+
+10. **git --amend** son commiti yaptınız fakat ondan sonrada dosyanızda değişiklik yaptınız farklı bir committe oluşturmanıza gerek yok **git --amend** kullanarak bir önceki commitin üstüne yazabilirsiniz.
+
+Loglarıma baktığımda son commitimde mesajımı istediğim gibi yazmamışım onu değiştirmek için **--amend** kullanabilirim. 
+
+```powershell title="~/Desktop/my-project master" caption="terminal"
+❯ git commit --amend -m "Master 4 ~index.md 'Hello World' eklendi"
+[master f3f0780] Master 4 ~index.md 'Hello World' eklendi
+ Date: Sat Dec 2 18:07:22 2023 +0300
+ 1 file changed, 1 insertion(+)
+
+❯ git log
+
+commit f3f0780e742331ef9e517f9869fde720544ea5b6 (HEAD -> master)
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 18:07:22 2023 +0300
+
+    Master 4 ~index.md 'Hello World' eklendi
+
+commit be80a7571cdfc9f85fd7d87388bd00a0790e4fe0
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 18:05:06 2023 +0300
+
+    Master 3 ~footer.md oluşturuldu.
+
+commit 4548be20291283b906e2ddc46f51808599d66fcc
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 18:03:38 2023 +0300
+
+    Master 2 ~header.md oluşturuldu.
+
+commit 821c729da6a0b9f2c2f04544580a10750c60f6c9
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 17:03:41 2023 +0300
+
+    Master 1 ~İlk commit
+```
+
+## git log -n
+
+11. Commitlerimin sadece belli sayıda görmek istiyorum o zaman **log -n 2** komutunu çalıştırır sanız size sadece son 2 commitinizi getirir.
+
+```powershell title="~/Desktop/my-project master" caption="terminal"
+❯ git log -n 2
+
+commit f3f0780e742331ef9e517f9869fde720544ea5b6 (HEAD -> master)
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 18:07:22 2023 +0300
+
+    Master 4 ~index.md 'Hello World' eklendi
+
+commit be80a7571cdfc9f85fd7d87388bd00a0790e4fe0
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 18:05:06 2023 +0300
+
+    Master 3 ~footer.md oluşturuldu.
+(END)
+```
+
+## git revert 
+
+12. **git revert headId** başlık id si verilen commiti siler ve sildikten sonrada commitin silindiğine dair commit oluşturur. 
+
+komutu çalıştırdığınızda bilgi ekranı çıkar `:wq{:html}` klavye tuşlarını kullanarak çıkarbilirsiniz.
+
+```powershell title="~/Desktop/my-project master" caption="terminal"
+❯ git revert be80a7571cdfc9f85fd7d87388bd00a0790e4fe0
+
+[master 0e146ba] Revert "Master 3 ~footer.md oluşturuldu."
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ delete mode 100644 footer.md
+
+❯ git log
+commit 0e146bae735dff9936f3ecf17f3e5d41a92e7275 (HEAD -> master)
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 18:46:53 2023 +0300
+
+    Revert "Master 3 ~footer.md oluşturuldu."
+    
+    This reverts commit be80a7571cdfc9f85fd7d87388bd00a0790e4fe0.
+
+commit f3f0780e742331ef9e517f9869fde720544ea5b6
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 18:07:22 2023 +0300
+
+    Master 4 ~index.md 'Hello World' eklendi
+
+commit be80a7571cdfc9f85fd7d87388bd00a0790e4fe0
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 18:05:06 2023 +0300
+
+    Master 3 ~footer.md oluşturuldu.
+
+commit 4548be20291283b906e2ddc46f51808599d66fcc
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 18:03:38 2023 +0300
+
+    Master 2 ~header.md oluşturuldu.
+
+commit 821c729da6a0b9f2c2f04544580a10750c60f6c9
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 17:03:41 2023 +0300
+
+    Master 1 ~İlk commit
+(END)
+```
+> **revert** kullanımında oluşturduğunuz değişiklikte silinir.
+
+13. Eğer son oluşan **revert** komutunuda **revert** ederseniz. Sildiğiniz komut tekrar oluşur
+
+```powershell title="~/Desktop/my-project master" caption="terminal"
+❯ git revert 0e146bae735dff9936f3ecf17f3e5d41a92e7275
+
+[master 3a3c5c6] Revert "Revert "Master 3 ~footer.md oluşturuldu.""
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 footer.md
+
+❯ git log
+commit 3a3c5c6a299461635f15d049573f76200b93c936 (HEAD -> master)
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 18:50:16 2023 +0300
+
+    Revert "Revert "Master 3 ~footer.md oluşturuldu.""
+    
+    This reverts commit 0e146bae735dff9936f3ecf17f3e5d41a92e7275.
+
+commit 0e146bae735dff9936f3ecf17f3e5d41a92e7275
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 18:46:53 2023 +0300
+
+    Revert "Master 3 ~footer.md oluşturuldu."
+    
+    This reverts commit be80a7571cdfc9f85fd7d87388bd00a0790e4fe0.
+
+commit f3f0780e742331ef9e517f9869fde720544ea5b6
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 18:07:22 2023 +0300
+
+    Master 4 ~index.md 'Hello World' eklendi
+
+commit be80a7571cdfc9f85fd7d87388bd00a0790e4fe0
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 18:05:06 2023 +0300
+
+    Master 3 ~footer.md oluşturuldu.
+
+commit 4548be20291283b906e2ddc46f51808599d66fcc
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 18:03:38 2023 +0300
+
+    Master 2 ~header.md oluşturuldu.
+
+commit 821c729da6a0b9f2c2f04544580a10750c60f6c9
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 17:03:41 2023 +0300
+
+    Master 1 ~İlk commit
+```
+
+## git reset --hard 
+
+14. **git reset headId** başlık id si verilen committen sonraki commitleri siler  ve bu commmiti **HEAD** kabul eder. **reset** komutunu **revert** komutu kullanırken bilgi commitlerini silmek için kullanıyorum. Bölrlikle başladığım commitlere gelmiş oluyorum.
+
+```powershell title="~/Desktop/my-project master" caption="terminal"
+❯ git reset --hard f3f0780e742331ef9e517f9869fde720544ea5b6
+HEAD is now at f3f0780 Master 4 ~index.md 'Hello World' eklendi
+
+❯ git log
+commit f3f0780e742331ef9e517f9869fde720544ea5b6 (HEAD -> master)
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 18:07:22 2023 +0300
+
+    Master 4 ~index.md 'Hello World' eklendi
+
+commit be80a7571cdfc9f85fd7d87388bd00a0790e4fe0
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 18:05:06 2023 +0300
+
+    Master 3 ~footer.md oluşturuldu.
+
+commit 4548be20291283b906e2ddc46f51808599d66fcc
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 18:03:38 2023 +0300
+
+    Master 2 ~header.md oluşturuldu.
+
+commit 821c729da6a0b9f2c2f04544580a10750c60f6c9
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Sat Dec 2 17:03:41 2023 +0300
+
+    Master 1 ~İlk commit
+```
+
+## git diff
+
+15. Verilen iki commit **headId** sinin arasındaki yapılan değişiklikleri gösterir. Dosya ismi belirtirseniz. Belirtilen commitler arasındaki o dosya ile alakalı değişiklikleri gösterir. Biz **index.md** dosyası ve tümüne bakacağız.
+
+```powershell title="~/Desktop/my-project master" caption="terminal"
+❯ git diff 821c729da6a0b9f2c2f04544580a10750c60f6c9..f3f0780e742331ef9e517f9869fde720544ea5b6 index.md
+
+diff --git a/index.md b/index.md
+index e69de29..557db03 100644
+--- a/index.md
++++ b/index.md
+@@ -0,0 +1 @@
++Hello World
+
+
+❯ git diff 821c729da6a0b9f2c2f04544580a10750c60f6c9..f3f0780e742331ef9e517f9869fde720544ea5b6
+
+diff --git a/footer.md b/footer.md
+new file mode 100644
+index 0000000..e69de29
+diff --git a/header.md b/header.md
+new file mode 100644
+index 0000000..e69de29
+diff --git a/index.md b/index.md
+index e69de29..557db03 100644
+--- a/index.md
++++ b/index.md
+@@ -0,0 +1 @@
++Hello World
+```
+
+
+
+
+
+
+
+
