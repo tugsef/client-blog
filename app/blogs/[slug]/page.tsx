@@ -144,7 +144,7 @@ export default function BlogPage({ params }: { params: { slug: string } }) {
         <div className="grid grid-cols-12  gap-y-8 lg:gap-8 sxl:gap-16 mt-8 px-5 md:container md:mx-auto md:px-0">
           <RenderMdx blog={blog} />
 
-          <div className="col-span-12  lg:col-span-3 ">
+          <div className="col-span-12  lg:col-span-3">
             <div className="w-full text-center mb-3 md:mb-10 order-1 md:order-none">
               <span className="block text-lg font-extrabold  p-0  mb-3 lg:mb-0 lg:p-6">
                 # Related categories
