@@ -11,16 +11,16 @@ tags:
   - stream
 ---
 
+
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 
-#  Java Stream Api
-## Genel Bakış
+# Genel Bakış
 Bu yazımda Java stream apinin oluşturulmasından paralel yürütme aşamasına kadar pratik kullanımlarını inceleyeceğim
 
 
 Konuyu daha iyi anlamak için okuyucuların Java 8 *(lambda expressions, Optional, method references)* ve Stream API hakkında temel bilgiye sahip olmaları gerekir.
 
-### Stream Oluşturma
+## Stream Oluşturma
 
 Farklı kaynakların örneğinin oluşturulmanın bir çok yolu vardır. Örnek oluşturulduktan sonra `kaynağını değiştirmez.{:html}` dolayısıyla tekbir kaynaktan birden çok örneğin oluşturulmasına olanak tanır.
 
@@ -40,7 +40,7 @@ public Stream<String> streamOf(List<String> list) {
     return list == null || list.isEmpty() ? Stream.empty() : list.stream();
 }
 ```
-### Collection ile Stream
+## Collection ile Stream
 
 Herhangi bir koleksiyon *türünden(Collection, List, Set)* stream oluşturabiliriz.
 
@@ -49,7 +49,7 @@ Collection<String> collection = Arrays.asList("a", "b", "c");
 Stream<String> streamOfCollection = collection.stream();
 ```
 
-### Array ile Strream
+## Array ile Strream
  Bir array aynı zamanda bir stream in kaynağıda olabilir.
 
  ```java
@@ -63,7 +63,7 @@ Stream<String> streamOfArrayFull = Arrays.stream(arr);
 Stream<String> streamOfArrayPart = Arrays.stream(arr, 1, 3);
  ```
 
- ### Stream.builder()
+ ## Stream.builder()
 
  **builder kullanıldığında, istenilen tür ifadenin sağ kısmında ek olarak belirtilmelidir**, aksi takdirde **build()** yöntemi `Stream<Object>{:html}` örneğini oluşturacaktır.
  
@@ -72,7 +72,7 @@ Stream<String> streamOfArrayPart = Arrays.stream(arr, 1, 3);
  Stream.<String>builder().add("a").add("b").add("c").build();
 ```
 
-### Stream.generate()
+## Stream.generate()
 
 **created()** yöntemi, öğe üretimi için bir `Supplier<T>{:html}`'yi kabul eder. Ortaya çıkan stream sonsuz olduğundan geliştiricinin istenen boyutu belirtmesi gerekir, aksi takdirde **created()** yöntemi bellek sınırına ulaşana kadar çalışacaktır:
 ```java
@@ -82,7 +82,7 @@ Stream.generate(() -> "element").limit(10);
 Yukarıdaki kod, `"element"{:html}` değerine sahip on dizeden oluşan bir dizi oluşturur.
 
 
-### Stream.iterate()
+## Stream.iterate()
 
 **Sonsuz bir stream oluşturmanın başka bir yolu iterate()** yöntemini kullanmaktır :
 
@@ -91,7 +91,7 @@ Stream<Integer> streamIterated = Stream.iterate(20, n -> n + 2).limit(20);
 ```
 Ortaya çıkan stream ilk öğesi **iterate()** yönteminin ilk parametresidir. Sonraki her öğeyi oluştururken, belirtilen işlev önceki öğeye uygulanır. Yukarıdaki örnekte ikinci eleman 42 olacaktır.
 
-### Primitive Streamler
+## Primitive Streamler
 
 Java 8, üç temel türden stream oluşturma olanağı sunar: **int, long ve double**. `Stream<T>{:html}` genel bir arayüz olduğundan ve temel değerleri jeneriklerle birlikte bir tür parametresi olarak kullanmanın bir yolu olmadığından, üç yeni özel arayüz oluşturuldu: `IntStream{:html}`, `LongStream{:html}`, `DoubleStream{:html}`.
 
@@ -113,7 +113,7 @@ Random random = new Random();
 DoubleStream doubleStream = random.doubles(3);
 ```
 
-### String ile Stream
+## String ile Stream
 
 String sınıfının **chars()** yönteminin yardımıyla bir stream oluşturmak için  String'i kaynak olarak da kullanabiliriz . JDK'da **CharStream** için bir arayüz olmadığından , bunun yerine bir karakter streamleri temsil etmek için **IntStream**'i kullanırız.
 
@@ -126,7 +126,7 @@ Aşağıdaki örnek, belirtilen **RegEx'e** göre bir String'i alt dizelere böl
 Stream<String> streamOfString =
 Pattern.compile(", ").splitAsStream("a, b, c");
 ```
-### Dosya ile Stream 
+## Dosya ile Stream 
 
 Ayrıca, **Java NIO** sınıfı Dosyalar , **lines()** yöntemi aracılığıyla bir metin dosyasının `Stream<String>{:html}` dosyasını oluşturmamıza olanak tanır . Metnin her satırı stream bir öğesi haline gelir.
 
@@ -138,7 +138,7 @@ Stream<String> streamWithCharset =
 ```
 Karakter Kümesi, **lines ()** yönteminin bir argümanı olarak belirtilebilir .
 
-## Stream referans verme
+# Stream referans verme
 
 Yalnızca ara işlemler çağrıldığı sürece bir stream başlatabilir ve ona erişilebilir bir referansa sahip olabiliriz. Bir terminal işleminin yürütülmesi, stream i erişilemez hale getirir .
 
@@ -170,7 +170,7 @@ Optional<String> anyElement = elements.stream().findAny();
 Optional<String> firstElement = elements.stream().findFirst();
 ```
 
-## Stream Pipeline
+# Stream Pipeline
 
 Ara işlemler yeni bir değiştirilmiş stream döndürür. Örneğin, az sayıda öğe olmadan mevcut stream in yeni bir stream oluşturmak için skip() yöntemi kullanılmalıdır:
 
@@ -196,7 +196,7 @@ long size = list.stream().skip(1)
   .map(element -> element.substring(0, 3)).sorted().count();
 ```
 
-## Lazy Invocation(Temmel Çağrı)
+# Lazy Invocation(Temmel Çağrı)
 
 **Ara işlemler tembeldir.** **Bu , yalnızca terminal işleminin yürütülmesi için gerekli olması durumunda çağrılacakları** anlamına gelir .
 
@@ -238,7 +238,7 @@ Ortaya çıkan günlük , **filter()** yöntemini iki kez ve **map()** yöntemin
 
 **findFirst()** işlemi yalnızca bir öğeyle karşılanır. Bu özel örnekte, tembel çağrı, biri **filter()** ve diğeri de **map()** için olmak üzere iki yöntem çağrısından kaçınmamızı sağladı .
 
-## Order of Execution
+# Order of Execution
 
 Performans açısından bakıldığında **doğru sıra, stream hattındaki zincirleme operasyonların en önemli yönlerinden biridir:**
 
@@ -262,8 +262,8 @@ long size = list.stream().skip(2).map(element -> {
 
 Bu bizi şu kurala getiriyor: Akışın boyutunu küçülten ara işlemler, her bir öğeye uygulanan işlemlerden önce yerleştirilmelidir. Bu nedenle **skip()**, **filter()** ve **Different()** gibi yöntemleri stream hattımızın en üstünde tutmamız gerekiyor .
 
-## Stream Reduction
-### reduce() Metodu
+# Stream Reduction
+## reduce() Metodu
 
 Bu yöntemin, imzalarına ve döndürme türlerine göre farklılık gösteren üç çeşidi vardır. Aşağıdaki parametrelere sahip olabilirler:
 
@@ -308,7 +308,7 @@ int reducedParallel = Arrays.asList(1, 2, 3).parallelStream()
 
 Buradaki sonuç farklıdır (36) ve birleştirici iki kez çağrılmıştır. Burada indirgeme aşağıdaki algoritmaya göre çalışır: akümülatör, streamin her öğesini kimliğe ekleyerek üç kez çalıştı . Bu eylemler paralel olarak yapılıyor. Sonuç olarak (10 + 1 = 11; 10 + 2 = 12; 10 + 3 = 13;) var. Artık birleştirici bu üç sonucu birleştirebilir. Bunun için iki yinelemeye ihtiyaç vardır (12 + 13 = 25; 25 + 11 = 36).
 
-### collect() Metodu
+## collect() Metodu
 
 Bir streamin azaltılması, başka bir terminal işlemi olan **Collect()** yöntemiyle de gerçekleştirilebilir . İndirgeme mekanizmasını belirten *Collector* türünde bir argümanı kabul eder . En yaygın işlemler için zaten oluşturulmuş, önceden tanımlanmış toplayıcılar vardır. Bunlara Kollektörler tipinin yardımıyla erişilebilir .
 
@@ -393,7 +393,7 @@ LinkedList<Product> linkedListOfPersons =
 
 Bu örnekte, **Collector**'ın bir örneği `LinkedList <Persone>{:html}` 'ye indirgenmiştir .
 
-## Paralel Streamler
+# Paralel Streamler
 
 API, işlemleri paralel modda gerçekleştiren paralel streamler oluşturmamıza olanak tanır. Bir stream kaynağı bir Koleksiyon veya dizi olduğunda, buna **paralelStream()** yönteminin yardımıyla ulaşılabilir :
 
