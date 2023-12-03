@@ -25,6 +25,7 @@ Adım adım ilerleyelim.
 1. Masaüstünde bir dosya oluşturuyorum. `my-project{:html}` **mkdir** kodu ile dosyayı oluşturduk. **cd my-project** kodu ile proje dizinini açtık.
 
 ```log  title="~/Desktop" caption="terminal"
+
  ❯ mkdir my-project
  ❯ cd my-project
 ```
@@ -32,6 +33,7 @@ Adım adım ilerleyelim.
 2. Artık **my-project** dosyasının içerisindeyiz git komutu çalıştırmayı deniyorum. `git status{:html}` kodunu 
 
 ```terminal title="~/Desktop/my-project" caption="terminal"
+
 ❯ git status
 ❯ git status
 fatal: not a git repository (or any of the parent directories): .git
@@ -42,6 +44,7 @@ terminal hata fırlatacaktır çünkü git komutunu harekete geçirecek `.git{:h
 3. git kullanılabilmesi için dosya dizininde **.git** dosyasını oluşturacak olan `git init{:html}` komutunu kullanıyorum ve **ls -al** kullanarak dosyanın oluştuğunu görebilirim. **.git** dosyası gizli olarak oluşur. **ls -la** komutu gizli olan dosyalarıda gösterir. Görüldüğü gibi dosyamız oluşmuş.
 
 ```powershell title="~/Desktop/my-project" caption="terminal"
+
 ❯ git init
 hint: Using 'master' as the name for the initial branch. This default branch name
 hint: is subject to change. To configure the initial branch name to use in all
@@ -62,6 +65,7 @@ drwxr-xr-x  12 sefademirtas  staff  384 Dec  2 17:03 .git
 4. Şimdi **my-project** dosyası içerisinde **index.md** dosyası oluşturacağım ve `git status{:html}` komutunu kullanacağım. Bu komut bana takipte olduğum ve bu dosya içerisinde takip etmek istediğim bütün dosyaların durumunu gösterecektir. Şimdilik bizim eklemiş olduğumuz **index.md** dosyası var.
 
 ```powershell title="~/Desktop/my-project master" caption="terminal"
+
 ❯ git status
 On branch master
 
@@ -80,6 +84,7 @@ nothing added to commit but untracked files present (use "git add" to track)
 6. **git add** komutu dosyayı **Untracked** durumundan commit için hazır hale getirmiş oluyoruz. Tekrar **git status** komutunu kullanırsak görüyoruzki takip edilen dosyanın durumu değişmiş.
 
 ```powershell title="~/Desktop/my-project master" caption="terminal"
+
 ❯ git add index.md
 ❯ git status
 On branch master
@@ -97,6 +102,7 @@ Changes to be committed:
 7. Dosyamız artık commitlenmeye hazır. `git commit -m"Commit Messajı"{:html}` kullanarak daha sonrada bu commit mesajının bize hatırlatıcı olarak kalacağını hesap ederek bir açıklama ekliyoruz. Bir dosyanın değiştiğini ve o dosya içersinde değişik olmadığını ifade eden not görünür. İlk commitimiz oluşmuş oldu.
 
 ```powershell title="~/Desktop/my-project master" caption="terminal"
+
 ❯ git commit -m"Master 1 ~İlk commit"
 [master (root-commit) 821c729] Master 1 ~İlk commit
  1 file changed, 0 insertions(+), 0 deletions(-)
@@ -110,6 +116,7 @@ Changes to be committed:
 Artık her commite özel numaralı bir commit oluştu commit id si bizim için önemli. Commite özel yapacağımız işlemler için kullanacağız. Yazarı, branch, zaman saat ve mesaj gibi özellikleri commite ait görmüş olduk. **log ekranınıdan** klavyeden **q** basarak çıkabilirsiniz.
 
 ```powershell title="~/Desktop/my-project master" caption="terminal"
+
 ❯ git log
 
 commit 821c729da6a0b9f2c2f04544580a10750c60f6c9 (HEAD -> master)
@@ -123,9 +130,10 @@ Date:   Sat Dec 2 17:03:41 2023 +0300
 9. Commit sayılarımı artırmak için 
     - **header.md**
     - **footer.md**
-    - **index.md** dosyasına **Hello World yazılarını ayrı ayrı ekleyip farklı 3 commit oluşturuyorum.
+    - **index.md** dosyasına **Hello World** yazılarını ayrı ayrı ekleyip farklı 3 commit oluşturuyorum.
 
 ```powershell title="~/Desktop/my-project master" caption="terminal"
+
 ❯ touch header.md
 ❯ git add header.md
 ❯ git commit -m"Master 2 ~header.md oluşturuldu."
@@ -184,6 +192,7 @@ Date:   Sat Dec 2 17:03:41 2023 +0300
 Loglarıma baktığımda son commitimde mesajımı istediğim gibi yazmamışım onu değiştirmek için **--amend** kullanabilirim. 
 
 ```powershell title="~/Desktop/my-project master" caption="terminal"
+
 ❯ git commit --amend -m "Master 4 ~index.md 'Hello World' eklendi"
 [master f3f0780] Master 4 ~index.md 'Hello World' eklendi
  Date: Sat Dec 2 18:07:22 2023 +0300
@@ -221,6 +230,7 @@ Date:   Sat Dec 2 17:03:41 2023 +0300
 11. Commitlerimin sadece belli sayıda görmek istiyorum o zaman **log -n 2** komutunu çalıştırır sanız size sadece son 2 commitinizi getirir.
 
 ```powershell title="~/Desktop/my-project master" caption="terminal"
+
 ❯ git log -n 2
 
 commit f3f0780e742331ef9e517f9869fde720544ea5b6 (HEAD -> master)
@@ -244,6 +254,7 @@ Date:   Sat Dec 2 18:05:06 2023 +0300
 komutu çalıştırdığınızda bilgi ekranı çıkar `:wq{:html}` klavye tuşlarını kullanarak çıkarbilirsiniz.
 
 ```powershell title="~/Desktop/my-project master" caption="terminal"
+
 ❯ git revert be80a7571cdfc9f85fd7d87388bd00a0790e4fe0
 
 [master 0e146ba] Revert "Master 3 ~footer.md oluşturuldu."
@@ -289,6 +300,7 @@ Date:   Sat Dec 2 17:03:41 2023 +0300
 13. Eğer son oluşan **revert** komutunuda **revert** ederseniz. Sildiğiniz komut tekrar oluşur
 
 ```powershell title="~/Desktop/my-project master" caption="terminal"
+
 ❯ git revert 0e146bae735dff9936f3ecf17f3e5d41a92e7275
 
 [master 3a3c5c6] Revert "Revert "Master 3 ~footer.md oluşturuldu.""
@@ -342,6 +354,7 @@ Date:   Sat Dec 2 17:03:41 2023 +0300
 14. **git reset headId** başlık id si verilen committen sonraki commitleri siler  ve bu commmiti **HEAD** kabul eder. **reset** komutunu **revert** komutu kullanırken bilgi commitlerini silmek için kullanıyorum. Bölrlikle başladığım commitlere gelmiş oluyorum.
 
 ```powershell title="~/Desktop/my-project master" caption="terminal"
+
 ❯ git reset --hard f3f0780e742331ef9e517f9869fde720544ea5b6
 HEAD is now at f3f0780 Master 4 ~index.md 'Hello World' eklendi
 
@@ -376,6 +389,7 @@ Date:   Sat Dec 2 17:03:41 2023 +0300
 15. Verilen iki commit **headId** sinin arasındaki yapılan değişiklikleri gösterir. Dosya ismi belirtirseniz. Belirtilen commitler arasındaki o dosya ile alakalı değişiklikleri gösterir. Biz **index.md** dosyası ve tümüne bakacağız.
 
 ```powershell title="~/Desktop/my-project master" caption="terminal"
+
 ❯ git diff 821c729da6a0b9f2c2f04544580a10750c60f6c9..f3f0780e742331ef9e517f9869fde720544ea5b6 index.md
 
 diff --git a/index.md b/index.md
