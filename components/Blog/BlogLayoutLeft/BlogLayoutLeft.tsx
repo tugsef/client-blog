@@ -15,7 +15,7 @@ export default function BlogLayoutLeft({
 }): React.JSX.Element {
   return (
     <section className="col-span-12  lg:col-span-8  max-w-max ">
-      <span className="flex items-center gap-3 font-bold text-lg pl-4 pb-2">
+      <span className="flex items-center gap-3 font-bold text-lg pb-6 ">
         {" "}
         <FaBookReader className="animate-rotate-y animate-infinite" /> Our picks
         for you
@@ -29,7 +29,7 @@ export default function BlogLayoutLeft({
           <button
             onClick={onNextClick}
             className={cx(
-              "text-lg   opacity-60 border-y-stone-700 hover:text-[#FF9119] mt-2 lg:mt-4"
+              "text-lg   opacity-60 border-y-stone-700 hover:text-[#FF9119] py-4  ms:py-6 lg:py-8 "
             )}
           >
             Load more...

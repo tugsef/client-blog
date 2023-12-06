@@ -7,7 +7,7 @@ function FeaturedPosts({ blogs }: { blogs: Blog[] }) {
   const sortedBlogs = sortBlogs(blogs);
 
   return (
-    <section>
+    <section className="py-4  ms:py-6 lg:py-8">
       <BlogTopList blogs={sortedBlogs} />
     </section>
   );

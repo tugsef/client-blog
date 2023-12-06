@@ -21,7 +21,7 @@ const Footer = () => {
   }
 
   return (
-    <footer className="bg-blue-300 dark:bg-dark   flex flex-col items-center text-light">
+    <footer className="mt-16 rounded-2xl bg-accent  dark:bg-accentDark/90 m-2 sm:m-10 flex flex-col items-center text-light dark:text-dark">
       <h3 className="mt-16 font-medium dark:font-bold text-center capitalize text-2xl sm:text-3xl lg:text-4xl px-4">
         We are renewed every day | Updates
       </h3>
@@ -117,7 +117,7 @@ const Footer = () => {
           aria-label="Check my profile on Github"
           target="_blank"
         >
-          <FaGithubSquare className="fill-light hover:scale-125 transition-all ease duration-200 h-8 w-8" />
+          <FaGithubSquare className="fill-light hover:scale-125 transition-all ease duration-200 h-8 w-8 dark:fill-dark" />
         </a>
         <a
           href={siteMetadata.dribbble}

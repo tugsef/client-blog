@@ -17,7 +17,7 @@ export default function MostreadSection({ blogs }: { blogs: Blog[] }) {
   };
   const displayedItems = blogs.slice(0, currentTotal);
   return (
-    <article>
+    <article className="py-4  ms:py-6 lg:py-8 ">
       <div className="container mx-auto grid grid-cols-12  gap-y-4 lg:gap-4 sxl:gap-16 mt-8 px-5 md:px-1">
         <BlogLayoutLeft
           displayedItems={displayedItems}

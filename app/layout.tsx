@@ -1,4 +1,4 @@
-import { Inter } from "next/font/google";
+import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import Header from "@/components/Header";
@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { Metadata } from "next";
 import siteMetadata from "@/components/utils/siteMetadata";
 import NextThemeProvider from "@/providers/theme-provider";
+import TanstackProvider from "@/providers/TanstackProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -14,6 +15,11 @@ const inter = Inter({
   variable: "--font-in",
 });
 
+const manrope = Manrope({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-mr",
+});
 export const metadata: Metadata = {
   title: {
     template: `%s | ${siteMetadata.title}`,
@@ -55,13 +61,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cx(inter.variable, "font-mono dark:bg-dark bg-light")}
-        suppressHydrationWarning={true}
+      className={cx(
+        inter.variable,
+        manrope.variable,
+        "font-mr bg-light dark:bg-dark"
+      )}        suppressHydrationWarning={true}
       >
         <NextThemeProvider>
           <Header />
-          {children}
-          <hr className="border-1   dark:bg-light border-gray  mt-12 " />
+          <TanstackProvider>{children}</TanstackProvider>
+
           <Footer />
           <Toaster position="bottom-center" reverseOrder={false} />
         </NextThemeProvider>
