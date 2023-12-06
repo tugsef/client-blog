@@ -1,0 +1,411 @@
+---
+title: "Git merge, rebase, squash commit, stash"
+description: "Git branch, checkout, stash, merge, rebase"
+image: "../../public/blogs/git-merge-stash.png"
+publishedAt: "2023-12-04"
+updatedAt: "2023-12-04"
+author: "Sefa Demirtaş"
+isPublished: true
+tags:
+  - git
+  - advanced
+---
+
+Bir önceki yazımda [git temel](https://focusspark.vercel.app/blogs/git-cheat-sheat-tr) komutlarını ele almıştım. Şirketler yazılım geliştirirken genel olarak takım halinde çalışırlar. Bu durum görevlerin dağılımını kolaylaştıracak ve birlikte çalışmayı daha uygun hale getirecek araçların gelişmesine neden olmuştur. Git dağılımı branch kullanarak kolaylaştırır. **Git** bireysel olarak ve takım halinde çalışmayı anlamlı hale getirmek için **branch** yapısını kullanır.
+
+## git branch
+
+Yazılımı parçalara ayırarak ilgili kişilerin, konuların veya sorumlulukların farklı **branch** lerde oluşturulup birleştirilmesini sağlar.
+
+Basit bir örnek üzerinden ilerleyeceğim. Bir web siteniz var. **Header** kısmını bir takım arkadaşınız **footer** kısmını ise diğer arkadaşınız kodlayacak. 
+
+Bir dosya oluşturacağım. Masaüstünde **my-project** ve içerisine **git init** komutu ile dosyamı kontrol etmeye başlayacağım.
+
+Dosya içerisine bir **index.txt** dosyası oluşturup. **git add index.txt** diyerek dosyayı versiyonlayacağım commitleyeceğim. İlk oluşan branch ana branch **master** veya **main** olarak adlandırılır.
+
+```shell title="~/Desktop" caption="terminal"
+
+❯ mkdir my-project
+❯ cd my-project
+```
+- **git init** komutu ile dosya takibe başlıyoruz
+```shell title="~/Desktop/my-project" caption="terminal"
+
+❯ git init
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+Initialized empty Git repository in /Users/sefademirtas/Desktop/my-project/.git/
+```
+## git checkout
+
+- **git branch header** komutu ile **header** adında branch oluşturuyoruz ve **git checkout header** komutu ile **header** branch ine geçiş yapıyoruz. 
+
+```shell title="~/Desktop/my-project master" caption="terminal"
+
+❯ touch index.txt
+❯ echo "Master değişiklik burda yapılacak">index.txt
+❯ cat index.txt
+Master değişiklik burda yapılacak
+❯ git add .
+❯ git commit -m"MASTER 1 | index.txt oluşturuldu"
+[master (root-commit) 8fa4f41] MASTER 1 | index.txt oluşturuldu
+ 1 file changed, 1 insertion(+)
+ create mode 100644 index.txt
+
+❯ git branch header
+❯ git checkout header
+Switched to branch 'header'
+```
+
+- **header** branch içerisinde **header.txt** dosyası oluşturuyoruz ve commitliyoruz. **ls** komutunu kullandığında **master branch** de bulunan **index.txt** görünür. fakat birleşme olmadan üst branch alt branch ı görmez.  
+ 
+## git checkout -b
+
+**git checkout -b footer** komutu ise **header branch** içerisinde yeni bir **footer branch** oluşturur ve **footer** branch e geçiş yapar.
+
+```shell title="~/Desktop/my-project header" caption="terminal"
+❯ touch header.txt
+❯ echo "Header  değişiklikleri burda yapılacak">header.txt
+❯ cat header.txt
+Header  değişiklikleri burda yapılacak
+❯ ls
+header.txt index.txt
+❯ git add .
+❯ git commit -m"HEADER 1 | header.txt oluşturuldu"
+[header cfe233b] HEADER 1 | header.txt oluşturuldu
+ 1 file changed, 1 insertion(+)
+ create mode 100644 header.txt
+
+❯ git checkout -b footer
+Switched to a new branch 'footer'
+```
+
+
+- **footer branch**  **header branch** alt branc olduğu için bütün dosyaları görebilir.
+- **footer branch** master altında oluşmuş olsaydı farklı bir branch olarak işlem görecekti.
+
+```shell title="~/Desktop/my-project footer" caption="terminal"
+
+❯ touch footer.txt
+❯ echo "Footer  değişiklikleri burda yapılacak">footer.txt
+❯ cat footer.txt
+Footer  değişiklikleri burda yapılacak
+❯ ls
+footer.txt header.txt index.txt
+❯ git add .
+❯ git commit -m"FOOTER 1 | footer.txt oluşturuldu"
+[footer 2df1af2] FOOTER 1 | footer.txt oluşturuldu
+ 1 file changed, 1 insertion(+)
+ create mode 100644 footer.txt
+```
+
+## git branch -D brachName
+ 
+ - **git branch -D footer** footer branch siler.
+
+```shell title="~/Desktop/my-project master" caption="terminal"
+
+❯ git branch -D footer
+Deleted branch footer (was 2df1af2).
+```
+
+
+
+## git merge
+
+**master branch** güncel kalmasını isteriz değişikliklerin ana branch yani **master**da toplanmasını isteriz. Branchleri birleştirme yöntemlerinden biri **merge** dir.
+
+**master branch** D-E commitlerini toplayacak ve F harfini bir düğüm noktası olarak düşünürsek A-B-C **footer** commitlerini birleştirecektir.
+
+
+
+<p align="center">
+  <Image
+    src="/blogs/git/git-merge.png"
+    width="718"
+    height="404"
+    alt="Image"
+    sizes="100vw"
+  />
+</p>
+
+```shell title="~/Desktop/my-project master" caption="terminal"
+
+> git log
+commit 8fa4f411095b2c398ddece0fda11305e8380716b (HEAD -> master)
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Mon Dec 4 20:11:11 2023 +0300
+
+    MASTER 1 | index.txt oluşturuldu
+(END)
+
+```
+
+```shell title="~/Desktop/my-project footer" caption="terminal"
+
+> git log
+commit 9232da6713621597500adaf02675f26e28b272f2 (HEAD -> footer)
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Mon Dec 4 21:14:06 2023 +0300
+
+    FOOTER 2 | update
+
+commit 8015ea47e0371a1019fc2fdd7f84c86d4bde8b0a
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Mon Dec 4 21:08:14 2023 +0300
+
+    FOOTER 1 | footer.txt oluşturuldu
+
+commit 8fa4f411095b2c398ddece0fda11305e8380716b (master)
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Mon Dec 4 20:11:11 2023 +0300
+
+    MASTER 1 | index.txt oluşturuldu
+
+```
+
+
+```shell title="~/Desktop/my-project master" caption="terminal"
+
+❯ git branch
+ footer
+  header
+* master
+
+❯ git merge footer
+Updating 8fa4f41..9232da6
+Fast-forward
+ footer.txt | 4 ++++
+ 1 file changed, 4 insertions(+)
+ create mode 100644 footer.txt
+
+❯ git log
+commit 9232da6713621597500adaf02675f26e28b272f2 (HEAD -> master, footer)
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Mon Dec 4 21:14:06 2023 +0300
+
+    FOOTER 2 | update
+
+commit 8015ea47e0371a1019fc2fdd7f84c86d4bde8b0a
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Mon Dec 4 21:08:14 2023 +0300
+
+    FOOTER 1 | footer.txt oluşturuldu
+
+commit 8fa4f411095b2c398ddece0fda11305e8380716b
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Mon Dec 4 20:11:11 2023 +0300
+
+    MASTER 1 | index.txt oluşturuldu
+(END)
+
+```
+
+## git merge --squash footer
+
+<p align="center">
+  <Image
+    src="/blogs/git/git-merge-squash.png"
+    width="718"
+    height="404"
+    alt="Image"
+    sizes="100vw"
+  />
+</p>
+
+
+Bracchleri bir arada tutmadan diğer bir yöntemi ise **squash** komutudur. **footer** branch commitlerini masterda bir değişim commiti oluşturacak şekide değişiklikleri **master** a yazar ve birleşim içib bir commit imkanı verir.
+
+
+```shell title="~/Desktop/my-project master" caption="terminal"
+
+❯ git merge --squash footer
+Updating 8fa4f41..9232da6
+Fast-forward
+Squash commit -- not updating HEAD
+ footer.txt | 4 ++++
+ 1 file changed, 4 insertions(+)
+ create mode 100644 footer.txt
+❯ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   footer.txt
+
+
+❯ git add .
+❯ git commit -m"Footer master da"
+ [master 4b04b19] Footer master da
+ 1 file changed, 4 insertions(+)
+ create mode 100644 footer.txt
+
+❯ git log
+commit 4b04b19d73087e8aff09973a4e7f90bd6177ed0a (HEAD -> master)
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Mon Dec 4 21:43:21 2023 +0300
+
+    Footer master da
+
+commit 8fa4f411095b2c398ddece0fda11305e8380716b
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Mon Dec 4 20:11:11 2023 +0300
+
+    MASTER 1 | index.txt oluşturuldu
+(END)
+
+```
+
+
+## git rebase
+
+
+<p align="center">
+  <Image
+    src="/blogs/git/git-rebase.png"
+    width="718"
+    height="404"
+    alt="Image"
+    sizes="100vw"
+  />
+</p>
+
+![]()
+
+**git rebase** ise **master** ve **footer** branchleri nabtıksal olarak kuyruk haline getriri ve **footer** master ile birleşir.
+
+```shell title="~/Desktop/my-project master" caption="terminal"
+
+❯ git rebase footer
+Successfully rebased and updated refs/heads/master.
+
+❯ git log
+commit 9232da6713621597500adaf02675f26e28b272f2 (HEAD -> master, footer)
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Mon Dec 4 21:14:06 2023 +0300
+
+    FOOTER 2 | update
+
+commit 8015ea47e0371a1019fc2fdd7f84c86d4bde8b0a
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Mon Dec 4 21:08:14 2023 +0300
+
+    FOOTER 1 | footer.txt oluşturuldu
+
+commit 8fa4f411095b2c398ddece0fda11305e8380716b
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Mon Dec 4 20:11:11 2023 +0300
+
+    MASTER 1 | index.txt oluşturuldu
+
+```
+
+
+
+
+
+
+## git stash
+
+Bazen commit  yapılmayacak fakat ihtiyaç durumuna göre karar vereceğiniz durumlar olabilir. Son commitlerinizden sonra yaptığınız değişiklikleri **git stash** komutunu kullanarak kayıt altına alabilirsiniz. **git stash list** stashleri görüntüler. 
+
+Sonrasında **git stash pop** komutunu kullanıranız commit yaptıktan sonra son **stash** kaydını uygular ve siler.
+
+Eğer **git stash apply** komutunu kullanırsanız kaydı uygular ama silmez.
+
+
+
+
+```shell title="~Desktop/my-project header"
+❯ echo "Başlık 3\\nBaşlık 4">>header.txt
+❯ cat header.txt
+Başlık 1
+Başlık 2
+Başlık 3
+Başlık 4
+❯ git stash
+Saved working directory and index state WIP on header: 569c182 Header 2 | Başlık 1  ve Başlık 2  oluşturuldu
+❯ git stash list
+  stash@{0}: WIP on header: 569c182 Header 2 | Başlık 1 ve Başlık 2 oluşturuldu
+❯ git stash pop
+On branch header
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   header.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Dropped refs/stash@{0} (7f8db378902d13bc0ea600197b1c693bcdab0b59)
+❯ git add .
+❯ git commit -m"Header 2 | stash  pop kullanıldı"
+On branch header
+nothing to commit, working tree clean
+❯ git stash list
+
+
+
+❯ echo "Başlık 5\\nBaşlık 6">>header.txt
+❯ cat header.txt
+Başlık 1
+Başlık 2
+Başlık 3
+Başlık 4
+Başlık 5
+Başlık 6
+❯ git stash
+Saved working directory and index state WIP on header: 1ac2fbd Header 3 | apply  pop kullanıldı
+❯ git stash list
+  stash@{0}: WIP on header: 1ac2fbd Header 3 | apply pop kullanıldı
+❯ git stash apply
+On branch header
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   header.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+❯ git add .
+❯ git commit -m"Header 3 | stash  apply kullanıldı"
+[header 52b45ad] Header 3 | stash  apply kullanıldı
+ 1 file changed, 2 insertions(+)
+❯ git stash list
+  stash@{0}: WIP on header: 1ac2fbd Header 3 | apply pop kullanıldı
+
+
+❯ git log
+
+  commit 52b45ad2532b0274de0696e1d95f5ccdfb793f06 (HEAD -> header)
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Mon Dec 4 11:31:14 2023 +0300
+
+    Header 3 | stash  apply kullanıldı
+
+commit 1ac2fbd45ba238bd9a2d624b81a37bbdf649b8d2
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Mon Dec 4 11:26:45 2023 +0300
+
+    Header 3 | apply  pop kullanıldı
+
+commit 569c1828ed4ea72de792a04ccead99e6c4f21ea6
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Mon Dec 4 10:54:40 2023 +0300
+
+    Header 2 | Başlık 1  ve Başlık 2  oluşturuldu
+
+commit 084921aa80737c75e8f5cc191665fe39755cd3a3 (master)
+Author: Sefa Demirtaş <39422788+tugsef@users.noreply.github.com>
+Date:   Mon Dec 4 10:53:36 2023 +0300
+
+    Master 1 | Oluşturuldu
+
+```
+
+
+ 
