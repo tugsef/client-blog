@@ -1,0 +1,454 @@
+---
+title: "Veri Yapıları ve Algoritmalar-2"
+description: "Arraylist. Linkedlist ve Karşılaştırma"
+image: "../../public/blogs/data-structures-and-algorithms/linkedlist-arraylist.png"
+publishedAt: "2024-01-02"
+updatedAt: "2024-01-02"
+author: "Sefa Demirtaş"
+isPublished: true
+tags:
+  - data structurecs
+  - algorithms
+  - veri yapıları
+  - arraylist
+  - linkedlist
+---
+
+
+## Linked Lists 🔗
+
+**"Linked List" (Bağlı Liste)**, bilgisayar bilimleri ve programlamada kullanılan bir veri yapısıdır. Linked List, elemanların bağlantılar (linkler) aracılığıyla birbirine bağlı olduğu bir veri yapısıdır. Bu veri yapısı, elemanların bellekte ardışık olarak yerleşmediği, ancak her elemanın bir önceki ve bir sonraki elemanı işaret ettiği bir yapıdır.
+
+Temel olarak, bir linked list elemanları ve bu elemanların birbirine bağlantılarından oluşur. **Bir linked list'in temel bileşenleri şunlardır:**
+
+- **Düğüm (Node):**
+
+Linked list'in temel birimi olan düğüm, veriyi ve bir sonraki düğümü işaret eden bir referansı içerir.
+
+- **Bağlantı (Link):**
+
+Düğümleri birbirine bağlayan referanslardır. Her düğüm, bir önceki ve bir sonraki düğümün referanslarını içerir.
+
+**Linked List'in çeşitli türleri vardır. İki temel tür şunlardır:**
+
+1. **Tek Yönlü Linked List (Singly Linked List):**
+
+Düğümler sadece bir sonraki düğümü işaret eder. Yani, elemanlar tek bir yönde hareket eder.
+
+<p align="center">
+  <Image
+    src="/blogs/data-structures-and-algorithms/linked-list-data-singly.png"
+   width="718"
+    height="404"
+    alt="Image"
+    sizes="100vw"
+  />
+</p>
+
+
+2. **Çift Yönlü Linked List (Doubly Linked List):**
+
+Düğümler hem bir önceki hem de bir sonraki düğümü işaret eder. Bu, ileri ve geri yönde hareket etmeyi sağlar, ancak daha fazla bellek kullanır.
+
+<p align="center">
+  <Image
+    src="/blogs/data-structures-and-algorithms/linked-data-doubly.png"
+    width="718"
+    height="404"
+    alt="Image"
+    sizes="100vw"
+  />
+</p>
+
+```java title="Main.java" caption="Linked Lists"
+
+package linkedlist;
+
+import java.util.LinkedList;
+
+public class Main {
+	public static void main(String[] args) {
+//		************************************************************************
+
+//		Linkedlist = Düğümleri 2 parça halinde saklar [veri + adres)
+//                   Düğümler ardışık olmayan bellektedir
+//					 Öğeler işaretçiler kullanılarak bağlanır
+
+//								Tek Bağlantılı Liste
+//						Node                 Node                 Node
+//		            [data | adress] - > [data | adress] - > [data | adress]
+
+//								Çift Bağlantılı Liste
+//						     Node                         Node
+//       		    [data | adress | data] < - > [data | adress | data]
+
+//					Avantajlar?
+//					1. Dinamik Veri Yapısı (çalışırken gerekli belleği ayırır)
+//					2. Insertion and Deletion of Nodes is easy. 0(1)
+//					3. Yok/Düşük bellek israfı
+
+//					Dezavantajlar?
+//                  1. Daha fazla bellek kullanımı (ek işaretçi)
+//					2. Öğelere rastgele erişim yok (indeks [i] yok)
+//          		3. Öğelere erişmek/aramak daha fazla zaman alır. 0(n)
+//					kullanır mı?
+//
+//                  Kullanımlar?
+//					1. Yığınları/Kuyrukları uygulayın
+//					2. GPS navigasyonu
+//					3. müzik çalma listesi
+
+//		************************************************************************
+
+		LinkedList<String> linkedlist = new LinkedList<String>();
+		linkedlist.push("A");
+		linkedlist.push("B");
+		linkedlist.push("C");
+		linkedlist.push("D");
+		linkedlist. push("F");
+		linkedlist.pop();
+
+		linkedlist.offer ("A");
+		linkedlist.offer("B");
+		linkedlist.offer("C");
+		linkedlist.offer("D");
+		linkedlist.offer("F");
+		linkedlist.pop();
+
+		System.out.println(linkedlist.indexOf("F'"));
+		linkedlist.add(4,"E");
+		linkedlist.remove("E");
+		System.out. println(linkedlist.peekFirst());
+				System.out.println(linkedlist.peekLast());
+				linkedlist.addFirst("0");
+				linkedlist.addLast("G");
+				String first = linkedlist.removeFirst();
+				String last = linkedlist.removeLast();
+				System.out. println(linkedlist);	}
+}
+```
+
+## Dynamic Arrays 🌱
+
+- Avantajları:
+
+  1. 0(1) öğelerine rastgele erişim
+  2. İyi referans konumu ve veri önbelleği kullanımı
+  3. Kolay ekleme/silme
+
+- Dezavantajları;
+  1. Daha fazla hafızayı boşa harcar
+  2. Elemanların kaydırılması zaman alıcıdır 0(n)
+  3. Diziyi genişletmek/daraltmak zaman alır 0(n)
+
+
+<details cursor> 
+<summary> <b>Dinamik Array Örnek</b></summary>
+
+```java title="DinamicArray.java" caption="Dinamik Array DinamicArray class"
+
+package dinamicArray;
+
+public class DinamicArray {
+
+	int size;
+	int capacity = 10;
+	Object[] array;
+
+	public DinamicArray() {
+		this.array = new Object[capacity];
+	}
+
+	public DinamicArray(int capacity) {
+		this.capacity = capacity;
+		this.array = new Object[capacity];
+	}
+
+	// Yeni nesne ekler
+	public void add(Object data) {
+
+		// dizinin size capacity den büyük veya küçük ise arrayin boyutunu artır.
+		if (size >= capacity) {
+			grow();
+		}
+
+		// array index = 0 dan başlar arrayin size elemanına eklenir yani son elemanı
+		// olarak eklenmiş olur
+		array[size] = data;
+
+		// Yeni size eklenen obje ile +1 artmış olur
+		size++;
+	}
+
+	// index si diziye nesne ekler
+	public void insert(int index, Object data) {
+
+		if (size >= capacity) {
+			grow();
+		}
+
+		for (int i = size; i > index; i--) {
+			array[i] = array[i - 1];
+		}
+
+		array[index] = data;
+		size++;
+	}
+
+	// Verilen objeyi silmek için
+	public void delete(Object data) {
+
+		for (int i = 0; i < size; i++) {
+			if (array[i] == data) {
+				for (int j = 0; j < size - i - 1; j++) {
+					array[i + j] = array[i + j + 1];
+				}
+				array[size - 1] = null;
+				size--;
+				if (size > (int) (capacity / 3)) {
+					shrink();
+				}
+				break;
+			}
+
+		}
+	}
+
+	// obje var ise objenin index sini yok isede -1 döndürür.
+	public int search(Object data) {
+		for (int i = 0; i < size - 1; i++) {
+			if (array[i] == data) {
+				return i;
+			}
+		}
+
+		return -1;
+	}
+
+	// Dizimizin boyutunu genişletecek
+	private void grow() {
+		int newCapacity = (int) (capacity * 2);
+		Object[] newArray = new Object[newCapacity];
+
+		for (int i = 0; i < size; i++) {
+			newArray[i] = array[i];
+		}
+
+		array = newArray;
+		capacity = newCapacity;
+	}
+
+	// capacity azaltma
+	public void shrink() {
+
+		int newCapacity = (int) (capacity / 2);
+		Object[] newArray = new Object[newCapacity];
+
+		for (int i = 0; i < size; i++) {
+			newArray[i] = array[i];
+		}
+
+		array = newArray;
+		capacity = newCapacity;
+	}
+
+	// Array in elemanı var mı yokmu
+	public boolean isEmpty() {
+		return size == 0;
+	}
+
+	public String toString() {
+		String string = "";
+		for (int i = 0; i < capacity; i++) {
+			string += array[i] + ", ";
+		}
+
+		if (string != "") {
+			string = "[" + string.substring(0, (string.length() - 2)) + "]";
+		} else {
+			string = "[]";
+		}
+
+		return string;
+	}
+}
+```
+
+```java title="Main.java" caption="Dinamik Array Main class"
+
+package dinamicArray;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		DinamicArray dinamikArray = new DinamicArray(5);
+
+		System.out.println("\narray");
+		System.out.println("capacity: " + dinamikArray.capacity);
+		System.out.println("size: " + dinamikArray.size);
+		System.out.println("array: " + dinamikArray.toString());
+		System.out.println("empty: " + dinamikArray.isEmpty());
+
+		dinamikArray.add("A");
+		dinamikArray.add("B");
+		dinamikArray.add("C");
+		dinamikArray.add("D");
+		dinamikArray.add("E");
+
+		System.out.println("\nadd metodu");
+		System.out.println("capacity: " + dinamikArray.capacity);
+		System.out.println("size: " + dinamikArray.size);
+		System.out.println("array: " + dinamikArray.toString());
+		System.out.println("empty: " + dinamikArray.isEmpty());
+
+		System.out.println("\ninsert metodu");
+		dinamikArray.insert(3,"X");
+		System.out.println("capacity: " + dinamikArray.capacity);
+		System.out.println("size: " + dinamikArray.size);
+		System.out.println("array: " + dinamikArray.toString());
+		System.out.println("empty: " + dinamikArray.isEmpty());
+
+		System.out.println("\ndelete metodu");
+		dinamikArray.delete("X");
+		System.out.println("capacity: " + dinamikArray.capacity);
+		System.out.println("size: " + dinamikArray.size);
+		System.out.println("array: " + dinamikArray.toString());
+		System.out.println("empty: " + dinamikArray.isEmpty());
+
+
+		System.out.println("\narama işlemi");
+		System.out.println("capacity: " + dinamikArray.capacity);
+		System.out.println("size: " + dinamikArray.size);
+		System.out.println("array: " + dinamikArray.toString());
+		System.out.println("empty: " + dinamikArray.isEmpty());
+		System.out.println("index: " + dinamikArray.search("B"));
+		System.out.println("index: " + dinamikArray.search("H"));
+
+		System.out.println("\ncapacity artırma metodu");
+		dinamikArray.add("A");
+		dinamikArray.add("B");
+		dinamikArray.add("C");
+		dinamikArray.add("D");
+		dinamikArray.add("E");
+		dinamikArray.add("F");
+		System.out.println("capacity: " + dinamikArray.capacity);
+		System.out.println("size: " + dinamikArray.size);
+		System.out.println("array: " + dinamikArray.toString());
+		System.out.println("empty: " + dinamikArray.isEmpty());
+
+
+	}
+
+}
+```
+
+```terminal title="Console" caption="Dinamik Array Console"
+
+array
+capacity: 5
+size: 0
+array: [null, null, null, null, null]
+empty: true
+
+add metodu
+capacity: 5
+size: 5
+array: [A, B, C, D, E]
+empty: false
+
+insert metodu
+capacity: 10
+size: 6
+array: [A, B, C, X, D, E, null, null, null, null]
+empty: false
+
+delete metodu
+capacity: 5
+size: 5
+array: [A, B, C, D, E]
+empty: false
+
+arama işlemi
+capacity: 5
+size: 5
+array: [A, B, C, D, E]
+empty: false
+index: 1
+index: -1
+
+capacity artırma metodu
+capacity: 20
+size: 11
+array: [A, B, C, D, E, A, B, C, D, E, F, null, null, null, null, null, null, null, null, null]
+empty: false
+```
+
+</details>
+
+## LinkedLists vs ArrayLists 🤼‍♂️
+
+Dinamik bir **array** oluşturduk. Kendi dinamik arraylerimizi oluşturabilirisniz. Java da ise **ArrayList** ve **LinkedList** kullanarak önceden kodlanmış dinamik arrayleri kullanabilirisiniz. Bu iki yöntem verileri saklama ve arama noktasında farklı özellikler sunar. Bu özellikleri inceleyelim ve hangisisnin daha iyi olduğunu bazı basit testlerle anlamaya çalışalım.
+
+> Java sanal makinesinin zamanını nanosaniye cinsinden elde edeceğiz. Bildiğimiz gibi kodları satır satır okur. Bizde **başlangıç(startTime)**, **bitiş(endTime)** ve **geçen zaman(elapsedTime)** kullanarak çalışma zamanını elde edeceğiz.
+
+```java title="Main.java" caption="LinkedLists vs ArrayLists"
+
+package arraylisiitvslinledlist;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+public class Main {
+	public static void main(String[] args) {
+		LinkedList<Integer> linkedList = new LinkedList<Integer>();
+		ArrayList<Integer> arrayList = new ArrayList<Integer>();
+
+		long startTime;
+		long endTime;
+		long elapsedTime;
+
+		for (int i = 0; i < 1000000; i++) {
+			arrayList.add(i);
+			linkedList.add(i);
+
+		}
+
+		startTime = System.nanoTime();
+
+		//linkedList.get(0);
+		//linkedList.get(500000);
+		//linkedList.get(999999);
+//		linkedList.remove(500000);
+		linkedList.remove(0);
+
+
+
+
+		endTime = System.nanoTime();
+		elapsedTime = endTime - startTime;
+
+		System.out.println("LinkedList:\t" + elapsedTime + "ns");
+
+		startTime = System.nanoTime();
+
+		//arrayList.get(0);
+		//arrayList.get(500000);
+		//arrayList.get(999999);
+//		arrayList.remove(500000);
+		arrayList.remove(0);
+
+
+		endTime = System.nanoTime();
+		elapsedTime = endTime - startTime;
+
+		System.out.println("ArrayList:\t" + elapsedTime + "ns");
+
+	}
+}
+
+```
+
+> **Sonuç**
+> Test sonuçlarımıza baktığımız zaman **Arraylist** kullanımın **linkedlist** kullanımından daha esnek olduğunu görebiliriz. **Arraylist** kullanırken aranan ve sileinen elemanın dizi içerisindeki yeri performansı etkileyecektir.
+> Sonuç olarak büyük veri setleri, ekleme ve sileme bağlantılı işlemlerin yoğun kullanılacağı sistemlerde **linkedlist** kullanımı daha iyi olacaktır.

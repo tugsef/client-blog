@@ -1,0 +1,246 @@
+---
+title: "Veri Yapıları ve Algoritmalar-1"
+description: "Veri yapıları ve Algoritma nedir? Stucks, Queue ve Priority Queues"
+image: "../../public/blogs/data-structures-and-algorithms/stacks-queue-priority.png"
+publishedAt: "2024-01-02"
+updatedAt: "2024-01-02"
+author: "Sefa Demirtaş"
+isPublished: true
+tags:
+  - data structurecs
+  - algorithms
+  - veri yapıları
+  - stack
+  - queue
+---
+
+## Veri Yapıları ve Algoritmaları nedir? 📈
+
+Kod yazıyoruz tamam ama arka plada neler oluyor. Bu veriler nasıl oluyorda depolanıyor neye göre nasıl sorularını kendimize sormuşuzdur. İşte bunun cevabını bende merak ettim ve size bir yazı serisi oluşturdum. Keyifli okumalar.
+
+**Veri Yapıları:** Veri yapıları, bilgisayar programlarında veri elemanlarını düzenlemek, depolamak ve yönetmek için kullanılan yapısal organizasyonlardır. Bu yapılar, verinin etkili bir şekilde işlenmesini sağlamak, hız ve bellek kullanımı gibi performans faktörlerini optimize etmek amacıyla tasarlanır. Veri yapıları, örneğin **diziler(Arraylist)**, **listeler(Linkedlist)**, **ağaçlar(Tree Data Structure)**, **grafikler**, **kuyruklar(Queues)** ve **yığınlar(stacks)** gibi çeşitli tiplerde olabilir.
+
+**Algoritmalar:** Algoritmalar, belirli bir problemi çözmek veya belirli bir görevi gerçekleştirmek için adım adım talimatlar içeren mantıksal bir sıradır. Algoritmalar, genellikle bir girişi alır, belirli bir işlemler dizisini uygular ve bir çıkış üretir. Algoritmalar, veri yapıları üzerinde işlem yaparak, bilgiyi düzenleme, sıralama, arama, ekleme veya silme gibi çeşitli görevleri gerçekleştirmek için kullanılır.
+
+Özetle, veri yapıları veriyi düzenlemek ve depolamak için kullanılırken, algoritmalar belirli bir görevi gerçekleştirmek için adım adım talimatlar içerir. İkisi de birlikte kullanılarak bilgisayar programlarının etkili bir şekilde tasarlanması ve uygulanması sağlanır.
+
+
+
+
+## Stacks 📚
+
+**Stack (yığın)**, bilgisayar bilimleri ve programlamada yaygın olarak kullanılan bir veri yapısıdır. Yığın, verilerin belirli bir sırayla depolandığı ve çıkartıldığı bir veri yapısıdır. Yığınlar genellikle **Last In, First Out (LIFO)** prensibiyle çalışırlar, yani en son eklenen eleman en önce çıkar.
+
+
+
+```java title="Main.java' caption='Stacks Veri Yapısı"
+
+package stacks;
+
+import java.util.Stack;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+//	   ************************************************************************
+
+// 	   Stack = LIFO ilk giren son çıkar
+//         	   bir tür dikey kule şeklinde sıralanır.
+
+//         	   push() listenin tonuna elemen ekler
+//        	   pop() dizinin son elemanını seçer ve diziden silinir.
+//         	   peek() dizinin son elemanını alır. Elemanı silmez
+//		   	   empty() dizi boi ise true, dolu ise false döner
+
+//	   ************************************************************************
+
+		Stack<String> stack = new Stack<String>();
+
+//		System.out.println(stack.empty());
+
+		stack.push( "Minecraft");
+		stack.push("Skyrim");
+		stack.push ("DOOM");
+		stack.push ("Borderlands");
+		stack.push ("'FFVII");
+//		System.out.println(stack.empty());
+
+		  stack.pop();
+
+
+	   String myFavGame = stack.peek();
+	   System.out.println(myFavGame);
+
+	   if(stack.empty()==true)
+		   System.out.println("List Boş");
+
+//	   ************************************************************************
+
+		// Nerelerde kullanılır.
+		// 1. Metin editörlerindeki geri/ileri(undo/redo) özellikleri
+		// 2. Tarayıcı geçmişinde ileri/geri(back/forward)
+		// 3. Geri izleme algoritmaları (maze, file directories)
+		// 4. Calling functions
+
+//	   ************************************************************************
+	}
+}
+```
+
+## Queues 🎟️
+
+
+**Kuyruk (Queue)**, bilgisayar bilimleri ve programlamada kullanılan bir veri yapısıdır. Kuyruk, verilerin belirli bir sırayla eklenip çıkartıldığı bir yapıdır ve genellikle First-In, First-Out (FIFO) prensibiyle çalışır. Yani, kuyruğa ilk eklenen eleman, kuyruktan ilk çıkartılan elemandır.
+
+**Kuyrukların temel iki işlemi vardır:**
+
+**Enqueue (Ekleme):**
+
+Yeni bir elemanı kuyruğa ekler. Bu işlem kuyruğun sonunda gerçekleşir.
+
+**Dequeue (Çıkartma):**
+
+Kuyruğun başındaki elemanı çıkartır. Bu işlem kuyruğun başında gerçekleşir.
+Bu iki temel işlem, kuyrukların verileri sıralı bir şekilde yönetmelerini sağlar. Kuyruklar genellikle işlemleri sırayla gerçekleştirmek ve talepleri belirli bir sırayla işlemek amacıyla kullanılır.
+
+<p align="center">
+  <Image
+    src="/blogs/data-structures-and-algorithms/collection-queue.png"
+    width="718"
+    height="404"
+    alt="Image"
+    sizes="100vw"
+  />
+</p>
+
+```java title="Main.java" caption="Queues Veri Yapısı"
+
+package queue;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+
+       // ****************************************************************************
+
+       // Queue = FIFO veri yapısıdır. First-In First-Out(İlk giren - ilk çıkar)
+       //         Doğrusal bir veri yapsıdır.
+       //
+       //         add() = enqueue, offer()
+       //         remove() = dequeue, poll()
+       //         size() = listenin eleman sayısını veririr
+       //         isEmpty() = Dizi boş mu dolumu? Boş isr true dolu ise false döne
+
+       // **********************************\*\*\*\***********************************
+
+    	Queue<String> queue = new LinkedList<String>();
+    	queue. offer ("Karen");
+    	queue.offer("Chad");
+    	queue. offer ("Steve");
+    	queue.offer("Harold");
+
+
+    	System.out.println(queue.contains(()));
+    	System.out.println(queue.poll());
+    	System.out.println(queue.poll());
+
+    	System.out.println(queue.size());
+
+        // **********************************\*\*\*\***********************************
+
+        // 1. Klavye Arabelleği (harfler basılma sırasına göre ekranda görünmelidir)
+        // 2. Yazıcı Sırası (Yazdırma işleri sırasıyla tamamlanmalıdır)
+        // 3. Bağlantılı Listelerde, Öncelik Sıralarında, Genişlik öncelikli aramada kullanılır
+
+        // **********************************\*\*\*\***********************************
+}
+}
+```
+
+## Priority Queues 🥇
+
+
+**Öncelikli Kuyruklar (Priority Queues)**, standart kuyruk yapılarından farklı olarak, her elemana bir öncelik değeri atanabilen ve öncelik değeri yüksek olan elemanların öncelik düzeyine göre işlemlerin gerçekleştiği veri yapılarıdır. Yani, öncelikli kuyruklar, elemanların sadece sırayla değil, aynı zamanda **önceliklerine göre** de sıralandığı bir yapıdır.
+
+**Öncelikli kuyrukların temel işlemleri şunlardır:**
+
+**Ekleme (Enqueue):**
+
+Yeni bir elemanı kuyruğa eklerken, bu elemana bir öncelik değeri de atanır.
+Çıkartma (Dequeue):
+
+Kuyruktan çıkartma işlemi sırasında, en yüksek önceliğe sahip eleman öncelikli olarak seçilir ve kuyruktan çıkartılır.
+Öncelikli kuyrukların kullanım alanları şunları içerebilir:
+
+```java title="Main.java" caption="Priority Veri Yapısı"
+
+package priorityQueue;
+
+import java.util.Collections;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
+public class Main {
+	public static void main(String[] args) {
+
+//	************************************************************************
+
+//	Priority Queue= FIFO veri yapısıdır. First-In First-Out(İlk giren - ilk çıkar).
+//					Öncelik sırasına göre sıralama
+//
+//	        Doğrusal bir veri yapsıdır.
+//
+//			add       = enqueue, offer()
+//			remove    = dequeue, poll()
+//	        size()    = listenin eleman sayısını veririr
+//			isEmpty() = Dizi boş mu dolumu? Boş isr true dolu ise false döner
+//			contains()= Objenin dizide olup olmadığını kontontrol eder var ise tru yok ise false döner
+
+//	************************************************************************
+
+		Queue<Double> queue = new PriorityQueue<>(Collections.reverseOrder());
+		Queue<String> queueStr = new PriorityQueue<>(Collections.reverseOrder());
+
+		queue.offer(3.0);
+		queue.offer(2.5);
+		queue.offer(4.0);
+		queue.offer(1.5);
+		queue.offer(2.0);
+
+		while (!queue.isEmpty()) {
+			System.out.println(queue.poll());
+
+		}
+		System.out.println("----------------------------------");
+		queueStr.offer("A");
+		queueStr.offer("D");
+		queueStr.offer("E");
+		queueStr.offer("C");
+		queueStr.offer("B");
+
+		while (!queueStr.isEmpty()) {
+			System.out.println(queueStr.poll());
+
+		}
+	}
+}
+```
+
+```terminal caption='Console'
+
+4.0
+3.0
+2.5
+2.0
+1.5
+E
+D
+C
+B
+A
+```

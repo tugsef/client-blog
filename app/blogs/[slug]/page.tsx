@@ -9,7 +9,6 @@ import { slug } from "github-slugger";
 import siteImg from "@/public/logo.png";
 import profileImg from "@/public/images/me.jpg";
 import Link from "next/link";
-
 export async function generateStaticParams() {
   return allBlogs.map((blog) => ({ slug: blog._raw.flattenedPath }));
 }
