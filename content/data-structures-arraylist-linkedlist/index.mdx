@@ -14,7 +14,6 @@ tags:
   - linkedlist
 ---
 
-
 ## Linked Lists 🔗
 
 **"Linked List" (Bağlı Liste)**, bilgisayar bilimleri ve programlamada kullanılan bir veri yapısıdır. Linked List, elemanların bağlantılar (linkler) aracılığıyla birbirine bağlı olduğu bir veri yapısıdır. Bu veri yapısı, elemanların bellekte ardışık olarak yerleşmediği, ancak her elemanın bir önceki ve bir sonraki elemanı işaret ettiği bir yapıdır.
@@ -38,13 +37,12 @@ Düğümler sadece bir sonraki düğümü işaret eder. Yani, elemanlar tek bir 
 <p align="center">
   <Image
     src="/blogs/data-structures-and-algorithms/linked-list-data-singly.png"
-   width="718"
+    width="718"
     height="404"
     alt="Image"
     sizes="100vw"
   />
 </p>
-
 
 2. **Çift Yönlü Linked List (Doubly Linked List):**
 
@@ -140,7 +138,6 @@ public class Main {
   1. Daha fazla hafızayı boşa harcar
   2. Elemanların kaydırılması zaman alıcıdır 0(n)
   3. Diziyi genişletmek/daraltmak zaman alır 0(n)
-
 
 <details cursor> 
 <summary> <b>Dinamik Array Örnek</b></summary>
@@ -419,11 +416,8 @@ public class Main {
 		//linkedList.get(0);
 		//linkedList.get(500000);
 		//linkedList.get(999999);
-//		linkedList.remove(500000);
+        //linkedList.remove(500000);
 		linkedList.remove(0);
-
-
-
 
 		endTime = System.nanoTime();
 		elapsedTime = endTime - startTime;
@@ -435,9 +429,8 @@ public class Main {
 		//arrayList.get(0);
 		//arrayList.get(500000);
 		//arrayList.get(999999);
-//		arrayList.remove(500000);
+        //arrayList.remove(500000);
 		arrayList.remove(0);
-
 
 		endTime = System.nanoTime();
 		elapsedTime = endTime - startTime;
@@ -446,7 +439,6 @@ public class Main {
 
 	}
 }
-
 ```
 
 > **Sonuç**
