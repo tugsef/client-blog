@@ -92,20 +92,21 @@ export default function BlogTop({
         <h2 className="font-semibold text-slate-900 truncate pr-20 opacity-60 dark:text-light">
           {blog.author}
         </h2>
+       
+
+        <dl className="mt-2 flex flex-wrap text-sm leading-6 font-medium relative">
         <MovingImg
           img={blog.image?.filePath.replace("../public", "") as string}
           title={blog.title}
           link={blog.url}
         />
-
-        <dl className="mt-2 flex flex-wrap text-sm leading-6 font-medium relative">
           <div className="absolute top-0 right-0 flex items-center space-x-1">
             <dt className="sr-only">Rating</dt>
             <dd className="px-1.5 ring-1 ring-slate-200 rounded">
               0{sequence}
             </dd>
           </div>
-
+        
           <div className="flex-none w-full mt-2 font-normal">
             <dt className="sr-only">RuneTime</dt>
             <dd className="text-slate-400  text-xs lg:text-base">
