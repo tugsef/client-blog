@@ -13,7 +13,7 @@ export async function generateStaticParams() {
   return allBlogs.map((blog) => ({ slug: blog._raw.flattenedPath }));
 }
 
-export async function generateMetadata({ params }: { params: Params }):any {
+export async function generateMetadata({ params }: { params: Params }){
   const blog = allBlogs.find((blog) => blog._raw.flattenedPath === params.slug);
   if (!blog) {
     return;
