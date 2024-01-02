@@ -41,9 +41,9 @@ function HomeCoverItem({ data }: { data?: News[] }) {
       onAutoplayTimeLeft={onAutoplayTimeLeft}
     >
       {data?.map((item) => (
-        <SwiperSlide>
+        <SwiperSlide key={item.title}>
           {" "}
-          <article className="flex flex-col items-start justify-end mx-5 sm:mx-10 relative h-[60vh] sm:h-[85vh]">
+          <article  className="flex flex-col items-start justify-end mx-5 sm:mx-10 relative h-[60vh] sm:h-[85vh]">
             <div className="absolute top-0 left-0 bottom-0 right-0 h-full bg-gradient-to-b from-transparent from-0% to-dark/90 rounded-3xl z-0" />
 
             <img
@@ -83,7 +83,7 @@ function HomeCoverItem({ data }: { data?: News[] }) {
         </SwiperSlide>
       ))}
 
-      <div className="absolute right-6  sm:right-14 bottom-4 w-6 h-6 z-10 sm:w-12 sm:h-12 flex items-center justify-center text-xs sm:font-bold text-white"slot="container-end">
+      <div className="absolute right-7  sm:right-14 bottom-6 sm:bottom-4 w-6 h-6 z-10 sm:w-12 sm:h-12 flex items-center justify-center text-xs sm:font-bold text-white"slot="container-end">
         <svg style={{
             position: "absolute",
             left: "0",
