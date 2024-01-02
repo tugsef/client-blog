@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { ITag, tagMapList } from "./service";
 
 let increment = 3;
-let starItem = 3;
+let starItem = 6;
 
 export default function BlogLayoutRight({ blogs }: { blogs: Blog[] }) {
   const tagList: ITag[] = tagMapList(blogs);
@@ -19,7 +19,10 @@ export default function BlogLayoutRight({ blogs }: { blogs: Blog[] }) {
   return (
     <div className="w-full text-center">
       <span className="block text-lg font-extrabold  p-0  mb-3 lg:mb-0 lg:p-6">
-        # Topics that might interest you
+        <span className="shadow-md rounded-lg p-2 m-2">#</span>{" "}
+        <h1 className="tracking-wide inline-block">
+          Topics that might interest you
+        </h1>
       </span>
       {displayedItems.map((tag, index) => (
         <Tag
