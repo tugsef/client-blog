@@ -85,7 +85,7 @@ export default function BlogTop({
     selectImg = siteImg;
   }
   return (
-    <article className="flex  items-start space-x-3 relative  shadow-xl p-5 rounded-xl">
+    <article className="flex  items-start space-x-3 relative  shadow-xl p-6 rounded-xl">
       <Image
         src={selectImg}
         alt=""

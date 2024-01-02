@@ -72,7 +72,7 @@ export default function LeftListItem({ blog }: { blog: Blog }) {
               alt={blog.title}
               width={blog.image?.width}
               height={blog.image?.height}
-              className="rounded-lg mx-3 animate-fade"
+              className="rounded-lg mx-3 animate-fade object-cover w-full h-full shadow-sm"
             />
           </Link>
         </div>
