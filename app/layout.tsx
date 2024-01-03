@@ -10,6 +10,7 @@ import NextThemeProvider from "@/providers/theme-provider";
 import TanstackProvider from "@/providers/TanstackProvider";
 import Link from "next/link";
 import { IoIosArrowDropupCircle } from "react-icons/io";
+import Up from "@/components/Up";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -78,8 +79,7 @@ export default function RootLayout({
 
         </NextThemeProvider>
         <Toaster position="bottom-center" reverseOrder={false} />
-        <Link href={"#header"} className="fixed bottom-8 z-50 right-8"><IoIosArrowDropupCircle className=" w-10 h-10 lg:w-20 lg:h-20 dark:text-accent text-accentDark rounded-full shadow-2xl shadow-accentDark dark:shadow-accent"/>
-</Link>
+   <Up/>
 
       </body>
     </html>
