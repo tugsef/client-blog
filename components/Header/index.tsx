@@ -18,7 +18,7 @@ export default function Header() {
     setClick(!click);
   };
   return (
-    <header className="w-full p-4  px-5 sm:px-10 flex items-center justify-between">
+    <header id="header" className="w-full p-4  px-5 sm:px-10 flex items-center justify-between">
       <div className="flex gap-2 lg:gap-10">
         <BlogLogo />
 
