@@ -2,18 +2,37 @@
 import BlogLogo from "@/components/Header/logo";
 import { cx } from "@/components/utils";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LoginAuth from "./loginAuth";
 import { useTheme } from "next-themes";
 import NavbarUp from "./navbar/index";
 import { WiDaySunny } from "react-icons/wi";
 import { GiNightSky } from "react-icons/gi";
 import OpenSearchModal from "../SearchBar/open-search-model";
+import { motion } from "framer-motion";
 
+
+interface SpringProps {
+  type: "spring";
+  stiffness: number;
+  damping: number;
+}
+
+const spring: SpringProps = {
+  type: "spring",
+  stiffness: 700,
+  damping: 30,
+};
 export default function Header() {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme,systemTheme } = useTheme();
+  const currentTheme = theme === 'system' ? systemTheme : theme;
+
   const [click, setClick] = useState(false);
 
+
+  const toggleSwitch = async()=>{
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  }
   const toggle = () => {
     setClick(!click);
   };
@@ -103,8 +122,11 @@ export default function Header() {
         <Link href="/about" className="mx-2">
           About
         </Link>
-
-        <button
+        <div className={cx("w-12 h-6 items-center   flex dark:bg-accent bg-accentDark  rounded-[50px] p-[10px] justify-start dark:justify-end cursor-pointer ")} onClick={toggleSwitch}>
+      <motion.div  layout transition={spring} className="w-4 h-4  rounded-[40px] bg-accent dark:bg-accentDark"/>
+    
+    </div>
+        {/* <button
           onClick={() => setTheme(theme === "light" ? "dark" : "light")}
           className={cx(
             "w-6 h-6 ease ml-2 flex items-center justify-center rounded-full p-1",
@@ -116,7 +138,7 @@ export default function Header() {
             theme === undefined ||
             (theme === null && <GiNightSky />)}
           {theme === "light" ? <GiNightSky /> : <WiDaySunny />}
-        </button>
+        </button> */}
       </nav>
       <div className=" hidden sm:flex items-center">
         <LoginAuth />

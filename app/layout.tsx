@@ -64,22 +64,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-      className={cx(
-        inter.variable,
-        manrope.variable,
-        "font-mr bg-light dark:bg-dark"
-      )}        suppressHydrationWarning={true}
+        className={cx(
+          inter.variable,
+          manrope.variable,
+          "font-mr bg-light dark:bg-dark"
+        )}
+        suppressHydrationWarning={true}
       >
-        <NextThemeProvider>
+        <NextThemeProvider >
           <Header />
           <TanstackProvider>{children}</TanstackProvider>
 
           <Footer />
           <Toaster position="bottom-center" reverseOrder={false} />
-
-        </NextThemeProvider>
         <Toaster position="bottom-center" reverseOrder={false} />
-   <Up/>
+        <Up />
+        </NextThemeProvider>
 
       </body>
     </html>
