@@ -11,7 +11,6 @@ import { GiNightSky } from "react-icons/gi";
 import OpenSearchModal from "../SearchBar/open-search-model";
 import { motion } from "framer-motion";
 
-
 interface SpringProps {
   type: "spring";
   stiffness: number;
@@ -23,21 +22,24 @@ const spring: SpringProps = {
   stiffness: 700,
   damping: 30,
 };
+
 export default function Header() {
-  const { theme, setTheme,systemTheme } = useTheme();
-  const currentTheme = theme === 'system' ? systemTheme : theme;
+  const { theme, setTheme } = useTheme();
 
   const [click, setClick] = useState(false);
 
-
-  const toggleSwitch = async()=>{
-    setTheme(theme === 'light' ? 'dark' : 'light');
-  }
+  const toggleSwitch = async () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
   const toggle = () => {
     setClick(!click);
   };
+
   return (
-    <header id="header" className="w-full p-4  px-5 sm:px-10 flex items-center justify-between">
+    <header
+      id="header"
+      className="w-full p-4  px-5 sm:px-10 flex items-center justify-between"
+    >
       <div className="flex gap-2 lg:gap-10">
         <BlogLogo />
 
@@ -122,10 +124,18 @@ export default function Header() {
         <Link href="/about" className="mx-2">
           About
         </Link>
-        <div className={cx("w-12 h-6 items-center   flex dark:bg-accent bg-accentDark  rounded-[50px] p-[10px] justify-start dark:justify-end cursor-pointer ")} onClick={toggleSwitch}>
-      <motion.div  layout transition={spring} className="w-4 h-4  rounded-[40px] bg-accent dark:bg-accentDark"/>
-    
-    </div>
+        <div
+          className={cx(
+            "w-14 h-7 items-center   flex dark:bg-accent bg-accentDark  rounded-[50px] p-2  justify-start dark:justify-end cursor-pointer "
+          )}
+          onClick={toggleSwitch}
+        >
+          <motion.div
+            layout
+            transition={spring}
+            className="w-5 h-5  rounded-[40px] bg-accent dark:bg-accentDark"
+          />
+        </div>
         {/* <button
           onClick={() => setTheme(theme === "light" ? "dark" : "light")}
           className={cx(

@@ -7,11 +7,14 @@ import Link from "next/link";
 import profilePic from "@/public/images/profile/developer-pic-1.png";
 import TransitionEffect from "@/components/About/TransitionEffect";
 
+
 export default function About() {
+
+
   return (
     <>
       <Head>
-        <title>Awesome Portfolio Built with Nextjs</title>
+        <title>Awesome Portfolio Built with Nextjs </title>
         <meta
           name="description"
           content="Explore FocusShark's Next.js developer portfolio and 
