@@ -63,32 +63,28 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-       <Suspense fallback={<Loading />}>
-      <body
-        className={cx(
-          inter.variable,
-          manrope.variable,
-          "font-mr bg-light dark:bg-dark"
-        )}
-        suppressHydrationWarning={true}
-      >
-       
-        <NextThemeProvider>
-          <TanstackProvider>
-            <Header />
-            
+      <Suspense fallback={<Loading />}>
+        <body
+          className={cx(
+            inter.variable,
+            manrope.variable,
+            "font-mr bg-light dark:bg-dark"
+          )}
+          suppressHydrationWarning={true}
+        >
+          <NextThemeProvider>
+            <TanstackProvider>
+              <Header />
 
-            {children}
-          
-            <Footer />
-            <Toaster position="bottom-center" reverseOrder={false} />
-            <Toaster position="bottom-center" reverseOrder={false} />
-            <Up />
-           
-          </TanstackProvider>
-        </NextThemeProvider>
-      
-      </body>
+              {children}
+
+              <Footer />
+              <Toaster position="bottom-center" reverseOrder={false} />
+              <Toaster position="bottom-center" reverseOrder={false} />
+              <Up />
+            </TanstackProvider>
+          </NextThemeProvider>
+        </body>
       </Suspense>
     </html>
   );
