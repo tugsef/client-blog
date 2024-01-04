@@ -2,7 +2,7 @@
 import BlogLogo from "@/components/Header/logo";
 import { cx } from "@/components/utils";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import LoginAuth from "./loginAuth";
 import { useTheme } from "next-themes";
 import NavbarUp from "./navbar/index";
@@ -34,6 +34,28 @@ export default function Header() {
   const toggle = () => {
     setClick(!click);
   };
+
+  const [local] = React.useState((): string => {
+    if (typeof window !== "undefined") {
+      const from_localStorage = window.localStorage.getItem(
+        "navbar_selected_item"
+      );
+      if (from_localStorage === null || from_localStorage === undefined) {
+        return "home";
+      }
+
+      return `${from_localStorage}` ? from_localStorage : "home";
+    }
+    return "";
+  });
+  const [selected, setSelected] = React.useState<string>(local);
+  const [selectedOption, setSelectedOption] = React.useState<string>();
+
+  React.useEffect(() => {
+    window.localStorage.setItem("navbar_selected_item", `${selected}`);
+
+    setSelectedOption(`${selected}`);
+  }, [local, selected]);
 
   return (
     <header
@@ -95,11 +117,32 @@ export default function Header() {
           top: click ? "1rem" : "-5rem",
         }}
       >
-        <Link href="/" className="mr-2">
+        <Link
+          onClick={() => setSelected("home")}
+          className={cx("mr-2", selectedOption === "home" && "text-amber-400")}
+          href="/"
+        >
           Home
         </Link>
-        <Link href="/about" className="mx-2">
+        <Link
+          onClick={() => setSelected("about")}
+          href="/about"
+          className={cx(
+            "mx-2 relative group",
+            selectedOption === "about" && "text-amber-400"
+          )}
+        >
           About
+          <span
+            className={cx(
+              "inline-block h-[1px] bg-light  absolute left-0 -bottom-0.5   ",
+              selectedOption?.toUpperCase() === "about"
+                ? "lg:bg-accent w-full"
+                : " group-hover:w-full  ease duration-300 w-0 lg:bg-accent"
+            )}
+          >
+            &nbsp;
+          </span>
         </Link>
         <NavbarUp />
         <button
@@ -115,14 +158,48 @@ export default function Header() {
       </nav>
 
       <nav
-        className=" w-max py-3 px-8 border border-solid border-dark rounded-full font-medium capitalize  items-center hidden sm:flex
+        className=" w-max py-3 px-8 border border-solid border-dark/50 dark:border-light/70 rounded-full font-medium capitalize  items-center hidden sm:flex
         fixed top-4 right-1/2 translate-x-1/2 bg-light/80 backdrop-blur-sm z-50 dark:bg-dark/80"
       >
-        <Link href="/" className="mr-2">
+        <Link
+          href="/"
+          onClick={() => setSelected("home")}
+          className={cx(
+            "mr-2 relative group hover:text-accent dark:hover:text-accentDark/70",
+            selectedOption === "home" && "text-accent dark:text-accentDark"
+          )}
+        >
           Home
+          <span
+            className={cx(
+              "inline-block h-[1px] bg-light  absolute left-0 -bottom-0.5   ",
+              selectedOption === "home"
+                ? "lg:bg-accent dark:lg:bg-accentDark w-full"
+                : " group-hover:w-full  ease duration-300 w-0 lg:bg-accent dark:lg:bg-accentDark/70"
+            )}
+          >
+            &nbsp;
+          </span>
         </Link>
-        <Link href="/about" className="mx-2">
+        <Link
+          href="/about"
+          onClick={() => setSelected("about")}
+          className={cx(
+            "mx-2 relative group hover:text-accent dark:hover:text-accentDark/70",
+            selectedOption === "about" && "text-accent dark:text-accentDark"
+          )}
+        >
           About
+          <span
+            className={cx(
+              "inline-block h-[1px] bg-light  absolute left-0 -bottom-0.5   ",
+              selectedOption === "about"
+                ? "lg:bg-accent dark:lg:bg-accentDark w-full"
+                : " group-hover:w-full  ease duration-300 w-0 lg:bg-accent dark:lg:bg-accentDark"
+            )}
+          >
+            &nbsp;
+          </span>
         </Link>
         <div
           className={cx(

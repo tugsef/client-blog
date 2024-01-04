@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import AnimatedText from "@/components/About/AnimatedText";
 import { LinkArrow } from "@/components/Icons";
 import Head from "next/head";
@@ -12,7 +12,7 @@ export default function About() {
 
 
   return (
-    <>
+    <div id="about">
       <Head>
         <title>Awesome Portfolio Built with Nextjs </title>
         <meta
@@ -67,6 +67,6 @@ export default function About() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

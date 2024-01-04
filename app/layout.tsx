@@ -1,16 +1,16 @@
 import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
-import Header from "@/components/Header";
 import { cx } from "@/components/utils";
 import Footer from "@/components/Footer";
 import { Metadata } from "next";
 import siteMetadata from "@/components/utils/siteMetadata";
 import NextThemeProvider from "@/providers/theme-provider";
 import TanstackProvider from "@/providers/TanstackProvider";
-import Link from "next/link";
-import { IoIosArrowDropupCircle } from "react-icons/io";
 import Up from "@/components/Up";
+import Header from "@/components/Header";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -63,6 +63,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+       <Suspense fallback={<Loading />}>
       <body
         className={cx(
           inter.variable,
@@ -71,17 +72,24 @@ export default function RootLayout({
         )}
         suppressHydrationWarning={true}
       >
-        <NextThemeProvider >
-          <Header />
-          <TanstackProvider>{children}</TanstackProvider>
+       
+        <NextThemeProvider>
+          <TanstackProvider>
+            <Header />
+            
 
-          <Footer />
-          <Toaster position="bottom-center" reverseOrder={false} />
-        <Toaster position="bottom-center" reverseOrder={false} />
-        <Up />
+            {children}
+          
+            <Footer />
+            <Toaster position="bottom-center" reverseOrder={false} />
+            <Toaster position="bottom-center" reverseOrder={false} />
+            <Up />
+           
+          </TanstackProvider>
         </NextThemeProvider>
-
+      
       </body>
+      </Suspense>
     </html>
   );
 }

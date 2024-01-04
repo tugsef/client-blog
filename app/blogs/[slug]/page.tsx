@@ -9,6 +9,8 @@ import { slug } from "github-slugger";
 import siteImg from "@/public/logo.png";
 import profileImg from "@/public/images/me.jpg";
 import Link from "next/link";
+import TransitionEffect from "@/components/About/TransitionEffect";
+
 export async function generateStaticParams() {
   return allBlogs.map((blog) => ({ slug: blog._raw.flattenedPath }));
 }
@@ -100,6 +102,8 @@ export default function BlogPage({ params }: { params: { slug: string } }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />{" "}
       <article>
+    <TransitionEffect/>
+    
         <div className="mb-8 text-center relative w-full h-[70vh] bg-dark ">
           <div className="w-full z-10 flex flex-col items-center justify-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             <div className="flex gap-2 p-10 items-center">
