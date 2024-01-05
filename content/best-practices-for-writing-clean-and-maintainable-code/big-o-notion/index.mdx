@@ -1,0 +1,75 @@
+---
+title: "Veri Yapıları ve Algoritmalar-3"
+description: "Veri yapıları ve Algoritma nedir? Stucks, Queue ve Priority Queues"
+image: "../../public/blogs/data-structures-and-algorithms/big-o-notion.png"
+publishedAt: "2024-01-02"
+updatedAt: "2024-01-02"
+author: "Sefa Demirtaş"
+isPublished: true
+tags:
+  - data structurecs
+  - algorithms
+  - veri yapilari
+  - big O notation
+---
+
+## Big O notation 📈
+
+> **"Veri büyüdükçe kod nasıl yavaşlar?"**
+
+Fonksiyonun yapacağı işi ne yapacağını belirleriz ancak 
+fonksiyon bu işlemleri gerçekleştirirken izleyeceği yolu çizmemiz gerekir işte algoritmada burda devreye girer.
+Evet bir fonksiyon işi görecek ama, işte ama dediğimiz noktada tekrar sayısı devreye girecektir. Bir fonksiyonun verileri
+işlerken izlediği bu yola yani tekrar sayısının gösterimini **Big o Nation** denir. Genel olarak veriler büyüdükçe
+fonksiyonların kullanabilirliği ve performansı önem kazanır.
+
+- Veri miktarı arttıkça bir algoritmanın performansını açıklar. 
+- Makineden bağımsız (tamamlanmaya kalan adım sayısı)
+- Daha küçük işlemleri yoksay *0(n;+ 1) -> 0(n)*
+
+<p align="center">
+    <Image src="/blogs/data-structures-and-algorithms/big-o-notion.svg" width="718" height="404" alt="Image" sizes="100vw"
+    />
+  </p>
+  <p align="center">
+   <Image src="/blogs/data-structures-and-algorithms/big-o-notion-to-compore.png" width="718" height="404" alt="Image" sizes="100vw"
+    />
+   
+</p>
+     **Örnek**
+    ***n=*** tekrar miktarı
+
+  - O(1)
+  - O(n)
+  - O(log)
+  - O(n²)
+  
+
+- ***O(n)* linear time**
+  Bu örnekte bir dizinin elemanının teker teker toplanması örneği verilmiştir. Bu örnekte **n** sayısının miktarı kadar işlem gerçekleşecektir. Yani - **Big O notation**= **O(n)** dir.
+
+  ```java title="Main.java" caption="0(n) linear time"
+
+  int addUp(int n){
+  int sum = 0;
+  for(int i = 0; i ‹= n; i++) {
+  sum += i;
+  ｝
+  return sum;
+  }
+  }
+  ```
+
+- ***O(1)* constant time**
+
+***n*** **0** dan **n** kadar sayıları toplamak istersek daha önce doğruluğu kanıtlanmış bir formül kullanırsak işlem sayısı **3** olacaktır. Büyük işlemler dikkate alındığında **3** sayısı tekrarın sayısına büyük bir etki etmeyeceğinden dikkate alınmaz.
+
+- **Big O notation** = **O(1)** dir.
+
+```java title="Main.java" caption=" O(1) constant time"
+
+int addUp(int n){
+int sum = n * (n + 1) / 2;
+return sum;
+}
+```
