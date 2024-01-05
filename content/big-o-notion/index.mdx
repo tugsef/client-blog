@@ -17,10 +17,17 @@ tags:
 
 > **"Veri büyüdükçe kod nasıl yavaşlar?"**
 
-- Veri miktarı arttıkça bir algoritmanın performansını açıklar.
+Fonksiyonun yapacağı işi ne yapacağını belirleriz ancak 
+fonksiyon bu işlemleri gerçekleştirirken izleyeceği yolu çizmemiz gerekir işte algoritmada burda devreye girer.
+Evet bir fonksiyon işi görecek ama, işte ama dediğimiz noktada tekrar sayısı devreye girecektir. Bir fonksiyonun verileri
+işlerken izlediği bu yola yani tekrar sayısının gösterimini **Big o Nation** denir. Genel olarak veriler büyüdükçe
+fonksiyonların kullanabilirliği ve performansı önem kazanır.
+
+- Veri miktarı arttıkça bir algoritmanın performansını açıklar. 
 - Makineden bağımsız (tamamlanmaya kalan adım sayısı)
 - Daha küçük işlemleri yoksay *0(n;+ 1) -> 0(n)*
-- <p align="center">
+
+<p align="center">
     <Image src="/blogs/data-structures-and-algorithms/big-o-notion.svg" width="718" height="404" alt="Image" sizes="100vw"
     />
   </p>
@@ -28,7 +35,7 @@ tags:
    <Image src="/blogs/data-structures-and-algorithms/big-o-notion-to-compore.png" width="718" height="404" alt="Image" sizes="100vw"
     />
    
-  </p>
+</p>
      **Örnek**
     ***n=*** tekrar miktarı
 
@@ -39,7 +46,7 @@ tags:
   
 
 - ***O(n)* linear time**
-  Bu örnekte bir dizinin elemanının teker teker toplanması örneği verilmiştir. Bu örnekte **n** sayısının miktarı kadar işlen gerçekleşecektir. Yani - **Big O notation**= **O(n)** dir.
+  Bu örnekte bir dizinin elemanının teker teker toplanması örneği verilmiştir. Bu örnekte **n** sayısının miktarı kadar işlem gerçekleşecektir. Yani - **Big O notation**= **O(n)** dir.
 
   ```java title="Main.java" caption="0(n) linear time"
 
@@ -55,7 +62,7 @@ tags:
 
 - ***O(1)* constant time**
 
-***n*** **0** dan **n** kadar sayıları toplamak istersek daha önce doğruluğu kanıtlanmış bir formül kullanırsak işlem sayısı **3** olacaktır. Büyük işlemler dikkate alındığında **1+2** **2** sayısı tekrarın sayısına büyük bir etki etmeyeceğinden.
+***n*** **0** dan **n** kadar sayıları toplamak istersek daha önce doğruluğu kanıtlanmış bir formül kullanırsak işlem sayısı **3** olacaktır. Büyük işlemler dikkate alındığında **3** sayısı tekrarın sayısına büyük bir etki etmeyeceğinden dikkate alınmaz.
 
 - **Big O notation** = **O(1)** dir.
 
