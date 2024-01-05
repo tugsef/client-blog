@@ -81,7 +81,7 @@ export default function LeftListItem({ blog }: { blog: Blog }) {
               alt={blog.title}
               width={blog.image?.width}
               height={blog.image?.height}
-              className="rounded-lg  animate-fade object-cover group-hover:object-center shadow-sm h-32 w-32 aspect-square object-center group-hover:scale-105 transition-all ease duration-300"
+              className="rounded-lg  animate-fade object-cover group-hover:object-center shadow-sm w-20 h-14 lg:h-32 lg:w-32 aspect-square object-center group-hover:scale-105 transition-all ease duration-300"
             />
           </Link>
         </div>
