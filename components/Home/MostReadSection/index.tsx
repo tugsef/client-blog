@@ -5,7 +5,7 @@ import BlogLayoutRight from "@/components/Blog/BlogLayoutRight";
 import React, { useState } from "react";
 
 let increment = 3;
-let starItem = 4;
+let starItem = 10;
 
 export default function MostreadSection({ blogs }: { blogs: Blog[] }) {
   const [currentTotal, setCurrentTotal] = useState(starItem);

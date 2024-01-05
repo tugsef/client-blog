@@ -21,7 +21,7 @@ const Footer = () => {
   }
 
   return (
-    <footer className="mt-16 rounded-2xl bg-accent  dark:bg-accentDark/90 m-2 sm:m-10 flex flex-col items-center text-light dark:text-dark">
+    <footer className="mt-16 rounded-2xl bg-accent  dark:bg-accentDark/90 m-2 sm:m-10 flex flex-col items-center text-light dark:text-dark relative">
       <h3 className="mt-16 font-medium dark:font-bold text-center capitalize text-2xl sm:text-3xl lg:text-4xl px-4">
         We are renewed every day | Updates
       </h3>
@@ -41,7 +41,7 @@ const Footer = () => {
       >
         {(formikProps: FormikProps<EmailSend>) => (
           <Form noValidate autoComplete="off" className="text-center">
-            <div className="flex relative z-0 mt-3">
+            <div className="flex relative -z-30 mt-3">
               <Field
                 type="text"
                 name="email"

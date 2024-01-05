@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { ITag, tagMapList } from "./service";
 
 let increment = 3;
-let starItem = 6;
+let starItem = 10;
 
 export default function BlogLayoutRight({ blogs }: { blogs: Blog[] }) {
   const tagList: ITag[] = tagMapList(blogs);

@@ -14,9 +14,10 @@ export default function LeftListItem({ blog }: { blog: Blog }) {
   }
   const slugTag = blog.tags?.[0];
   return (
-      <figure className="grid grid-cols-12 justify-items-stretch py-2 lg:py-4 hover:shadow-2xl pl-4 pe-6 hover:pl-3 hover:pe-5 hover:rounded-xl hover:dark:bg-slate-600 shadow-xl rounded-xl my-4">
-        <div className=" col-span-9 lg:col-span-8 justify-self-start">
-          <div className="flex gap-2">
+      <figure className="grid grid-cols-12 justify-items-stretch py-2 lg:py-4 group hover:shadow-2xl pl-4 pe-6 hover:pl-3 hover:pe-5 hover:rounded-xl hover:dark:bg-slate-600 shadow-xl rounded-xl my-4 cursor-pointer">
+        <div className="col-span-8 lg:col-span-9 flex flex-col justify-center">
+          <div className="flex gap-2 ite">
+            
             <Image
               src={selectImg}
               alt={blog.author}
@@ -34,8 +35,15 @@ export default function LeftListItem({ blog }: { blog: Blog }) {
                 <Link href={blog.url}>
                   <div>
                     <dt className="sr-only">Title</dt>
+             
                     <dd className="lg:font-extrabold font-bold text-sm sm:text-xl tracking-wider">
+                    <span
+                    className="bg-gradient-to-r from-accent to-accent dark:from-accentDark/50 
+  dark:to-accentDark/50 bg-[length:0px_2px]
+  group-hover:bg-[length:100%_2px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 "
+                  >
                       {blog.title}
+                      </span>
                     </dd>
                   </div>
                   <div className="my-1 lg:my-3">
@@ -49,13 +57,13 @@ export default function LeftListItem({ blog }: { blog: Blog }) {
                 <div className="flex-none w-full font-normal">
                   <dt className="sr-only">Runtime</dt>
                   <dd className="text-slate-400 text-xs lg:text-base">
-                    {format(new Date(blog.publishedAt), "MMM dd")}·
-                    {blog.readingTime.text}·
+                    {format(new Date(blog.publishedAt), "MMM dd")}
+                    &nbsp;·&nbsp;{blog.readingTime.text}&nbsp;·&nbsp;
                     <Link
                       href={`/categories/${slug(slugTag as string)}`}
                       className="px-1.5 ring-1 ring-slate-200 rounded-full"
                     >
-                      {blog.tags?.[0]}
+                     {blog.tags?.[0]}
                     </Link>
                   </dd>
                 </div>
@@ -63,7 +71,8 @@ export default function LeftListItem({ blog }: { blog: Blog }) {
             </div>
           </article>
         </div>
-        <div className="col-span-3 lg:col-span-4 justify-self-center">
+        <div className="col-span-4 lg:col-span-3 flex justify-end items-center w-full h-full">
+   
           <Link href={blog.url}>
             <Image
               src={blog.image?.filePath.replace("../public", "") as string}
@@ -72,7 +81,7 @@ export default function LeftListItem({ blog }: { blog: Blog }) {
               alt={blog.title}
               width={blog.image?.width}
               height={blog.image?.height}
-              className="rounded-lg mx-3 animate-fade object-cover w-full h-full shadow-sm"
+              className="rounded-lg  animate-fade object-cover group-hover:object-center shadow-sm h-32 w-32 aspect-square object-center group-hover:scale-105 transition-all ease duration-300"
             />
           </Link>
         </div>

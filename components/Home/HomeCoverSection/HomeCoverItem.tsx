@@ -8,6 +8,7 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import errorImage from "@/public/blogs/css-position-fixed.png";
 
 import { News } from ".";
+import Image from "next/image";
 function HomeCoverItem({ data }: { data?: News[] }) {
   const progressCircle = useRef<SVGSVGElement | null>(null);
   const progressContent = useRef<HTMLSpanElement | null>(null);
@@ -43,7 +44,7 @@ function HomeCoverItem({ data }: { data?: News[] }) {
       {data?.map((item) => (
         <SwiperSlide key={item.title}>
           {" "}
-          <article  className="flex flex-col items-start justify-end mx-5 sm:mx-10 relative h-[60vh] sm:h-[85vh]">
+          <article className="flex flex-col items-start justify-end mx-5 sm:mx-10 relative h-[60vh] sm:h-[85vh]">
             <div className="absolute top-0 left-0 bottom-0 right-0 h-full bg-gradient-to-b from-transparent from-0% to-dark/90 rounded-3xl z-0" />
 
             <img
@@ -83,8 +84,12 @@ function HomeCoverItem({ data }: { data?: News[] }) {
         </SwiperSlide>
       ))}
 
-      <div className="absolute right-7  sm:right-14 bottom-6 sm:bottom-4 w-6 h-6 z-10 sm:w-12 sm:h-12 flex items-center justify-center text-xs sm:font-bold text-white"slot="container-end">
-        <svg style={{
+      <div
+        className="absolute right-7  sm:right-14 bottom-6 sm:bottom-4 w-6 h-6 z-10 sm:w-12 sm:h-12 flex items-center justify-center text-xs sm:font-bold text-white"
+        slot="container-end"
+      >
+        <svg
+          style={{
             position: "absolute",
             left: "0",
             top: "0px",
@@ -97,8 +102,10 @@ function HomeCoverItem({ data }: { data?: News[] }) {
             strokeDashoffset: "calc(125.6 * (1 - var(--progress)))",
             strokeDasharray: "125.6",
             transform: "rotate(-90deg)",
-      
-        }} viewBox="0 0 48 48" ref={progressCircle}>
+          }}
+          viewBox="0 0 48 48"
+          ref={progressCircle}
+        >
           <circle cx="24" cy="24" r="20"></circle>
         </svg>
         <span ref={progressContent}></span>
