@@ -71,10 +71,10 @@ const Footer = () => {
               type="submit"
               color="primary"
               disabled={formikProps.isSubmitting}
-              className="mt-4 text-white bg-blue-200 hover:bg-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center items-center me-2  dark:hover:bg-blue-700"
+              className="mt-4  bg-accentDark/70 hover:bg-accentDark dark:bg-accent/70 dark:hover:bg-accent hover:scale-125 transition-all ease duration-200  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center items-center me-2  "
             >
               <svg
-                className="w-5 h-5 text-blue-300 dark:text-light"
+                className="w-5 h-5  text-accent dark:text-accentDark"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

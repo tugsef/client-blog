@@ -4,6 +4,7 @@ import LeftListItem from "./LeftListItem";
 import { Blog } from "@/.contentlayer/generated";
 import { FaBookReader } from "react-icons/fa";
 import { cx } from "@/components/utils";
+import { FiChevronsDown } from "react-icons/fi";
 
 export default function BlogLayoutLeft({
   displayedItems,
@@ -32,10 +33,11 @@ export default function BlogLayoutLeft({
           <button
             onClick={onNextClick}
             className={cx(
-              "text-lg   opacity-60 border-y-stone-700 hover:text-[#FF9119] py-4  ms:py-6 lg:py-8 "
+              "text-lg   opacity-60 border-y-stone-700 hover:text-[#FF9119] py-1 lg:py-2 "
             )}
           >
-            Load more...
+            <FiChevronsDown className="w-5 h-5 lg:h-10 lg:w-10"/>
+
           </button>
         </div>
       )}

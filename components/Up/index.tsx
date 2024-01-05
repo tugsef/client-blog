@@ -1,10 +1,9 @@
-"use client"
-import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
-import { IoIosArrowDropupCircle } from 'react-icons/io';
-
+"use client";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { IoIosArrowDropupCircle } from "react-icons/io";
 const Up: React.FC = () => {
-  const floatingDivRef = useRef<HTMLAnchorElement   >(null);
+  const floatingDivRef = useRef<HTMLAnchorElement>(null);
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
@@ -22,28 +21,32 @@ const Up: React.FC = () => {
     };
 
     // Attach the scroll event listener
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     // Initial check on component mount
     handleScroll();
 
     // Cleanup the event listener on component unmount
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   return (
-    <div >
-    <Link
+    <div>
+      <Link
         ref={floatingDivRef}
         href={"#header"}
-        className=  {`${isActive?"fixed bottom-4 right-4 lg:bottom-8 z-50 lg:right-8":"hidden"}`} 
+        className={`${
+          isActive
+            ? "fixed bottom-4 right-4 lg:bottom-8 z-50 lg:right-8"
+            : "hidden"
+        }`}
       >
-        <IoIosArrowDropupCircle className=" w-10 h-10 lg:w-20 lg:h-20 dark:text-accent text-accentDark rounded-full shadow-2xl shadow-accentDark dark:shadow-accent" />
+        <IoIosArrowDropupCircle className="w-10 h-10 lg:w-20 lg:h-20 dark:text-accent text-accentDark rounded-full shadow-2xl shadow-accentDark dark:shadow-accent" />
       </Link>
     </div>
   );
 };
 
-export default Up
+export default Up;
