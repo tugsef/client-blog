@@ -43,14 +43,16 @@ const MovingImg: React.FC<MovingImgProps> = ({ title, img, link }) => {
         onMouseMove={handleMouse}
         onMouseLeave={handleMouseLeave}
       >
-              <div>
-              <dt className="sr-only">title</dt>
-              <dd className="font-semibold text-sm lg:text-lg hover:underline bg-gradient-to-r from-accent to-accent bg-[length:0px_6px] dark:from-accentDark/50 dark:to-accentDark/50
-                group-hover:bg-[length:100%_6px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500">
-                {" "}
-                {title}
-              </dd>
-            </div>
+        <div>
+          <dt className="sr-only">title</dt>
+          <dd
+            className="font-semibold text-sm lg:text-lg hover:underline bg-gradient-to-r from-accent to-accent bg-[length:0px_6px] dark:from-accentDark/50 dark:to-accentDark/50
+                group-hover:bg-[length:100%_6px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500"
+          >
+            {" "}
+            {title}
+          </dd>
+        </div>
         <FramerImage
           src={img}
           ref={imgRef}
@@ -85,14 +87,15 @@ export default function BlogTop({
     selectImg = siteImg;
   }
   return (
-    <motion.article 
-    initial={{ y: 100 }}
-    whileInView={{
-      y: 0,
-      transition: { duration: 0.5, ease: "easeInOut" },
-    }}
-    viewport={{ once: true }}
-    className="flex  items-start space-x-3 relative  shadow-xl p-6 rounded-xl">
+    <motion.article
+      initial={{ y: 100 }}
+      whileInView={{
+        y: 0,
+        transition: { duration: 0.5, ease: "easeInOut" },
+      }}
+      viewport={{ once: true }}
+      className="flex  items-start space-x-3 relative  shadow-xl p-6 rounded-xl"
+    >
       <Image
         src={selectImg}
         alt=""
@@ -100,27 +103,22 @@ export default function BlogTop({
         height="30"
         className="lg:flex-none rounded-full bg-slate-100"
       />
-      
+
       <div className="min-w-0 relative flex-auto">
         <h2 className="font-semibold text-slate-900 truncate pr-20 opacity-60 dark:text-light">
           {blog.author}
         </h2>
-       
+
         <div className="absolute top-0 right-0  space-x-1">
-            <dt className="sr-only">Rating</dt>
-            <dd className="px-1.5 ring-1 ring-slate-200 rounded">
-              0{sequence}
-            </dd>
-         
-          </div>
+          <dt className="sr-only">Rating</dt>
+          <dd className="px-1.5 ring-1 ring-slate-200 rounded">0{sequence}</dd>
+        </div>
         <dl className="mt-2 flex flex-wrap text-sm leading-6 font-medium relative">
-       
-       
           <MovingImg
-          img={blog.image?.filePath.replace("../public", "") as string}
-          title={blog.title}
-          link={blog.url}
-        />
+            img={blog.image?.filePath.replace("../public", "") as string}
+            title={blog.title}
+            link={blog.url}
+          />
           <div className="flex-none w-full mt-2 font-normal">
             <dt className="sr-only">RuneTime</dt>
             <dd className="text-slate-400  text-xs lg:text-base">

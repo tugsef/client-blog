@@ -7,7 +7,7 @@ import { format } from "date-fns";
 import { slug } from "github-slugger";
 import siteImg from "@/public/logo.png";
 import { motion } from "framer-motion";
-import { PiArticle } from "react-icons/pi";
+
 export default function LeftListItem({ blog }: { blog: Blog }) {
   let selectImg: StaticImageData = profileImg;
 
