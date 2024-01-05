@@ -15,7 +15,7 @@ export default function LeftListItem({ blog }: { blog: Blog }) {
   const slugTag = blog.tags?.[0];
   return (
       <figure className="grid grid-cols-12 justify-items-stretch py-2 lg:py-4 group hover:shadow-2xl pl-4 pe-6 hover:pl-3 hover:pe-5 hover:rounded-xl hover:dark:bg-slate-600 shadow-xl rounded-xl my-4 cursor-pointer">
-        <div className="col-span-8 lg:col-span-9 flex flex-col justify-center">
+        <div className="col-span-9 lg:col-span-9 flex flex-col justify-center">
           <div className="flex gap-2 ite">
             
             <Image
@@ -71,7 +71,7 @@ export default function LeftListItem({ blog }: { blog: Blog }) {
             </div>
           </article>
         </div>
-        <div className="col-span-4 lg:col-span-3 flex justify-end items-center w-full h-full">
+        <div className="col-span-3 lg:col-span-3 flex justify-end ml-1 items-center w-full h-full">
    
           <Link href={blog.url}>
             <Image
