@@ -63,15 +63,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Suspense fallback={<Loading />}>
-        <body
-          className={cx(
-            inter.variable,
-            manrope.variable,
-            "font-mr bg-light dark:bg-dark"
-          )}
-          suppressHydrationWarning={true}
-        >
+      <body
+        className={cx(
+          inter.variable,
+          manrope.variable,
+          "font-mr bg-light dark:bg-dark"
+        )}
+        suppressHydrationWarning={true}
+      >
+        <Suspense fallback={<Loading />}>
           <NextThemeProvider>
             <TanstackProvider>
               <Header />
@@ -84,8 +84,8 @@ export default function RootLayout({
               <Up />
             </TanstackProvider>
           </NextThemeProvider>
-        </body>
-      </Suspense>
+        </Suspense>
+      </body>
     </html>
   );
 }

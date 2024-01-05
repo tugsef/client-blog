@@ -85,7 +85,14 @@ export default function BlogTop({
     selectImg = siteImg;
   }
   return (
-    <article className="flex  items-start space-x-3 relative  shadow-xl p-6 rounded-xl">
+    <motion.article 
+    initial={{ y: 100 }}
+    whileInView={{
+      y: 0,
+      transition: { duration: 0.5, ease: "easeInOut" },
+    }}
+    viewport={{ once: true }}
+    className="flex  items-start space-x-3 relative  shadow-xl p-6 rounded-xl">
       <Image
         src={selectImg}
         alt=""
@@ -129,6 +136,6 @@ export default function BlogTop({
           </div>
         </dl>
       </div>
-    </article>
+    </motion.article>
   );
 }
