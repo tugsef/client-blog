@@ -41,7 +41,7 @@ const Footer = () => {
       >
         {(formikProps: FormikProps<EmailSend>) => (
           <Form noValidate autoComplete="off" className="text-center">
-            <div className="flex relative -z-30 mt-3">
+            <div className="flex relative z-30 mt-3">
               <Field
                 type="text"
                 name="email"
