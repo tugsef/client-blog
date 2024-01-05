@@ -1,3 +1,4 @@
+"use client"
 import { Blog } from "@/.contentlayer/generated";
 import Image, { StaticImageData } from "next/image";
 import React from "react";
