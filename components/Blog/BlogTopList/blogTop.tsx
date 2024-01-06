@@ -123,8 +123,8 @@ export default function BlogTop({
           <div className="flex-none w-full mt-2 font-normal">
             <dt className="sr-only">RuneTime</dt>
             <dd className="text-slate-400  text-xs lg:text-base">
-              {format(new Date(blog.publishedAt), "MMM dd")}·
-              {blog.readingTime.text}·
+              {format(new Date(blog.publishedAt), "MMM dd")}&nbsp;·&nbsp;
+              {blog.readingTime.text}&nbsp;·&nbsp;
               <Link
                 href={`/categories/${blog.tags?.[0].replace(" ", "-")}`}
                 className="px-1.5   ring-1 ring-slate-200 rounded-full"

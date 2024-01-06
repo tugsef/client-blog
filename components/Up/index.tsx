@@ -9,24 +9,13 @@ const Up: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (!floatingDivRef.current) return;
-
-      // Eşik değeri, sayfanın üst kısmına ulaşıldığında aktif/pasif durumu değiştirmek için kullanılır
       const threshold = 50;
-
-      // Sayfanın scroll değeri
       const scrollY = window.scrollY || document.documentElement.scrollTop;
-
-      // Eğer scroll değeri eşik değerinden küçükse, div aktif olur; değilse pasif olur
       setIsActive(scrollY > threshold);
     };
 
-    // Attach the scroll event listener
     window.addEventListener("scroll", handleScroll);
-
-    // Initial check on component mount
     handleScroll();
-
-    // Cleanup the event listener on component unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
