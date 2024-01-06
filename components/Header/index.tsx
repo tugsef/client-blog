@@ -1,5 +1,4 @@
 "use client";
-import BlogLogo from "@/components/Header/logo";
 import { cx } from "@/components/utils";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -7,6 +6,7 @@ import LoginAuth from "./loginAuth";
 import { useTheme } from "next-themes";
 import OpenSearchModal from "../SearchBar/open-search-model";
 import { motion } from "framer-motion";
+import { BloglogoProps, DarkBloglogoProps } from "../Icons";
 
 interface SpringProps {
   type: "spring";
@@ -92,7 +92,10 @@ export default function Header() {
       className="w-full p-4  px-5 sm:px-10 flex items-center justify-between"
     >
       <div className="flex gap-2 lg:gap-10">
-        <BlogLogo />
+        <Link href="/">
+          <DarkBloglogoProps className="dark:hidden block" />
+          <BloglogoProps className="hidden dark:block" />
+        </Link>
 
         <div className="flex items-center">
           <OpenSearchModal />

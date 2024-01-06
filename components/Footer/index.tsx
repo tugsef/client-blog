@@ -48,15 +48,16 @@ const Footer = () => {
                 id="email_"
                 placeholder=" "
                 className={cx(
-                  "py-2.5 px-0 w-[300px] text-white text-base bg-transparent border-0 border-b-2 border-white appearance-none dark:text-white dark:border-gray-600  peer",
+                  "py-2.5 px-0 w-[300px] text-white text-base bg-transparent border-0 border-b-2 border-white dark:border-dark appearance-none   peer ",
+
                   formikProps.errors.email && formikProps.touched.email
                     ? "dark:focus:border-red-600 focus:outline-none focus:ring-0 focus:border-red-500"
-                    : "dark:focus:border-G-DARK focus:outline-none focus:ring-0 focus:border-bg-dark"
+                    : "dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-bg-dark"
                 )}
               />
               <label
                 htmlFor="email_"
-                className="absolute text-sm  text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-white peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+                className="absolute text-sm text-white dark:text-dark/70 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-white peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
               >
                 example@example.com
               </label>
@@ -71,7 +72,7 @@ const Footer = () => {
               type="submit"
               color="primary"
               disabled={formikProps.isSubmitting}
-              className="mt-4  bg-accentDark/70 hover:bg-accentDark dark:bg-accent/70 dark:hover:bg-accent hover:scale-125 transition-all ease duration-200  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center items-center me-2  "
+              className="mt-4  bg-light/70 hover:bg-light dark:bg-dark/70 dark:hover:bg-dark hover:scale-125 transition-all ease duration-200  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center items-center me-2  "
             >
               <svg
                 className="w-5 h-5  text-accent dark:text-accentDark"
@@ -150,7 +151,6 @@ const Footer = () => {
           </a>
         </div>
       </div>
-
     </footer>
   );
 };

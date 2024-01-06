@@ -42,6 +42,7 @@ const MovingImg: React.FC<MovingImgProps> = ({ title, img, link }) => {
         className="relative"
         onMouseMove={handleMouse}
         onMouseLeave={handleMouseLeave}
+
       >
         <div>
           <dt className="sr-only">title</dt>
@@ -94,7 +95,7 @@ export default function BlogTop({
         transition: { duration: 0.5, ease: "easeInOut" },
       }}
       viewport={{ once: true }}
-      className="flex  items-start space-x-3 relative  shadow-xl p-6 rounded-xl"
+      className="flex  items-start space-x-3 relative  shadow-xl p-6 rounded-xl dark:bg-slate-600/20"
     >
       <Image
         src={selectImg}

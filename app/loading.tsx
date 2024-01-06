@@ -1,5 +1,8 @@
 import BlogLogo from "@/components/Header/logo";
-import PointerLogo from "@/components/Icons";
+import PointerLogo, {
+  BloglogoProps,
+  DarkBloglogoProps,
+} from "@/components/Icons";
 import Link from "next/link";
 import React from "react";
 
@@ -10,10 +13,8 @@ function Loading() {
       <div className="flex gap-6">
         <Link href="/" className="flex items-center">
           <div className="flex items-center gap-1">
-            <PointerLogo className="w-16 lg:w-24  dark:text-white" />
-            <span className="font-bold text-xs lg:text-lg  tracking-tight">
-              FocusSpark
-            </span>
+            <DarkBloglogoProps className="dark:hidden block" />
+            <BloglogoProps className="hidden dark:block " />
           </div>
         </Link>
       </div>

@@ -26,7 +26,7 @@ export default function MostreadSection({ blogs }: { blogs: Blog[] }) {
         />
 
         <div className="col-span-12  lg:col-span-4">
-          <div className="sticky top-6 max-h-[80vh] overflow-hidden overflow-y-auto">
+          <div className="sticky top-6 ">
             <BlogLayoutRight blogs={blogs} />
           </div>
         </div>

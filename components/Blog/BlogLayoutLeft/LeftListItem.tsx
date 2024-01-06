@@ -24,7 +24,7 @@ export default function LeftListItem({ blog }: { blog: Blog }) {
         transition: { duration: 0.5, ease: "easeInOut" },
       }}
       viewport={{ once: true }}
-      className="grid grid-cols-12 justify-items-stretch py-4   group hover:shadow-2xl px-4 hover:pl-3 hover:pe-5 hover:rounded-xl hover:dark:bg-slate-600 shadow-xl rounded-xl my-4 cursor-pointer"
+      className="grid grid-cols-12 justify-items-stretch py-4  dark:bg-slate-600/20  group hover:shadow-2xl px-4 hover:pl-3 hover:pe-5 hover:rounded-xl shadow-xl rounded-xl my-4 cursor-pointer"
     >
       <div className="col-span-9 lg:col-span-9 flex flex-col justify-center">
         <div className="flex gap-2 ite">
