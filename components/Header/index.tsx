@@ -144,7 +144,7 @@ export default function Header() {
         <motion.div
           className="min-w-[70vw] sm:min-w-[90vw] flex justify-between items-center flex-col fixed top-1/2 left-1/2 -translate-x-1/2
       -translate-y-1/2
-      py-32 dark:bg-dark/90 bg-light/75 rounded-lg z-50 backdrop-blur-md
+      py-32 dark:bg-dark/90 bg-light/75 rounded-lg z-50 backdrop-blur-md md:hidden
       "
           initial={{ scale: 0, x: "-50%", y: "-50%", opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -165,28 +165,28 @@ export default function Header() {
             </div>
           </div>
 
-          <nav className="flex items-center justify-center flex-col ">
+          <nav className="flex items-center justify-center flex-col">
             <CustomMobileLink
               toggle={toggle}
-              className="mx-4 lg:m-0 lg:my-2"
+              className="mx-4 lg:m-0 lg:my-3"
               href="/"
               title="Home"
             />
             <CustomMobileLink
               toggle={toggle}
-              className="mx-4 lg:m-0 lg:my-2"
+              className="mx-4 lg:m-0 lg:my-3"
               href="/about"
               title="About"
             />
             <CustomMobileLink
               toggle={toggle}
-              className="mx-4 lg:m-0 lg:my-2"
+              className="mx-4 lg:m-0 lg:my-3"
               href="/projects"
               title="Not Found"
             />
-            <span onClick={() => setIsOpen(true)}>
-              <IoSearchCircle className="w-8 h-8" />
-            </span>
+            <div onClick={() => setIsOpen(true)} className="hover:scale-125 transition-all ease duration-200 cursor-pointer dark:bg-dark mt-2 bg-white pr-2 ps-1 rounded-full">
+              <IoSearchCircle className="w-8 h-8 dark:bg-transparent dark:text-white inline-block" /> Search
+            </div>
           </nav>
           <nav
             className="flex items-center justify-center  mt-2

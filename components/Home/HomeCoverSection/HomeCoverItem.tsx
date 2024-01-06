@@ -103,13 +103,14 @@ function HomeCoverItem({ data }: { data?: News[] }) {
                 strokeDashoffset: "calc(125.6 * (1 - var(--progress)))",
                 strokeDasharray: "125.6",
                 transform: "rotate(-90deg)",
+                opacity:"0.5"
               }}
               viewBox="0 0 48 48"
               ref={progressCircle}
             >
               <circle cx="24" cy="24" r="20"></circle>
             </svg>
-            <span ref={progressContent}></span>
+            <span ref={progressContent} className="opacity-50"></span>
           </div>
         </Swiper>
     
