@@ -7,6 +7,7 @@ import { useTheme } from "next-themes";
 import OpenSearchModal from "../SearchBar/open-search-model";
 import { motion } from "framer-motion";
 import { BloglogoProps, DarkBloglogoProps } from "../Icons";
+import { IoSearchCircle } from "react-icons/io5";
 
 interface SpringProps {
   type: "spring";
@@ -56,7 +57,7 @@ export default function Header() {
   const { theme, setTheme } = useTheme();
 
   const [click, setClick] = useState(false);
-
+  const [isOpen, setIsOpen] = useState(false);
   const toggleSwitch = async () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
@@ -98,11 +99,11 @@ export default function Header() {
         </Link>
 
         <div className="flex items-center">
-          <OpenSearchModal />
+          <OpenSearchModal isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>
       </div>
       <button
-        className="inline-block sm:hidden z-50"
+        className="inline-block sm:hidden z-50 mr-[10px]"
         onClick={toggle}
         aria-label="Hamburger Menu"
       >
@@ -148,18 +149,22 @@ export default function Header() {
           initial={{ scale: 0, x: "-50%", y: "-50%", opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
         >
-          <div
-            className={cx(
-              "w-14 h-7 items-center mb-4  flex dark:bg-accent bg-accentDark  rounded-[50px] p-2  justify-start dark:justify-end cursor-pointer "
-            )}
-            onClick={toggleSwitch}
-          >
-            <motion.div
-              layout
-              transition={spring}
-              className="w-5 h-5  rounded-[40px] bg-accent dark:bg-accentDark"
-            />
+          <div className="flex items-center justify-center mb-4 gap-2">
+            {" "}
+            <div
+              className={cx(
+                "w-14 h-7 items-center   flex dark:bg-accent bg-accentDark  rounded-[50px] p-2 justify-start dark:justify-end cursor-pointer "
+              )}
+              onClick={toggleSwitch}
+            >
+              <motion.div
+                layout
+                transition={spring}
+                className="w-5 h-5  rounded-[40px] bg-accent dark:bg-accentDark"
+              />
+            </div>
           </div>
+
           <nav className="flex items-center justify-center flex-col ">
             <CustomMobileLink
               toggle={toggle}
@@ -179,6 +184,9 @@ export default function Header() {
               href="/projects"
               title="Not Found"
             />
+            <span onClick={() => setIsOpen(true)}>
+              <IoSearchCircle className="w-8 h-8" />
+            </span>
           </nav>
           <nav
             className="flex items-center justify-center  mt-2
