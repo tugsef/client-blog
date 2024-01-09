@@ -20,7 +20,6 @@ import { useTheme } from "next-themes";
 export default function SignUpModal() {
   const { theme } = useTheme();
   const ref = useRef<boolean>(true);
-  const [send, setSend] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
@@ -29,7 +28,6 @@ export default function SignUpModal() {
     values: LoginValues,
     { resetForm }: any
   ): Promise<void> {
-    setSend(false);
     register(values, resetForm);
     resetForm();
   }
@@ -46,33 +44,18 @@ export default function SignUpModal() {
         "Content-Type": "application/json",
       },
     });
+
     if (!res.ok) {
-      theme === "dark"
-        ? toast.error(`${res.statusText} Registration Failed!`, {
-            style: {
-              borderRadius: "10px",
-              background: "#333",
-              color: "#fff",
-            },
-          })
-        : toast.error(`${res.statusText} Registration Failed!`);
+      toast.error(`${res.statusText} Registration Failed!`)
+      
       ref.current = false;
       return;
     }
     const response = await res.body;
+    toast.error(`${res.statusText} Registration Failed!`)
     ref.current = true;
     resetForm();
-    theme === "dark"
-      ? toast(`${values.email} Successfully email!`, {
-          icon: "👏",
-          style: {
-            borderRadius: "10px",
-            background: "#333",
-            color: "#fff",
-          },
-        })
-      : toast.success(`${values.email} Successfully email!`, { icon: "👏" });
-  };
+  }
 
   return (
     <>
