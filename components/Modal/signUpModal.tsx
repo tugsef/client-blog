@@ -2,7 +2,7 @@
 
 import { Dialog, Transition } from "@headlessui/react";
 import { ErrorMessage, Field, Form, Formik, FormikProps } from "formik";
-import { Fragment, Suspense, useState } from "react";
+import { Fragment, Suspense, useRef, useState } from "react";
 import CloseModal from "./close-modal";
 import { LoginValues } from "@/api/auth/values/loginValues";
 import OpenModalSignUp from "./open-modal-signup";
@@ -19,6 +19,7 @@ import { useTheme } from "next-themes";
 
 export default function SignUpModal() {
   const { theme } = useTheme();
+  const ref = useRef<boolean>(true);
   const [send, setSend] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const openCart = () => setIsOpen(true);
@@ -55,11 +56,11 @@ export default function SignUpModal() {
             },
           })
         : toast.error(`${res.statusText} Registration Failed!`);
-      setSend(true);
+      ref.current = false;
       return;
     }
     const response = await res.body;
-    setSend(true);
+    ref.current = true;
     resetForm();
     theme === "dark"
       ? toast(`${values.email} Successfully email!`, {
@@ -236,7 +237,7 @@ export default function SignUpModal() {
                             disabled={formikProps.isSubmitting}
                             className="flex w-full justify-center rounded-md bg-blue-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                           >
-                            {send ? (
+                            {ref.current ? (
                               "Sign up"
                             ) : (
                               <div className="flex justify-center items-center gap-2">
