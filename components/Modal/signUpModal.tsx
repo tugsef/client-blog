@@ -47,7 +47,7 @@ export default function SignUpModal() {
           },
         }
       );
-      toast.success(`Successful:${data} ${status}`);
+      toast.success(`Successful:${data}`);
       setSend(true);
       resetForm();
     } catch (error) {
