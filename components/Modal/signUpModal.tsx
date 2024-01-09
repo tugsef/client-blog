@@ -18,7 +18,7 @@ import { Backend_URL } from "@/lib/Constants";
 import { useTheme } from "next-themes";
 
 export default function SignUpModal() {
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
   const [send, setSend] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const openCart = () => setIsOpen(true);
@@ -79,7 +79,7 @@ export default function SignUpModal() {
         <OpenModalSignUp />
       </button>
       <Transition show={isOpen}>
-        <Dialog onClose={closeCart} className="relative z-40">
+        <Dialog onClose={closeCart} className="relative z-50">
           <Transition.Child
             as={Fragment}
             enter="transition-all ease-in-out duration-300"
