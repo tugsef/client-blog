@@ -15,47 +15,54 @@ import { BloglogoProps, DarkBloglogoProps } from "../Icons";
 import SignInModal from "./signInModal";
 import OpenCartSignIn from "@/components/Modal/open-modal-signin";
 import { Backend_URL } from "@/lib/Constants";
-import { useTheme } from "next-themes";
+import axios from "axios";
 
 export default function SignUpModal() {
-  const { theme } = useTheme();
-  const ref = useRef<boolean>(true);
+  const [send, setSend] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
 
-  async function handleSubmit(
+  async function onSubmit(
     values: LoginValues,
     { resetForm }: any
   ): Promise<void> {
+    setSend(false);
     register(values, resetForm);
-    resetForm();
   }
 
   const register = async (values: LoginValues, resetForm: any) => {
-    const res = await fetch(Backend_URL + "/auth/local/signup", {
-      method: "POST",
-      body: JSON.stringify({
-        email: values.email,
-        password: values.password,
-        roles: [],
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    try {
+      const { data, status } = await axios.post<any>(
+        `${Backend_URL}/auth/local/signup`,
+        {
+          email: values.email,
+          password: values.password,
+          roles: [],
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
+      );
+      toast.success(`Successful:${data} ${status}`);
+      setSend(true);
+      resetForm();
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(`error message: ${error.message}`);
+        return error.message;
+      } else {
+        toast.error(`unexpected error:${error}`);
 
-    if (!res.ok) {
-      toast.error(`${res.statusText} Registration Failed!`)
-      
-      ref.current = false;
-      return;
+        return "An unexpected error occurred";
+      }
+    } finally {
+      setSend(true);
     }
-    const response = await res.body;
-    toast.error(`${res.statusText} Registration Failed!`)
-    ref.current = true;
-    resetForm();
-  }
+  };
 
   return (
     <>
@@ -110,7 +117,7 @@ export default function SignUpModal() {
                       passwordConfirm: "",
                     }}
                     validationSchema={signUpSchema}
-                    onSubmit={handleSubmit}
+                    onSubmit={onSubmit}
                   >
                     {(formikProps: FormikProps<SignUpValues>) => (
                       <Form className="space-y-3" noValidate autoComplete="off">
@@ -220,7 +227,7 @@ export default function SignUpModal() {
                             disabled={formikProps.isSubmitting}
                             className="flex w-full justify-center rounded-md bg-blue-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                           >
-                            {ref.current ? (
+                            {send ? (
                               "Sign up"
                             ) : (
                               <div className="flex justify-center items-center gap-2">
