@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
+import cx from "../utils";
 
-export default function OpenModalSignIn() {
+export default function OpenModalSignIn({className}:{className?:string}) {
   return (
-    <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.8 }}>
-      <a className="dark:border-white dark:text-white lg:text-base text-sm">
+    <motion.div  whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.8 }} className="relative z-0">
+      <a  className={cx("text-accent",className)}>
         SignIn
       </a>
     </motion.div>

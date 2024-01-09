@@ -1,8 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import HomeCoverItem from "./HomeCoverItem";
 import data from "@/public/data/news/news.json";
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+
 export interface Source {
   id?: number | string | null;
   name?: number | string | null;
@@ -19,7 +19,6 @@ export interface News {
   urlToImage?: string;
 }
 function HomeCoverSection() {
-
   //   const { data, isLoading, isError } = useQuery({
   //     queryKey: ["newsPapers"],
   //     queryFn: async () => {

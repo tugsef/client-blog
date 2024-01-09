@@ -1,5 +1,5 @@
 "use client"
-import { cx } from "../utils";
+import  cx  from "../utils";
 import Link from "next/link";
 import React from "react";
 import {motion} from "framer-motion"

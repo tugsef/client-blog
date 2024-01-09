@@ -1,0 +1,1 @@
+export const Backend_URL = "https://backend-blog-production-21eb.up.railway.app";

@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -8,7 +8,6 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import errorImage from "@/public/blogs/css-position-fixed.png";
 
 import { News } from ".";
-import Image from "next/image";
 function HomeCoverItem({ data }: { data?: News[] }) {
   const progressCircle = useRef<SVGSVGElement | null>(null);
   const progressContent = useRef<HTMLSpanElement | null>(null);
@@ -62,12 +61,12 @@ function HomeCoverItem({ data }: { data?: News[] }) {
                 <div className="w-full lg:w-3/4 p-6 sm:p-8 md:p-12  lg:p-16 flex flex-col items-start justify-center z-0 text-light">
                   <a
                     href={item?.url}
-                    className="inline-block py-2 sm:py-3 px-6 sm:px-10  bg-dark text-light rounded-full capitalize font-semibold border-2 border-solid border-light hover:scale-105 transition-all ease duration-200 text-sm sm:text-base"
+                    className="inline-block py-2 sm:py-3 px-6 sm:px-10  bg-dark text-light rounded-full capitalize font-semibold border-2 group border-solid border-light hover:scale-105 transition-all ease duration-200 text-sm sm:text-base"
                   >
                     World News {item?.source?.name}
                   </a>
                   <a href={item?.url} className="mt-6">
-                    <h1 className="font-bold capitalize text-lg sm:text-xl md:text-3xl lg:text-4xl">
+                    <h1 className="font-bold capitalize  text-lg sm:text-xl md:text-3xl lg:text-4xl">
                       <span
                         className="bg-gradient-to-r from-accent to-accent dark:from-accentDark/50 
   dark:to-accentDark/50 bg-[length:0px_6px]

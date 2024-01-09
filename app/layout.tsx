@@ -1,16 +1,17 @@
 import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
-import { cx } from "@/components/utils";
+import  cx  from "@/components/utils";
 import Footer from "@/components/Footer";
 import { Metadata } from "next";
 import siteMetadata from "@/components/utils/siteMetadata";
-import NextThemeProvider from "@/providers/theme-provider";
-import TanstackProvider from "@/providers/TanstackProvider";
+import NextThemeProvider from "@/context/theme-provider";
+import TanstackProvider from "@/context/TanstackProvider";
 import Up from "@/components/Up";
 import Header from "@/components/Header";
 import { Suspense } from "react";
 import Loading from "./loading";
+import AuthProvider from "@/context/AuthProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -74,14 +75,14 @@ export default function RootLayout({
         <Suspense fallback={<Loading />}>
           <NextThemeProvider>
             <TanstackProvider>
-              <Header />
-
-              {children}
-
-              <Footer />
-              <Toaster position="bottom-center" reverseOrder={false} />
-              <Toaster position="bottom-center" reverseOrder={false} />
+              <AuthProvider>
+                <Header />
+                <main>{children}</main>
+                <Footer />
+              </AuthProvider>
               <Up />
+              <Toaster position="top-right" reverseOrder={false} />
+
             </TanstackProvider>
           </NextThemeProvider>
         </Suspense>

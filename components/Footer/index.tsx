@@ -11,7 +11,7 @@ import { FaGithubSquare } from "react-icons/fa";
 import { FaDribbbleSquare } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { incrementView } from "../Blog/ViewCounter/viewEmail";
-import { cx } from "../utils";
+import  cx  from "../utils";
 
 const Footer = () => {
   async function handleSubmit(values: EmailSend): Promise<void> {

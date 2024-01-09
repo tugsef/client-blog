@@ -1,5 +1,5 @@
 import { AiFillCloseSquare } from 'react-icons/ai';
-import { cx } from '../utils';
+import  cx  from '../utils';
 
 export default function CloseModal({ className }: { className?: string }) {
   return (

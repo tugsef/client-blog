@@ -13,7 +13,7 @@ export const signUpSchema = yup.object({
     .required("Email is a required field")
     .email("Email must be a valid email")
     .nullable(),
-  password: yup.string().required("Password is a required field").nullable(),
+  password: yup.string().required("Password is a required field").min(8,"8 characters").nullable(),
   passwordConfirm: yup
     .string()
     .oneOf([yup.ref("password")], "Passwordn't confirm")

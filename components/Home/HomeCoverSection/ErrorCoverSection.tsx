@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { delay, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 export default function HomeCoverSection() {
@@ -49,13 +49,13 @@ export default function HomeCoverSection() {
           <br />
           <button className=""></button>
           <Link href={"/categories/all"} className="text-sm lg:text-xl ">
-          <motion.div
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 0.8 }}
-            className="inline-block rounded-full px-2 py-2 lg:px-3 lg:p-3  bg-transparent border-light text-light dark:border-white border-2 font-mono  lg:mt-5 mt-3  "
-          >
-           <span >Now reading</span>
-          </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 0.8 }}
+              className="inline-block rounded-full px-2 py-2 lg:px-3 lg:p-3  bg-transparent border-light text-light dark:border-white border-2 font-mono  lg:mt-5 mt-3  "
+            >
+              <span>Now reading</span>
+            </motion.div>
           </Link>
         </motion.div>
         <div className="hidden xl:block">

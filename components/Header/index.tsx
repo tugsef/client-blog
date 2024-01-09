@@ -1,5 +1,5 @@
 "use client";
-import { cx } from "@/components/utils";
+import  cx  from "@/components/utils";
 import Link from "next/link";
 import React, { useState } from "react";
 import LoginAuth from "./loginAuth";

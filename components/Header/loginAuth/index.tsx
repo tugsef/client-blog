@@ -12,7 +12,7 @@ export default function LoginAuth() {
       <Suspense fallback={<OpenModalSignUp />}>
         <SignUpModal />
       </Suspense>
-      <Suspense fallback={<OpenCartSignIn />}>
+      <Suspense fallback={<OpenCartSignIn className="dark:border-white dark:text-white lg:text-base text-sm"/>}>
         <SignInModal />
       </Suspense>
     </div>

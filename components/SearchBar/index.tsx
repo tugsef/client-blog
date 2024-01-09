@@ -1,8 +1,7 @@
 "use client";
 import { Blog } from "@/.contentlayer/generated";
 import { useState } from "react";
-import LeftListItem from "../Blog/BlogLayoutLeft/LeftListItem";
-import PointerLogo from "../Icons";
+import LeftListItem from "../Blog/BlogLayoutLeft/LeftListItem"; 
 
 const SearchBar: React.FC<{ blogs: Blog[]; closeSearch: () => void }> = ({
   blogs,
