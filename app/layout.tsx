@@ -81,11 +81,12 @@ export default function RootLayout({
                 <Footer />
               </AuthProvider>
               <Up />
-              <Toaster position="top-right" reverseOrder={false} />
 
             </TanstackProvider>
           </NextThemeProvider>
         </Suspense>
+        <Toaster position="top-right" reverseOrder={false} />
+
       </body>
     </html>
   );
