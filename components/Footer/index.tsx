@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { ErrorMessage, Field, Form, Formik, FormikProps } from "formik";
-import { EmailSend } from "@/api/other/values";
+import { EmailSend } from "@/service/other/values";
 import { emailSendSchema } from "../utils/custom/valitaions";
 import siteMetadata from "../utils/siteMetadata/index.js";
 import { FaLinkedin } from "react-icons/fa";

@@ -2,7 +2,7 @@
 import React from "react";
 import { ErrorMessage, Field, Form, Formik, FormikProps } from "formik";
 import { contactSendSchema } from "@/components/utils/custom/valitaions";
-import { ContactValues } from "@/api/auth/values/contactValues";
+import { ContactValues } from "@/service/auth/values/contactValues";
 
 
 export default function ContactForm() {

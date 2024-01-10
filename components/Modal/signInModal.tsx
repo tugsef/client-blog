@@ -6,7 +6,7 @@ import { Fragment, useState } from "react";
 import CloseModal from "./close-modal";
 import OpenCartSignIn from "./open-modal-signin";
 import { signInSchema } from "../utils/custom/valitaions";
-import { LoginValues } from "@/api/auth/values/loginValues";
+import { LoginValues } from "@/service/auth/values/loginValues";
 import cx from "../utils";
 import toast from "react-hot-toast";
 import { BloglogoProps, DarkBloglogoProps } from "../Icons";
