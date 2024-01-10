@@ -1,7 +1,7 @@
 import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
-import  cx  from "@/components/utils";
+import cx from "@/components/utils";
 import Footer from "@/components/Footer";
 import { Metadata } from "next";
 import siteMetadata from "@/components/utils/siteMetadata";
@@ -81,12 +81,10 @@ export default function RootLayout({
                 <Footer />
               </AuthProvider>
               <Up />
-
             </TanstackProvider>
           </NextThemeProvider>
         </Suspense>
         <Toaster position="top-right" reverseOrder={false} />
-
       </body>
     </html>
   );
