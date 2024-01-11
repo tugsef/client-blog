@@ -78,6 +78,10 @@ export default function Header() {
     }
     return "";
   });
+  const onSubmit = ()=>{
+    toggle()
+    setIsOpen(true)
+  }
   const [selected, setSelected] = React.useState<string>(local);
   const [selectedOption, setSelectedOption] = React.useState<string>();
 
@@ -141,7 +145,7 @@ export default function Header() {
         </div>
       </button>
       {click ? (
-        <motion.div
+          <motion.div
           className="min-w-[70vw] sm:min-w-[90vw] flex justify-between items-center flex-col fixed top-1/2 left-1/2 -translate-x-1/2
       -translate-y-1/2
       py-32 dark:bg-dark/90 bg-light/75 rounded-lg z-50 backdrop-blur-md md:hidden
@@ -184,8 +188,8 @@ export default function Header() {
               href="/projects"
               title="Not Found"
             />
-            <div onClick={() => setIsOpen(true)} className="hover:scale-125 transition-all ease duration-200 cursor-pointer dark:bg-dark mt-2 bg-white pr-2 ps-1 rounded-full">
-              <IoSearchCircle className="w-8 h-8 dark:bg-transparent dark:text-white inline-block" /> Search
+            <div onClick={onSubmit} className="hover:scale-125 transition-all ease duration-200 cursor-pointer dark:bg-dark mt-2 bg-white pr-2 ps-1 rounded-full">
+              <IoSearchCircle  className="w-8 h-8 dark:bg-transparent dark:text-white inline-block" /> Search
             </div>
           </nav>
           <nav
@@ -193,21 +197,21 @@ export default function Header() {
       "
           >
             <div className="mt-3">
-              <LoginAuth />
+              <LoginAuth close={toggle}/>
             </div>
           </nav>
         </motion.div>
       ) : null}
 
       <nav
-        className=" w-max py-3 px-8 border border-solid border-dark/50 dark:border-light/70 rounded-full font-medium capitalize  items-center hidden sm:flex
+        className=" w-max py-2 px-4 border border-solid border-dark/50 dark:border-light/70 rounded-full font-medium capitalize  items-center hidden sm:flex
         fixed top-4 right-1/2 translate-x-1/2 bg-light/80 backdrop-blur-sm z-50 dark:bg-dark/80"
       >
         <Link
           href="/"
           onClick={() => setSelected("home")}
           className={cx(
-            "mr-2 relative group hover:text-accent dark:hover:text-accentDark/70",
+            "mr-2 relative group hover:text-accent dark:hover:text-accentDark/70 text-sm",
             selectedOption === "home" && "text-accent dark:text-accentDark"
           )}
         >
@@ -227,7 +231,7 @@ export default function Header() {
           href="/about"
           onClick={() => setSelected("about")}
           className={cx(
-            "mx-2 relative group hover:text-accent dark:hover:text-accentDark/70",
+            "mx-2 relative group hover:text-accent dark:hover:text-accentDark/70 text-sm",
             selectedOption === "about" && "text-accent dark:text-accentDark"
           )}
         >
@@ -245,14 +249,14 @@ export default function Header() {
         </Link>
         <div
           className={cx(
-            "w-14 h-7 items-center   flex dark:bg-accent bg-accentDark  rounded-[50px] p-2  justify-start dark:justify-end cursor-pointer "
+            "w-10 h-5 items-center   flex dark:bg-accent bg-accentDark  rounded-[50px] p-2  justify-start dark:justify-end cursor-pointer "
           )}
           onClick={toggleSwitch}
         >
           <motion.div
             layout
             transition={spring}
-            className="w-5 h-5  rounded-[40px] bg-accent dark:bg-accentDark"
+            className="w-3 h-3  rounded-[40px] bg-accent dark:bg-accentDark"
           />
         </div>
         {/* <button
