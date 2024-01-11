@@ -1,3 +1,4 @@
+import page from "@/app/test/page";
 import { Backend_URL } from "@/lib/Constants";
 import axios from "axios";
 import { NextAuthOptions } from "next-auth";
@@ -73,8 +74,11 @@ export const authOptions: NextAuthOptions = {
      clientSecret:`${process.env.GOOGLE_CLIENT_SECRET}`,
 
     }),
+  
   ],
-
+  pages:{
+    signIn: '/auth/signin',
+  },
   callbacks: {
     async jwt({ token, user }) {
       if (user) return { ...token, ...user };

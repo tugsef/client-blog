@@ -1,12 +1,13 @@
 import { motion } from "framer-motion";
 import cx from "../utils";
+import Link from "next/link";
 
-export default function OpenModalSignIn({className}:{className?:string}) {
+export default function OpenModalSignIn({className,close}:{className?:string,close?:()=>void}) {
   return (
-    <motion.div  whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.8 }} className="relative z-0">
-      <a  className={cx("text-accent/90 hover:text-accent dark:text-accentDark/90 hover:dark:text-accentDark tracking-wide",className)}>
+    <Link href={"/login"} onClick={close} className="relative z-0 hover:scale-105 transition-all ease duration-200 group">
+      <span className={cx("text-accent/90 hover:text-accent dark:text-accentDark/90 hover:group-hover:dark:text-accentDark tracking-wide",className)}>
         Sign In
-      </a>
-    </motion.div>
+      </span>
+    </Link>
   );
 }
