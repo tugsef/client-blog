@@ -1,11 +1,10 @@
-import page from "@/app/test/page";
 import { Backend_URL } from "@/lib/Constants";
 import axios from "axios";
 import { NextAuthOptions } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from 'next-auth/providers/google'
+import GoogleProvider from "next-auth/providers/google";
 
 async function refreshToken(token: JWT): Promise<JWT> {
   const res = await fetch(Backend_URL + `/auth/refresh`, {
@@ -27,11 +26,9 @@ async function refreshToken(token: JWT): Promise<JWT> {
 
 export const authOptions: NextAuthOptions = {
   providers: [
-    
     CredentialsProvider({
-     
       name: "Credentials",
-      
+
       credentials: {
         email: {
           label: "Email",
@@ -40,44 +37,34 @@ export const authOptions: NextAuthOptions = {
         },
         password: { label: "Password", type: "password" },
       },
-    
+
       async authorize(credentials, req) {
-        try {
-          if (!credentials?.email || !credentials?.password) return null;
-          const { email, password } = credentials;
-          const { data } = await axios.post<any>(
-            `${Backend_URL}/auth/local/signin`,
-            {
-              email,
-              password,
+        if (!credentials?.email || !credentials?.password) return null;
+        const { email, password } = credentials;
+        const { data } = await axios.post<any>(
+          `${Backend_URL}/auth/local/signin`,
+          {
+            email,
+            password,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
             },
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-              },
-            }
-          );
-          const user = await data;
-          return user;
-        } catch (error) {
-          if (axios.isAxiosError(error)) {
-            return error.message;
-          } else {
-            return "An unexpected error occurred";
           }
-        }
+        );
+        const user = await data;
+        return user;
       },
     }),
     GoogleProvider({
-     clientId:`${process.env.GOOGLE_CLIENT_ID}`,
-     clientSecret:`${process.env.GOOGLE_CLIENT_SECRET}`,
-
+      clientId: `${process.env.GOOGLE_CLIENT_ID}`,
+      clientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`,
     }),
-  
   ],
-  pages:{
-    signIn: '/auth/signin',
+  pages: {
+    signIn: "/auth/signin",
   },
   callbacks: {
     async jwt({ token, user }) {
