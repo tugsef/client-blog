@@ -12,11 +12,14 @@ import { FaDribbbleSquare } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { incrementView } from "../Blog/ViewCounter/viewEmail";
 import  cx  from "../utils";
+import { sendRegister } from "@/lib/mail";
 
-const Footer = () => {
+const Footer =async() => {
   async function handleSubmit(values: EmailSend): Promise<void> {
     console.info(values);
-    incrementView(values.email);
+  await  incrementView(values.email);
+  await sendRegister(values.email)
+    
     toast.success(`${values.email} Successfully email!`);
   }
 
