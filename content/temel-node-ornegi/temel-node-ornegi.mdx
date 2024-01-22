@@ -1,0 +1,91 @@
+---
+title: "React.js Hazırlok Basit Node Projesi"
+description: "Basit bir node projesi"
+image: "../../public/blogs/reeact.png"
+publishedAt: "2024-01-16"
+updatedAt: "2024-01-16"
+author: "Sefa Demirtaş"
+isPublished: true
+tags:
+  - react
+  - javascript
+---
+# Basit bir NODE projesi kurulumu.
+
+Basit bir node projesi
+
+> **npm init** komutu ile başlatılabilir.
+
+```node
+Press ^C at any time to quit.
+package name: (react-note) my-project
+version: (1.0.0) 
+description: 
+entry point: (index.js) 
+test command: 
+git repository: 
+keywords: 
+author: 
+license: (ISC) 
+About to write to /Users/sefademirtas/Desktop/react-note/package.json:
+
+{
+  "name": "my-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
+```
+
+- **npm init** ile birlikte projenin adı(package name), açıklamaları ve yazarı gibi özellikler belirtilir ve/veya kullanılacak ise git reposu belirtilebilir.
+- Projenin oluşması ile birlikte **package.json** da oluşur. Bu dosya içinde bağımlılıklar(dependencies) ve scripts ler ve dosyanın genel tanımları blunur. 
+- Aşağıdaki örnekte bir bağımlılık ekleyeceğim.
+
+### Basit bir örnek
+- Örnek bir bağımlılık indiriyorum **npm slugify** bu bağımlılık aldığı ifadeleri boşluklarını **default** olark **"-"** işariti yerleştirir.
+  
+```terminal title="console" caption="Dependencies install" 
+npm i slugify 
+```
+- bağımlılığın nasıl göründüğünü görebiliriz.
+```node title="packege.json" caption="Temel Node.js Örneği"
+{
+  "name": "first-node-example",
+  "version": "1.0.0",
+  "description": "\"İlk node.js Projem\"",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "slugify": "^1.6.6"
+  }
+}
+
+```
+
+- Bir string ifadenin boşluklarını  karakterle birleştirmek istiyorum. Bu yöntem genel olarak var olan dosyaların veya link isimlerininn sunucuda daha anlamlı ifadelere ve browserin ifadeleri daha anlamlı kullanabilmesi için kullanılır.
+
+```node
+
+var slugify = require('slugify')
+const test = slugify('temel node orneği') // some-string
+console.log(test);
+
+```
+
+```terminal title="Console" 
+> first-node-example@1.0.0 start
+> node index
+
+temel-node-ornegi
+```
+> **NOT**
+> **package.json** içersinde **scripts** kısmını özelleştirerek programın nasıl bir başlangıç yapabilieceğini söyleye bilirsiniz. Bazen birden fazla başlatma veya programın ihtiyacına göre **scripts** kısmı düzenlenebilir. 
