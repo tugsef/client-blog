@@ -1,0 +1,366 @@
+---
+title: "JavaScript Array Fonksiyonları"
+description: "En çok kullanılan javaScript array fonksiyonları"
+image: "../../public/blogs/react.png"
+publishedAt: "2024-11-243
+updatedAt: "2024-11-23"
+author: "Sefa Demirtaş"
+isPublished: true
+tags:
+  - react
+  - javascript
+---
+
+# JavaScript Fonksiyonları
+
+## Array.prototype.at()
+
+- Bu fonksiyon bir değeri **sayi** olan bir **index** alır. **Pozitif** veya **negatif** değerler alabilir. **Negatif** değer alır ile dizinin sonundan saymaya başlar ve ilk değeri **0** değildir.
+
+```javascript title="index.js"
+let index = 1;
+
+console.log(`${index}. index değeri ${array.at(index)}`);
+// 1. index değeri 13
+
+index = -1;
+console.log(`${index}. index değeri ${array.at(index)}`);
+// -1. index değeri 98
+
+index = 8;
+console.log(`${index}. index değeri ${array.at(index)}`);
+// 8. index değeri undefined
+```
+
+- **lenght** değerini okur ve o değere kadar arama yapar. Değeri kapsamı dışında ise **undefiend** döner.
+
+```javascript title="index.js"
+const arrayItem = {
+  length: 2,
+  0: "a",
+  1: "b",
+  2: "c",
+};
+
+console.log(Array.prototype.at.call(arrayItem, 0));
+// "a"
+
+console.log(Array.prototype.at.call(arrayItem, 2));
+// undefined
+```
+
+## Array.prototype.concat()
+
+- **concat** iki veya daha fazla diziyi **birleştirmek** için kullanır. Mevcut dizileri değiştirmez yeni bir dizi oluşturur.
+
+```javascript title="index.js"
+const array1 = ["a", "b", "g", "h"];
+const array2 = ["c", "r", "t", "z"];
+
+const newArray = array1.concat(array2);
+console.log(newArray);
+// [ 'a', 'b', 'g', 'h', 'c', 'r', 't', 'z' ]
+
+const array1 = ["a", "b", "g", "h"];
+const array2 = ["c", "r", "t", "z"];
+const array3 = ["f", "i", "s", "w"];
+
+const newArray2 = array1.concat(array2, array3);
+console.log(newArray);
+//[ 'a', 'b', 'g', 'h','c', 'r', 't', 'z','f', 'i', 's', 'w']
+```
+
+- **SYNTAX**
+
+```javascript title="index.js"
+concat();
+concat(value1);
+concat(value1, value2);
+concat(value1, value2, /* …, */ valueN);
+```
+
+- **concat()**, tüm dizi benzeri nesneleri varsayılan olarak diziler olarak ele almaz; yalnızca Sembol.**isConcatSpreadable** doğru bir değere (ör. true) ayarlanmışsa. Örnekte **obj1** olduğu gibi kullanılırsa sonucu **obje** olarak alınır bir elemanlı bir **obje** gibi array a **obje** olarak katılır. **[Symbol.isConcatSpreadable]: true** ifedesi **objenin** **array** olarak işlem görmeisin sağlar
+
+```javascript title="index.js"
+const obj1 = { 0: 1, 1: 2, 2: 3, length: 3 };
+const obj2 = { 0: 1, 1: 2, 2: 3, length: 3, [Symbol.isConcatSpreadable]: true };
+console.log([0].concat(obj1, obj2));
+// [ 0, { '0': 1, '1': 2, '2': 3, length: 3 }, 1, 2, 3 ]
+```
+
+- **sparse** array yapısı seyrek ise
+
+```javascript title="index.js"
+console.log([1, , 3].concat([4, 5])); // [1, empty, 3, 4, 5]
+console.log([1, 2].concat([3, , 5])); // [1, 2, 3, empty, 5]
+```
+
+# entries
+
+```javascript title="index.js"
+const arrayLife = [{ name: "Sefa" }, { name: "Miraç" }, { name: "Ege" }];
+const iterator = arrayLife.entries();
+
+console.log(iterator.next().value);
+[0, { name: "Sefa" }];
+
+console.log(iterator.next().value);
+[1, { name: "Miraç" }];
+
+console.log(iterator.next().value)[(2, { name: "Ege" })];
+```
+
+- **iterator** tanımlandığında her adımda **\*next()** metodu ile bir adım leriye atar ve orda kalır. Bir **next** metodunda kaldığı yerden devam eder.
+
+- **for ..of**
+
+```javascript title="index.js"
+const arrayLife = [{ name: "Sefa" }, { name: "Miraç" }, { name: "Ege" }];
+for (let element of arrayLife.entries()) {
+  console.log(element);
+}
+//[ 0, { name: 'Sefa' } ]
+//[ 1, { name: 'Miraç' } ]
+//[ 2, { name: 'Ege' } ]
+```
+
+```javascript title="index.js"
+const arrayLife = [{ name: "Sefa" }, { name: "Miraç" }, { name: "Ege" }]
+for (let [index, element] of arrayLife.entries()) {
+    console.log(index, element);
+}
+// 0 { name: 'Sefa' }
+// 1 { name: 'Miraç' }
+// 2 { name: 'Ege' }
+```
+
+
+```javascript title="index.js"
+for (let element of [,"a"]){
+    console.log(element);
+}
+// undefined
+// a
+```
+
+```javascript title="index.js"
+
+const arrayLike = {
+    length: 3,
+    0: "a",
+    1: "b",
+    2: "c",
+    3: "d", // ignored by entries() since length is 3
+  };
+  for (const entry of Array.prototype.entries.call(arrayLike)) {
+    console.log(entry);
+  }
+
+// [ 0, 'a' ]
+// [ 1, 'b' ]
+// [ 2, 'c' ]
+```
+
+
+## Array.prototype.every()
+
+**every()** oluşturulan doğrulama sonucunda eğer **arraylerin** tümü bu doğrulamaya uyuyor ise yanıt olarak **true** herhangi biri ymuyosa **false** döner. Yöntem her değeri dolaşırken verilen doğrulamaya uymaya element var ise aramayı durudurur ve **false** döner.
+
+- Bütün array elemanlarının **90**dan küçük olma durumunu kontrol edelim. Değer olarak **true** dönecektir. Bütün elemanlar **90**dan küçüktür. **true** olarak değer dönecektir. **50** den büyük olma durumu ise **false** olarak dönecektir.
+- 
+
+```javascript title="index.js"
+
+const newArray = [20, 34, 56, 78, 45, 12]
+
+const isCheck = newArray.every((item) => item < 90)
+console.log(isCheck);
+// true
+
+const isCheck2 = newArray.every((item) => item > 50)
+console.log(isCheck2);
+// false
+```
+
+- Bir dizinin diğer bir dizizinin alt kümesi olduğunu kontrol etme 
+
+**every()** metonu ile **array2** dolaşılacak daha sonra her **item** **array1** içinde var mı diyerek kontrol edilecek **icludes** fonksiyonu ile böylelikle **every** **return** olarak **boolean** değer döner. **includes** bu değeri dağlayacaktır. **array2** n,n bütün eelemanları eğer **array1** inicde var ise** **true** yoksa **false** dönecektir.
+
+```javascript title="index.js"
+
+const array1 = [10, 12, 14, 16, 18, 20, 22]
+const array2 = [10, 12, 14]
+const array3 = [10, 15, 25]
+
+const isSubset = (array1, array2) => array2.every((item) => array1.includes(item))
+console.log(isSubset(array1, array2));
+// true
+console.log(isSubset(array1,array3));
+// false
+```
+
+- **every()** üçüncü argüman olarak kullanma
+
+arrayDizideki başka bir öğeye erişmek istiyorsanız bu argüman kullanışlıdır. Aşağıdaki örnek önce **filter()** pozitif değerleri çıkarmak için kullanır ve ardından **every()** dizinin tam olarak artıp artmadığını kontrol etmek için kullanır.
+
+
+```javascript title="index.js"
+
+const newArray = [-2, 10, 20, 40, -1, 25]
+
+const isIncreasing = newArray
+    .filter((num) => num > 0)
+    .every((num, idx, arr) => {
+        console.log(num);
+        console.log(idx);
+        console.log(arr);
+        if (idx === 0) return true;
+        return num > arr[idx - 1]
+      })
+
+console.log(isIncreasing);
+
+```
+
+- Seyrek dizilerde ***Every()** işlevini kullanma
+
+```javascript title="index.js"
+
+console.log([1, , 3].every((x) => x !== undefined)); // true
+console.log([2, , 2].every((x) => x === 2)); // true
+```
+
+- Dizi dışı nesnelerde **every()** öğesinin çağrılması
+
+Yöntem, özelliğini **every()** okur ve ardından her bir özelliğe , hepsine erişilene veya dönene kadar, negatif olmayan bir tamsayı anahtarıyla erişir .**lengthth** **islength** **callbackFnfalse**
+
+```javascript title="index.js"
+
+const arrayLike = {
+  length: 3,
+  0: "a",
+  1: "b",
+  2: "c",
+  3: 345, // uzunluk 3 olduğundan, every    () tarafından göz ardı edilir
+};
+console.log(
+  Array.prototype.every.call(arrayLike, (x) => typeof x === "string"),
+); // true
+```
+
+## Array.prototype.filter()
+
+**filter()** Örnekler yöntemi, belirli bir dizinin bir kısmının yüzeyselArray bir kopyasını oluşturur ve yalnızca belirli dizideki, sağlanan işlev tarafından uygulanan testi geçen öğelere kadar filtrelenir.
+- hiçbir öğe testi geçemez ise boş döndürür.
+- **string** array içerisinde harf sayısının belli bir değerden büyük olması durumunu inceleyim.
+
+```javascript title="index.js"
+const words = ['spray', 'elite', 'exuberant', 'destruction', 'present'];
+const minLenght = 6;
+
+const newWords = words.filter((word) => word.length > minLenght)
+console.log(newWords);
+// [ 'exuberant', 'destruction', 'present' ]
+
+```
+
+- **SYNTAX**
+
+```javascript title="index.js"
+filter(callbackFn)
+filter(callbackFn, thisArg)
+```
+
+- Bir **array** içerisinde **asal** sayıları bullaum.
+
+```javascript title="index.js"
+
+const array = [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+
+const isPrime = (num) => {
+    for (let i = 2; i < num; i++) {
+        if (num % i === 0) {
+            return false;
+        }
+    }
+    return num > 1
+}
+
+const primeArray = array.filter(isPrime)
+
+console.log(primeArray);
+// [ 2, 3, 5, 7, 11, 13 ]
+```
+
+- geçerli ve geçersiz **id** lerin bulunması **Number.isFinite()** bir sayı **Infinity**, bir sayı **null**, bir sayı **empty** durumlarında **false** döndürür. Sasyının sonlumu sonsuz mu olduğnu belirler.
+
+```javascript title="index.js"
+const array = [
+    { id: 15 },
+    { id: -1 },
+    { id: 0 },
+    { id: 3 },
+    { id: 12.2 },
+    {},
+    { id: null },
+    { id: NaN },
+    { id: "undefined" },
+];
+let invalitEntries = 0;
+
+const filterByID = (item) => {
+    if (Number.isFinite(item.id) && item.id !== 0) {
+        return true;
+    }
+    invalitEntries++;
+    return false;
+}
+
+const arrByID = array.filter(filterByID);
+
+console.log("Filitrelenmiş Array\n",arrByID);
+// Filitrelenmiş Array
+// [ { id: 15 }, { id: -1 }, { id: 3 }, { id: 12.2 } ]
+
+console.log("Geçersiz idler\n",invalitEntries);
+// Geçersiz idler
+// 5
+```
+
+
+- Dizi olmayan nesnelerde **array** çağırılması
+
+```javascript title="index.js"
+
+const arrayLike = {
+  length: 3,
+  0: "a",
+  1: "b",
+  2: "c",
+  3: "a", // ignored by filter() since length is 3
+};
+console.log(Array.prototype.filter.call(arrayLike, (x) => x <= "b"));
+// [ 'a', 'b' ]
+```
+
+- Üçüncü argümanını kullanma
+
+**array** Dizideki başka bir öğeye erişmek istiyorsanız, özellikle de diziye başvuran mevcut bir değişkeniniz olmadığında bu argüman kullanışlıdır. Aşağıdaki örnek, ilk önce **map()** her addan sayısal kimliği çıkarmak için kullanır ve ardından **filter()** komşularından daha büyük olanları seçmek için kullanır.
+
+```javascript title="index.js"
+
+const names = ["JC63", "Bob132", "Ursula89", "Ben96"];
+const greatIDs = names
+  .map((name) => parseInt(name.match(/[0-9]+/)[0], 10))
+  .filter((id, idx, arr) => {
+// arr argümanı olmadan, diziye kolayca erişmenin bir yolu yoktur.
+// bir değişkene kaydetmeden ara dizi.
+    if (idx > 0 && id <= arr[idx - 1]) return false;
+    if (idx < arr.length - 1 && id <= arr[idx + 1]) return false;
+    return true;
+  });
+console.log(greatIDs); // [132, 96]
+```
+
+Argüman , oluşturulmakta olan dizi **array** değildir ; oluşturulmakta olan diziye geri çağırma işlevinden erişmenin bir yolu yoktur.
+
