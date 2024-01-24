@@ -1,9 +1,9 @@
 ---
 title: "JavaScript Array Fonksiyonları"
 description: "En çok kullanılan javaScript array fonksiyonları"
-image: "../../public/blogs/react.png"
-publishedAt: "2024-11-243
-updatedAt: "2024-11-23"
+image: "../../public/blogs/reeact.png"
+publishedAt: "2024-01-24"
+updatedAt: "2024-01-24"
 author: "Sefa Demirtaş"
 isPublished: true
 tags:
@@ -364,3 +364,612 @@ console.log(greatIDs); // [132, 96]
 
 Argüman , oluşturulmakta olan dizi **array** değildir ; oluşturulmakta olan diziye geri çağırma işlevinden erişmenin bir yolu yoktur.
 
+## Array.prototype.find()
+
+**find()** Örneklerin yöntemi, sağlanan Arraydizide sağlanan test işlevini karşılayan ilk öğeyi döndürür. Hiçbir değer test fonksiyonunu karşılamıyorsa **undefined** döndürülür.
+  - Dizide bulunan öğenin dizinine ihtiyacınız varsa kullanın **findIndex()**
+  - Bir değerin dizinini bulmanız gerekiyorsa kullanın **indexOf().** (Buna benzer **findIndex()**, ancak bir test işlevi kullanmak yerine her öğenin değerle eşitliğini kontrol eder.)
+  - Bir dizide bir değerin **bulunup bulunmadığını** bulmanız gerekiyorsa kullanın **includes()**. Yine, bir test işlevi kullanmak yerine her öğenin değerle eşitliğini kontrol eder.
+  - Herhangi bir öğenin sağlanan test işlevini karşılayıp karşılamadığını bulmanız gerekiyorsa kullanın **some()**.
+
+
+```javascript title="index.js"
+const array1 = [5, 12, 8, 130, 44];
+
+const found = array1.find((element) => element > 10);
+
+console.log(found);
+// Expected output: 12
+```
+
+- SYNTAX
+
+```javascript title="inndex.js"
+
+find(callbackFn)
+find(callbackFn, thisArg)
+```
+Sağlanan test fonksiyonunu karşılayan dizideki ilk öğe. Aksi takdirde **undefinediade** edilir.
+
+- Bir dizideki bir nesneyi özelliklerinden birine göre bulun
+
+```javascript title="index.js"
+
+const inventory = [
+    { name: "apples", quantity: 2 },
+    { name: "bananas", quantity: 0 },
+    { name: "cherries", quantity: 5 },
+  ];
+
+  const isCherries = (item)=>{
+    return item.name === "cherries";
+  }
+
+  const selected = inventory.find(isCherries)
+
+  console.log(selected);
+// { name: 'cherries', quantity: 5 }
+```
+
+- Bir dizide asal sayı bulma
+
+```javascript title="index.js"
+const isPrime = (element, index, arr) => {
+    let start = 2;
+    while (start <= Math.sqrt(element)) {
+        if (element % start++ < 1) {
+            return false;
+        }
+        return element > 1
+    }
+}
+
+console.log([4, 6, 8, 12].find(isPrime)); // undefined, not found
+console.log([4, 5, 8, 12].find(isPrime)); // 5
+```
+
+- Seyrek dizilerde **find()** işlevini kullanma
+
+```javascript title="index.js"
+// Dizini 2, 3 ve 4 numaralı indekslerde hiçbir öğe olmadan tanımlıyoruz
+const array = [0, 1, , , , 5, 6];
+
+// Yalnızca atanmış değerleri olan indeksleri değil, tüm indeksleri gösterir
+array.find((value, index) => {
+  console.log("Visited index", index, "with value", value);
+});
+// 0 değeriyle ziyaret edilen dizin 0
+// 1 değeriyle ziyaret edilen dizin 1
+// Tanımsız değerle ziyaret edilen dizin 2
+// Değeri tanımsız olan dizin 3'ü ziyaret edildi
+// Değeri tanımsız olan dizin 4'ü ziyaret edildi
+// 5 değeriyle ziyaret edilen dizin 5
+// 6 değeriyle ziyaret edilen dizin 6
+
+// Silinen dizinler dahil tüm dizinleri gösterir
+array.find((value, index) => {
+// İlk yinelemede 5. öğeyi sil
+if (index === 0) {
+    console.log("Deleting array[5] with value", array[5]);
+    delete array[5];
+  }
+// Öğe 5 silinmiş olsa bile hala ziyaret ediliyor
+console.log("Visited index", index, "with value", value);
+});
+// 5 değerine sahip dizi[5] siliniyor
+// 0 değeriyle ziyaret edilen dizin 0
+// 1 değeriyle ziyaret edilen dizin 1
+// Tanımsız değerle ziyaret edilen dizin 2
+// Değeri tanımsız olan dizin 3'ü ziyaret edildi
+// Değeri tanımsız olan dizin 4'ü ziyaret edildi
+// Tanımsız değerle ziyaret edilen dizin 5
+// 6 değeriyle ziyaret edilen dizin 6
+```
+
+- Üçüncü argümanını kullanma
+
+**array** Dizideki başka bir öğeye erişmek istiyorsanız, özellikle de diziye başvuran mevcut bir değişkeniniz olmadığında bu argüman kullanışlıdır. Aşağıdaki örnek önce **filter()** pozitif değerleri çıkarmak için kullanır ve ardından **find()** komşularından daha küçük olan ilk öğeyi bulmak için kullanır.
+
+
+```javascript title="index.js"
+const numbers = [3, -1, 10, 4, 10, 5, 9, 2, 6];
+
+const firstTrough = numbers
+  .filter((num) => num > 0)
+  .find((num, idx, arr) => {
+ // arr argümanı olmadan, diziye kolayca erişmenin bir yolu yoktur.
+ // bir değişkene kaydetmeden ara dizi.
+    if (idx > 0 && num >= arr[idx - 1]) return false;
+    if (idx < arr.length - 1 && num >= arr[idx + 1]) return false;
+    return true;
+  });
+console.log(firstTrough); // 3
+```
+
+## Array.prototype.some()
+
+- Eğer dizi içerisinde şartı sağlayan bir eleman var ise true döndürür. 
+- **Array** değiştirmez.
+- **true** yanıtını bulduğunda sonllanır.
+- Aranan özellik yok ise **false**   döner
+- Boş ise **false**
+
+- Dizi içerisinde çift var mı?
+
+```javascript title="index.js"
+
+const array = [13,34,2,6,87,16,4]
+
+// Checks whether an element is even
+
+const even = (number) => {
+    console.log(number);
+    return number%2 === 0}
+
+const isEven = array.some(even)
+
+console.log(isEven);
+// true
+```
+
+- SYNTAX
+
+```javascript title="index.js"
+some(callbackFn)
+some(callbackFn, thisArg)
+```
+
+- Dizi elemanlarının değerinin test edilmesi
+
+```javascript title="index.js"
+
+const isBiggerThan10 = (num, idx, arr) => num > 10;
+
+console.log([2, 5, 8, 1, 4].some(isBiggerThan10)) // false
+console.log([12, 5, 8, 1, 4].some(isBiggerThan10)); // true
+```
+
+- Bir dizide bir değerin olup olmadığını kontrol etme
+
+```javascript title="index.js"
+
+const fruits = ["apple", "banana", "mango", "guava"];
+
+const checkAvailability = (arr,value) => arr.some((item)=>item===value);
+
+console.log(checkAvailability(fruits,"apple"));
+console.log(checkAvailability(fruits,"kiwi"));
+```
+
+## Array.prototype.includes()
+
+**includes()** Örneklerin yöntemi, bir **Array** dizinin girdileri arasında belirli bir değeri içerip içermediğini, döndürüp döndürmediğini **true** veya **false** uygun olup olmadığını belirler.
+
+```javascript title="index.js"
+
+const array1 = [1, 2, 3,23,54,76,34];
+console.log(array1.includes(2))
+// true
+
+const fruits = ["apple", "banana", "mango", "guava"];
+
+console.log(fruits.includes('apple'));
+// true
+
+console.log(fruits.includes('app'));
+// false
+```
+
+- SYNTAX
+
+```javascript title="index.js"
+
+includes(searchElement)
+includes(searchElement, fromIndex)
+```
+
+- **fromIndex** dizi uzunluğundan büyük veya ona eşit
+- **fromIndex**Aramanın başllatılacağı sıfır tabanlı dizin
+- **fromIndex** değeri arrayın boyutuna **length** eşit veya büyük ise **false** döner
+- **fromIndex** değeri **index = length - fromIndex** hesaplanır eğer hesaplana index **length** uzunlupundan küçük veya eşit ise dizinin tamamı aranacak. 
+
+
+## Array.prototype.splice()
+
+**splice()** Örneklerin yöntemi, mevcut öğeleri kaldırarak veya değiştirerek ve/veya ***yerine** **Array** yeni öğeler ekleyerek bir dizinin içeriğini değiştirir . 
+
+- SYNTAX
+
+```javascript title="index.js"
+splice(start)
+splice(start, deleteCount)
+splice(start, deleteCount, item1)
+splice(start, deleteCount, item1, item2)
+splice(start, deleteCount, item1, item2, /* …, */ itemN)
+```
+
+- Negatif dizin, dizinin sonundan geriye doğru sayar; eğer **start < 0** kullanılırsa **start + array.length**.
+- **start < -array.length**, kullanılıyorsa **0**.
+- Eğer öyleyse **start >= array.length**, hiçbir öğe silinmeyecek, ancak yöntem, sağlanan sayıda öğeyi ekleyerek bir ekleme işlevi gibi davranacaktır.
+- Atlanırsa **start(ve splice()bağımsız değişken olmadan çağrılırsa)**, hiçbir şey silinmez. **undefinedBu** , dönüştürülen pass'tan farklıdır 0
+
+- Dizin 2'den önceki 0 (sıfır) öğeyi kaldırın ve "tambur" ekleyin
+
+```javascript title="index.js"
+
+const myFish = ["angel", "clown", "mandarin", "sturgeon"];
+
+const removed = myFish.splice(2,0,"Tambur");
+
+console.log(myFish);
+console.log(removed);
+
+// myFish şu şekildedir: ["melek", "palyaço", "davul", "mandalina", "mersin balığı"]
+// kaldırılan [], hiçbir öğe kaldırılmadı
+```
+
+- Dizin 2'den önceki 0 (sıfır) öğeyi kaldırın ve "drum" ve "guitar" ekleyin
+
+```javascript title="index.js"
+const myFish = ["angel", "clown", "mandarin", "sturgeon"];
+
+const removed = myFish.splice(2,0,"drum","guitar")
+
+console.log(myFish);
+console.log(removed);
+
+//  [ 'angel', 'clown', 'drum', 'guitar', 'mandarin', 'sturgeon' ]
+// kaldırılan [ ], hiçbir öğe kaldırılmadı
+```
+
+
+- 0 dizinindeki 0 (sıfır) öğeyi kaldırın ve "angel" ekleyin
+
+```javascript title="index.js"
+
+const removed = myFish.splice(0,0,"angel")
+
+console.log(myFish);
+console.log(removed);
+// [ 'angel', 'clown', 'mandarin', 'sturgeon' ]
+// []
+```
+
+- Son dizindeki 0 (sıfır) öğeyi kaldırın ve "sturgeon" ekleyin
+
+```javascript title="index.js"
+const myFish = ["angel", "clown", "mandarin"];
+
+const removed = myFish.splice(myFish.length,0,"sturgeon") 
+
+console.log(myFish);
+console.log(removed);
+
+// [ 'angel', 'clown', 'mandarin', 'sturgeon' ]
+// []
+```
+
+- Dizin 3'teki 1 öğeyi kaldır
+
+```javascript title="index.js"
+const myFish = ["angel", "clown", "drum", "mandarin", "sturgeon"];
+
+const removed = myFish.splice(3,1);
+console.log(myFish);
+// [ 'angel', 'clown', 'drum', 'sturgeon' ]
+
+console.log(removed);
+// [ 'mandarin' ]
+```
+
+- Dizin 2'deki 1 öğeyi çıkarın ve "trumpet" ekleyin
+
+```javascript title="index.js"
+
+const myFish = ["angel", "clown", "drum", "sturgeon"];
+
+const removed = myFish.splice(2,1,"trumpet")
+
+console.log(myFish);
+// [ 'angel', 'clown', 'trumpet', 'sturgeon' ]
+
+console.log(removed);
+// [ 'drum' ]
+
+```
+
+- 0 dizininden 2 öğeyi çıkarın ve "parrot", "anemone" ve "blue" ekleyin
+
+```javascript title="index.js"
+const myFish = ["angel", "clown", "trumpet", "sturgeon"];
+const removed = myFish.splice(0,2,"parrot","anemone","blue")
+
+console.log(myFish);
+// [ 'parrot', 'anemone', 'blue', 'trumpet', 'sturgeon' ]
+
+console.log(removed);
+// [ 'angel', 'clown' ]
+```
+
+- Dizin 2'den başlayarak 2 öğeyi kaldırın
+
+```javascript title="inndex.js"
+const myFish = ["parrot", "anemone", "blue", "trumpet", "sturgeon"];
+
+const removed = myFish.splice(2,2);
+
+console.log(myFish);
+ // [ 'parrot', 'anemone', 'sturgeon' ]
+
+console.log(removed);
+// [ 'blue', 'trumpet' ]
+```
+
+- -2 dizininden 1 öğeyi kaldır
+
+```javascript title="index.js"
+const myFish = ["angel", "clown", "mandarin", "sturgeon"];
+const removed = myFish.splice(-2,1)
+
+console.log(myFish);
+// [ 'angel', 'clown', 'sturgeon' ]
+
+console.log(removed);
+// [ 'mandarin' ]
+```
+
+- Dizin 2'den başlayarak tüm öğeleri kaldırın
+
+```javascript title="inde.js"
+const myFish = ["angel", "clown", "mandarin", "sturgeon"];
+const removed = myFish.splice(2)
+
+console.log(myFish);
+// [ 'angel', 'clown' ]
+
+console.log(removed);
+// [ 'mandarin', 'sturgeon' ]
+```
+- Seyrek dizilerde **splice()** işlevini kullanma
+
+```javascript title="index.js"
+const arr = [1, , 3, 4, , 6];
+console.log(arr.splice(1, 2)); // [empty, 3]
+console.log(arr); // [1, 4, empty, 6]
+```
+
+## Array.prototype.entries()
+
+**entries()** Örneklerin yöntemi, dizideki her dizin için **key/value** çiftlerini içeren **Array** yeni bir dizi yineleyici nesnesi döndürür. 
+**next** ileri hareket ettirir ve bir sonraki **value** değerini verir. Eğer geziilecek eleman **length** boyutunu geçer ise **undefined** değerini veirir.
+
+
+```javascript title="index.js"
+const array1 = ['a', 'b', 'c'];
+
+const arrayEntries = array1.entries();
+
+console.log(arrayEntries.next().value);
+// [ 0, 'a' ]
+
+console.log(arrayEntries.next().value);
+// [ 0, 'a' ]
+console.log(arrayEntries.next().value);
+// [ 2, 'c' ]
+
+console.log(arrayEntries.next().value);
+// undefined
+```
+
+- Dizin ve öğeyle yineleme
+
+```javascript title="index.js"
+const a = ["a", "b", "c"];
+
+for(let [index,element] of a.entries()){
+    console.log(`Key : ${index} Value : ${element}`);
+}
+
+// Key : 0 Value : a
+// Key : 1 Value : b
+// Key : 2 Value : c
+```
+
+- For...of döngüsü kullanma
+
+```javascript title="index.js"
+const array = ["a", "b", "c"];
+const arrayEntries = array.entries();
+
+for (let [index, element] of arrayEntries) {
+    console.log(`Key : ${index} Value : ${element}`);
+}
+
+// Key : 0 Value : a
+// Key : 1 Value : b
+// Key : 2 Value : c
+```
+
+- Seyrek dizileri yineleme
+
+```javascript title="index.js"
+for (const element of [, "a"].entries()) {
+  console.log(element);
+}
+// [0, undefined]
+// [1, 'a']
+
+```
+
+- Dizi olmayan nesnelerde **entry()** çağrılması
+
+```javascript title="index.js"
+const arrayLike = {
+  length: 3,
+  0: "a",
+  1: "b",
+  2: "c",
+  3: "d", // ignored by entries() since length is 3
+};
+for (const entry of Array.prototype.entries.call(arrayLike)) {
+  console.log(entry);
+}
+// [ 0, 'a' ]
+// [ 1, 'b' ]
+// [ 2, 'c' ]
+
+```
+
+## Array.from()
+
+Statik yöntem, yinelenebilir veya dizi benzeri **Array.from()** bir nesneden yeni, sığ kopyalanmış bir **Array** örnek oluşturur .
+
+- Örnek **string** parçalayarak dizi yapar.
+- Yöntemlw değerler ayarlanabilir. Yeni farklı bir dizi döndürür
+
+```javascript title="index.js"
+const stringArray = Array.from("foo")
+console.log(stringArray);
+[ 'f', 'o', 'o' ]
+
+const array = [1, 2, 3, 4, 5, 6];
+const increaseY = (x)=>x + x
+const newArray = Array.from(array,increaseY)
+console.log(newArray);
+// [ 2, 4, 6, 8, 10, 12 ]
+```
+
+- SYNTAX
+
+```javascript title="index.js"
+Array.from(arrayLike)
+Array.from(arrayLike, mapFn)
+Array.from(arrayLike, mapFn, thisArg)
+```
+
+- **Array.from()** asla seyrek bir dizi oluşturmaz. Nesnede arrayLikebazı indeks özellikleri eksikse bunlar **undefined** yeni dizide yer alır.
+
+- Bir Dizeden Dizi
+
+```javascript title="index.js"
+Array.from("foo");
+// [ "f", "o", "o" ]
+```
+
+- Bir Kümeden Dizi
+- 
+```javascript title="index.js"
+const map = new Map([[1, 1], [2, 2], [3, 3], [4, 4]]);
+
+const arr = Array.from(map);
+
+console.log(arr);
+// [ [ 1, 1 ], [ 2, 2 ], [ 3, 3 ], [ 4, 4 ] ]
+
+const map2 = new Map([[1, "a"], [2, "b"], [3, "c"], [4, "d"]]);
+
+const arrayKeys = Array.from(map2.keys());
+console.log(arrayKeys);
+// [ 1, 2, 3, 4 ]
+
+const arrayValue = Array.from(map2.values())
+console.log(arrayValue);
+// [ 'a', 'b', 'c', 'd' ]
+```
+- NodeList'ten dizi
+
+Örnekte DOM kullnaılarak **img** ler bir **array** de toplanır. **Array.from()** kullanılarak linklerden oluşan yeni bi dizi oluşturulur. **filter** yardımı ve **startsWith** string ifedede  **"http://"** başlayan linkler  **insecureSources** dizisi oluşturulur.
+
+```javascript title="index.js"
+
+//DOM Öğelerinin bir özelliğini temel alan bir dizi oluşturun
+const images = document.querySelectorAll("img");
+const sources = Array.from(images, (image) => image.src);
+const insecureSources = sources.filter((link) => link.startsWith("http://"));
+```
+
+- Array benzeri bir nesneden gelen dizi (argümanlar)
+
+```javascript title="index.js"
+
+function f() {
+  return Array.from(arguments);
+}
+
+f(1, 2, 3);
+
+// [ 1, 2, 3 ]
+```
+
+- Ok işlevlerini ve **Array.from()** işlevini kullanma
+
+```javascript title="index.js"
+
+// Harita işlevi olarak bir ok işlevini kullanma
+// elemanları işliyoruz
+Array.from([1, 2, 3], (x) => x + x);
+// [2, 4, 6]
+
+// Bir sayı dizisi oluştur
+// Dizi her konumda 'tanımsız' ile başlatıldığından,
+// aşağıdaki 'v'nin değeri 'tanımsız' olacak
+
+Array.from({ length: 5 }, (v, i) => i);
+// [0, 1, 2, 3, 4]
+
+```
+- Sıra üreteci (aralık)
+
+// Sıra oluşturucu işlevi (genellikle "aralık" olarak anılır, örneğin Clojure, PHP, vb.)
+
+```javascript title="index.js"
+
+const range = (start, stop, step) => Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + i * step)
+
+// 0..4 aralığında sayılar üret
+console.log(range(0, 4, 1));
+// [ 0, 1, 2, 3, 4 ]
+
+
+// 2'lik adımlarla 1..10 aralığındaki sayıları üret
+console.log(range(1, 10, 2))
+/// [ 1, 3, 5, 7, 9 ]
+
+// Array.from'u kullanarak alfabenin bir dizi olarak sıralanmasını kullanarak alfabeyi oluşturun
+const alphabetCode = range("A".charCodeAt(0),"Z".charCodeAt(0),1)
+const alphabets = alphabetCode.map((x)=>String.fromCharCode(x));
+console.log(alphabets);
+
+// [ 'A', 'B', 'C', 'D', 'E', 'F','G', 'H', 'I', 'J', 'K', 'L','M', 'N', 'O', 'P', 'Q', 'R','S', 'T', 'U', 'V', 'W', 'X','Y', 'Z']
+
+```
+
+- **charCodeAt()** Değerler yöntemi, verilen dizindeki **UTF-16** kod birimi arasında ve onu temsil eden Stringbir tamsayı döndürür .065535
+- **String.fromCharCode()** Statik **String.fromCharCode()** yöntem, belirtilen **UTF-16** kod birimleri dizisinden oluşturulan bir dizeyi döndürür.
+
+- Dizi olmayan kurucularda from() öğesinin çağrılması
+Yöntem from(), yeni dizinin uzunluğunu temsil eden tek bir argümanı kabul eden herhangi bir yapıcı fonksiyonda çağrılabilir.
+
+```javascript title="index.js"
+
+function NotArray(uzunluk) {
+   console.log("NotArray uzunlukla çağrıldı", len);
+}
+
+// Iterable
+console.log(Array.from.call(NotArray, new Set(["foo", "bar", "baz"])));
+// NotArray uzunluğu tanımsız olarak çağrıldı
+// NotArray { '0': 'foo', '1': 'bar', '2': 'baz', uzunluk: 3 }
+
+// Array-like
+console.log(Array.from.call(NotArray, { uzunluk: 1, 0: "foo" }));
+// NotArray uzunluğu 1 ile çağrıldı
+// NotArray { '0': 'foo', uzunluk: 1 }
+```
+
+Değer thisbir yapıcı olmadığında düz bir Arraynesne döndürülür.
+
+```javascript title="index.js"
+console.log(Array.from.call({}, { length: 1, 0: "foo" })); // [ 'foo' ]
+
+```
