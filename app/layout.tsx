@@ -12,6 +12,7 @@ import Header from "@/components/Header";
 import { Suspense } from "react";
 import Loading from "./loading";
 import AuthProvider from "@/context/AuthProvider";
+import Information from "@/components/Home/Information";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -76,6 +77,7 @@ export default function RootLayout({
           <NextThemeProvider>
             <TanstackProvider>
               <AuthProvider>
+                <Information />
                 <Header />
                 <main>{children}</main>
                 <Footer />
