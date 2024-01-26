@@ -42,9 +42,14 @@ const MovingImg: React.FC<MovingImgProps> = ({ title, img, link }) => {
         className="relative"
         onMouseMove={handleMouse}
         onMouseLeave={handleMouseLeave}
-
       >
-        <div>
+        <Link
+          href={link}
+          target={"_blank"}
+          className="relative"
+          onMouseMove={handleMouse}
+          onMouseLeave={handleMouseLeave}
+        >
           <dt className="sr-only">title</dt>
           <dd
             className="font-semibold text-sm lg:text-lg hover:underline bg-gradient-to-r from-accent to-accent bg-[length:0px_6px] dark:from-accentDark/50 dark:to-accentDark/50
@@ -53,7 +58,7 @@ const MovingImg: React.FC<MovingImgProps> = ({ title, img, link }) => {
             {" "}
             {title}
           </dd>
-        </div>
+        </Link>
         <FramerImage
           src={img}
           ref={imgRef}
