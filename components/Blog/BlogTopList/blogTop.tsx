@@ -36,19 +36,14 @@ const MovingImg: React.FC<MovingImgProps> = ({ title, img, link }) => {
   };
   return (
     <>
-      <Link
-        href={link}
-        target={"_blank"}
-        className="relative"
-        onMouseMove={handleMouse}
-        onMouseLeave={handleMouseLeave}
-      >
         <Link
           href={link}
-          target={"_blank"}
           className="relative"
           onMouseMove={handleMouse}
           onMouseLeave={handleMouseLeave}
+        >
+     
+        <div
         >
           <dt className="sr-only">title</dt>
           <dd
@@ -58,7 +53,7 @@ const MovingImg: React.FC<MovingImgProps> = ({ title, img, link }) => {
             {" "}
             {title}
           </dd>
-        </Link>
+        </div>
         <FramerImage
           src={img}
           ref={imgRef}
