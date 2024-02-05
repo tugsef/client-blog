@@ -1,0 +1,175 @@
+---
+title: "React State nedir?"
+description: "React state nedir?"
+image: "../../public/blogs/reeact.png"
+publishedAt: "2024-01-04"
+updatedAt: "2024-01-"
+author: "Sefa Demirtaş"
+isPublished: true
+tags:
+  - react
+  - javascript
+---
+
+**State** kavramı **react hook** olarak adlandırılan yapılardandır. **useState** sayfanın herhangi bir yerinde tanımlanan özelliğin değişimi durumunda diğer birleşenleri değiştirmeden **tannımlanan** özelliğin değişmesini sağlar.
+
+> Örnekler **\*Nextjs**, **typescript** ve **tailwind.js** kullanılarak uygulanmıştır.
+
+```js
+"use client";
+import React, { useState } from "react";
+
+const page = () => {
+  const [name, setName] = useState < string > "John";
+  const [age, setAge] = useState < number > 33;
+  return (
+    <div className="flex justify-center items-center w-full h-screen flex-col gap-2">
+      <ul>
+        <li>Selam {name}</li>
+        <li>{age}</li>
+      </ul>
+      <button
+        className="block border "
+        onClick={() => {
+          setName("Candy");
+          setAge(32);
+        }}
+      >
+        Click
+      </button>
+    </div>
+  );
+};
+
+export default page;
+```
+
+- Örnekte **name** ve **age** değişkenleri **useStae** olarak tanımlanmış. Yani uygulama aktif ise ve **button** tuşuna basarsanız sadece ilgili sayfanın **name** ve **age** bölümlerinin değiştiğini görürsünüz.
+
+# Array State
+
+- Arrayler **usestate** olarak tanımlana bilirler. Bu işlemleri yaparken dikkeat etmemiz gereken hususlat
+  - Array'in içersindeki değerlerin veri tipleri ile eklen aynı olmalı
+  - **spread** **...** dikkat edilmelidir. Bu ifade arrayin içindeki olan önceki verileri yazar. Eklamek istediğniz değeri başa yazarsanız değerden sonra, değeri sona yazarsanız ile baştan öncekş verileri yazacaktır.
+
+```js
+"use client";
+import React, { useState } from "react";
+
+const page = () => {
+  const [name, setName] = useState<string>("John");
+  const [age, setAge] = useState<number>(33);
+  const [friends, setfriends] = useState<string[]>(["Harry", "Lorem"]);
+  return (
+    <div>
+      <ul>
+        <li>Selam {name}</li>
+        <li>{age}</li>
+        {friends.map((friend, index) => (
+          <li key={index}>{friend}</li>
+        ))}
+      </ul>
+      <button
+        className="block border "
+        onClick={() => {
+          setfriends([...friends, "Ipsum"]);
+        }}
+      >
+        Add Friends
+      </button>
+    </div>
+  );
+};
+
+export default page;
+
+```
+
+# Object State
+
+**Object** ler ile **usestate** kullanımı **array**ler de kullanımına benzerdir. Önemli olan nokta iw **spread** operatörüdür. Kullanımda **object** nesnenizi değişiminde de aynı özelliğe sahip olmasına dikkat etmelisiniz.
+
+```js
+"use client";
+import React, { useState } from "react";
+
+interface AdressState {
+  title: string;
+  zip: number;
+}
+
+const page = () => {
+  const [name, setName] = useState<string>("John");
+  const [age, setAge] = useState<number>(33);
+  const [friends, setfriends] = useState<string[]>(["Harry", "Lorem"]);
+  const [adress, setAdress] = useState<AdressState>({
+    title: "Ankara",
+    zip: 6590,
+  });
+  return (
+    <div>
+      <ul>
+        <li>Selam {name}</li>
+        <li>{age}</li>
+        {friends.map((friend, index) => (
+          <li key={index}>{friend}</li>
+        ))}
+        <li>{adress.title}</li>
+        <li>{adress.zip}</li>
+
+      </ul>
+
+      <button
+        className="border p-2"
+        onClick={() => {
+          setAdress({ ...adress, title: "Ipsum" });
+        }}
+      >
+        Change Adress
+      </button>
+    </div>
+  );
+};
+
+export default page;
+```
+
+# Uygulama bir sayıyı artırmak ve azaltmak
+
+- **incrrease** ve **decrease** adında iki tane fonksiyon tanımlıyoruz. BU fonksiyonlar sayımızı artıracak vr azaltacak. Bu fonksiyonlar tanımlanadanda yazabiliriz. \*usestate hook\*\* nasıl çalıştığını anlamamıza yardımcı olacatır.
+
+```js
+"use client";
+import React, { useState } from "react";
+
+const page = () => {
+  const [number, setNumber] = useState<number>(0);
+
+  const decrease = () => {
+    setNumber(number - 1);
+  };
+  const increase = () => {
+    setNumber(number + 1);
+  };
+  return (
+    <div>
+      <h1 className="text-9xl mb-5 text-center">{number}</h1>
+
+      <div className="flex gap-2 w-full justify-center">
+        <button onClick={increase} className="border-2 p-2">
+          Artır
+        </button>
+        <button onClick={decrease} className="border-2 p-2">
+          Azalt
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default page;
+```
+
+# Re-Render Mantığını Anlamak (React vs jQuery)
+
+Aralarındakş temel fark **rendering** esnasında **react** gereksiz **render**ları fark eder ve sayfayı **state** yenlmemzken **JQuery** bu konuda hep aynı değeri **render* edebilir. 

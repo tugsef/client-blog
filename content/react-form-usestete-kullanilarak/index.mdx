@@ -1,0 +1,59 @@
+---
+title: "React Form Usestate Kullanımı"
+description: "Usestate ile form oluşturma"
+image: "../../public/blogs/reeact.png"
+publishedAt: "2024-11-25"
+updatedAt: "2024-11-25"
+author: "Sefa Demirtaş"
+isPublished: true
+tags:
+  - react
+  - javascript
+---
+
+- **onChange** inputtaki değişimi takip eder kendi özelliğidir.
+- **event.target.name** inputun belirttiği **name** dir.
+- **evant.target.value** inputa girdiğinizdeki o anki değerdir.
+- İki farklı şekilde yapılabilir ayrı ayrı **input** değerlerini **usestate**de tanımlamak yada **form** objesi olarak tutarak bir fonsksiyon ile **input** değişimlerini almak
+
+
+```js
+"use client";
+import React, { useState } from "react";
+
+interface FormState {
+  name:string
+  surname:string
+}
+
+const page = () => {
+  const [form, setForm] = useState<FormState>({name:"",surname:""});
+
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({...form, [event.target.name]:[event.target.value]})
+  };
+ 
+  return (
+    <div className="flex flex-col gap-4">
+      Name
+      <input
+        type="text"
+        className="border-2 -mt-2"
+        name="name"
+        onChange={onChange}
+      />
+      <span className="-mt-2 font-light text-xs tracking-widest">{form.name}</span>
+      Surname
+      <input
+        className="border-2 -mt-2"
+        type="text"
+        name="surname"
+        onChange={onChange}
+      />
+      <span className="-mt-2 font-light text-xs tracking-widest">{form.surname}</span>
+    </div>
+  );
+};
+
+export default page;
+```
