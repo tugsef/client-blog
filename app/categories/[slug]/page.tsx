@@ -21,7 +21,6 @@ export async function generateStaticParams() {
       });
     }
   });
-  
 
   return paths;
 }
@@ -52,7 +51,7 @@ const CategoryPage = ({ params }: any) => {
 
   return (
     <article className="mt-12 flex flex-col text-dark dark:text-light">
-      <TransitionEffect/>
+      <TransitionEffect />
 
       <div className=" px-5 sm:px-10  md:px-24  sxl:px-32 flex flex-col">
         <h1 className="mt-6 font-semibold text-2xl md:text-4xl lg:text-5xl">
@@ -62,17 +61,16 @@ const CategoryPage = ({ params }: any) => {
           Discover more categories and expand your knowledge!
         </span>
       </div>
+      
       <Categories categories={allCategories} currentSlug={params.slug} />
 
       <div className="grid  grid-cols-1 sm:grid-cols-2   grid-rows-2 gap-4  mt-5 sm:mt-5 md:mt-12 sxl:mt-16 px-5 sm:px-10 md:px-12 sxl:px-16">
         {blogs.map((blog, index) => (
-          <article key={index} >
+          <article key={index}>
             <LeftListItem blog={blog} />
           </article>
         ))}
-
       </div>
-      
     </article>
   );
 };

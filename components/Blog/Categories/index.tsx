@@ -15,6 +15,9 @@ const Categories = ({ categories, currentSlug }:{categories:string[],currentSlug
   const displayedItems = categories.slice(0, currentTotal);
   return (
     <div className="px-0 md:px-10 sxl:px-20 mt-10 border-t-2 text-dark dark:text-light border-b-2 border-solid border-dark dark:border-light py-4 flex items-start flex-wrap font-medium mx-5 md:mx-10">
+      <span className="inline-block py-1.5  md:py-2 px-6  md:px-10   rounded-full  border-solid   hover:scale-105 transition-all ease duration-200 m-2 bg-accent text-light dark:bg-accentDark dark:text-dark">
+        {currentSlug}
+      </span>
       {displayedItems.map((cat) => (
         <Category
           key={cat}
