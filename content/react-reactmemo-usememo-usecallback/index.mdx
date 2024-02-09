@@ -1,0 +1,297 @@
+---
+title: "React React.memo, useMemo, useCallback"
+description: "React React.memo, useMemo, useCallback nedir?"
+image: "../../public/blogs/reeact.png"
+publishedAt: "2024-02-10"
+updatedAt: "2024-02-10"
+author: "Sefa Demirtaş"
+isPublished: true
+tags:
+  - react
+  - javascript
+---
+
+# React.memo nedir?
+
+**React.momo** componentin tekrar tekrar gereksiz render olmasını engellemek için kullanılır.
+
+**app.tsx** de basit br uygulama gerçeleştirecek olursak **number** sayısının **onClick** olduğunda sayısını değerini bir artırsın. Her artırmada **App.tsx** componentinde bullune **Header** cmponentide render olacaktır. Bu gereksiz render işlemin önüne geçebilmek için **React.memo** yapsısını kullanailir. **Header** componentinde oluşacak gereksiz renderların önüne geçebiliriz. **number** değerini **Header** componentinde **props** olarak vermmeiz durumunda değişimden katnaklı **Header** componentide render edilir.
+
+```tsx title="App.tsx"
+"use client";
+import Header from "@/components/Header";
+import React, { useState } from "react";
+
+function App() {
+  const [number, setNumber] = useState(0);
+
+  return (
+    <div className="text-center block">
+      <Header number={number < 5 ? 0 : number} />
+      <hr />
+      <span className="text-3xl m-3">{number}</span>
+      <button
+        className="border-2 block"
+        onClick={() => setNumber((n) => n + 1)}
+      >
+        Onclick
+      </button>
+    </div>
+  );
+}
+
+export default App;
+```
+
+```tsx title="Header.tsx"
+import React from "react";
+
+interface Props {
+  number: number;
+}
+const Header: React.FC<Props> = ({ number }) => {
+  console.log("Render edildi.");
+
+  return (
+    <div>
+      <h1 className="text-3xl">Header</h1>
+      <span>{number}</span>
+    </div>
+  );
+};
+
+export default React.memo(Header);
+```
+
+# useMemo()
+
+React **hook** olan **useMemo** tekrarlanması durumunda permansı ileri seviye çıkarmak için kulllanılır. Tekrar etmesi gereksiz bir fonksiyonun hafızaya alınarak değişme şartınıda eklayerek componentimize ekleyebiliriz.
+
+- Gereksiz Re-render yapılmasını önler
+- Özellikle tekrarı masraflı olan fonksiyonların değişimini kontrol eder ve değişiklik yok ise ekrana yazar
+- Permormansı artırır.
+
+- Öncelikle örnekte vereceğimiz bir objenin component içerisinde tanımlamasıdır. İki `objenin` primative değerlerde olduğu gibi `9===9` değeri `true` döner ancak `{name:"John"}==={name:"John"}` cevabı `false` dönecektir. İşte bu noktada **object** yani nesneler hafızada tututlduğu konuma bakılarak eşitliği kontrol edildiğinden döner döner **false** olmuştur.
+YUkarıdaki **React.memo** kullanımında eğer **Header** componentine bir nesneyi **prop** olarak gönderirsek **data** değişmemiş gibi göründse de eşit değildir. Re-renser gerçekleşir.
+
+> Örnek te bir **user** nesnesinin iki türlü **Re-render** olmasını engelleye biliriz. Ya opjemizi componentin üzerinde tanımlayacağız ya da **useMemo** kullanarak tekrar **Re-render** önüne geçebiliriz.
+
+```tsx title="App.tsx"
+"use client";
+import Header from "@/components/Header";
+import React, { useState } from "react";
+
+function App() {
+  const [number, setNumber] = useState(0);
+  const user = { name: "Sefa", number: 0 };
+  return (
+    <div className="text-center block">
+      <Header number={number < 5 ? 0 : number} user={user} />
+      <hr />
+      <span className="text-3xl m-3">{number}</span>
+      <button
+        className="border-2 block"
+        onClick={() => setNumber((n) => n + 1)}
+      >
+        Onclick
+      </button>
+    </div>
+  );
+}
+
+export default App;
+```
+
+```tsx title="Header.tsx"
+"use client";
+import Header from "@/components/Header";
+import React, { useState } from "react";
+
+function App() {
+  const [number, setNumber] = useState(0);
+  const user = { name: "Sefa", number: 0 };
+  return (
+    <div className="text-center block">
+      <Header number={number < 5 ? 0 : number} user={user} />
+      <hr />
+      <span className="text-3xl m-3">{number}</span>
+      <button
+        className="border-2 block"
+        onClick={() => setNumber((n) => n + 1)}
+      >
+        Onclick
+      </button>
+    </div>
+  );
+}
+
+export default App;
+```
+
+Yukarıdaki örnek olası **Re-Render** temsil eder şimdi **useMemo** ve **user** nesnesinin component dışında tanımlanması durumunu inceleyelim. Bundan sonraki örneklerde **Header.tsx** componenti değişmeyeceğinden tekrar tekrar yazılmayacaktır.
+
+```tsx tittle="App.tsx"
+"use client";
+import Header from "@/components/Header";
+import React, { useMemo, useState } from "react";
+
+// component dışında tanımlayabiliriz.
+// const user = {name:"Sefa",number:0}
+
+function App() {
+  const [number, setNumber] = useState(0);
+
+  const user = useMemo(() => {
+    return { name: "Sefa", number: 0 };
+  }, []);
+  return (
+    <div className="text-center block">
+      <Header number={number < 5 ? 0 : number} user={user} />
+      <hr />
+      <span className="text-3xl m-3">{number}</span>
+      <button
+        className="border-2 block"
+        onClick={() => setNumber((n) => n + 1)}
+      >
+        Onclick
+      </button>
+    </div>
+  );
+}
+
+export default App;
+```
+
+- Bir fonksiyon düşünelim eğer bu fonksiyon karmaşık bir fonksiyon olsun ve her çalışması durumunda **Re-render** olması sayfamızı olduğundan fazla yavaşlatacak hatta işlem yapamaz hale getirecektir. Aşağı örnekte **input** elementine girilen değerlerin alınırken her tuşa bastığımızda fonksiyonun Render edilmesini engellememiz gerekecektir. Aynı zamanda bu fonksiyonun çalışma durumunu belirleyen **number** değerinide tanımlayacağız sonuç olarak aşağıdaki örenekte.
+
+- **calculator** fonksiyonu bir nesne döndürür. **useMemo** kullanılmamış olsa idi. Her **input** elementine veri girişinde sistemi durma noktasına getirecekti **calculator** fonksiyonu alışması durumunda zaman gerektiren karmaşık fonksiyondur. **useMemo** fonksiyonu hafızaya aldı ve tekrar çalışmasını **number** değerinin değişmesi durumunda çalışacaktır.
+
+Component **render** edilir. **calculator** çalışır. Bir dahaki çalışması **number** değerinin değişimine bağlıdır.
+
+```tsx title="App.tsx"
+"use client";
+import Header from "@/components/Header";
+import React, { useMemo, useState } from "react";
+
+function calculator(number: number) {
+  console.log("Calculator başlası...");
+
+  for (let index = 0; index < 1000000000; index++) {}
+  console.log("Calculator bitti...");
+  return { name: "Sefa", number: number };
+}
+
+function App() {
+  const [number, setNumber] = useState(0);
+  const [text, setText] = useState("");
+
+  const user = useMemo(() => calculator(number), [number]);
+  return (
+    <div className="flex flex-col justify-center items-center text-center">
+      <Header number={number < 5 ? 0 : number} user={user} />
+      <hr />
+      <span className="text-3xl m-3">{number}</span>
+      <button
+        className="border-2 block"
+        onClick={() => setNumber((n) => n + 1)}
+      >
+        Onclick
+      </button>
+      <hr />
+      <input
+        className="border-2"
+        type="text"
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+          setText(event.target.value)
+        }
+      />
+    </div>
+  );
+}
+
+export default App;
+```
+
+# useCallback()
+
+Bir fonksiyonu aktif hale getirmrsi için alt **componentlere** fonksiyonu **props** olarak gönderebiliriz. Ana **componentdeki** değeri değiştrecektir. Her **onClick** olayında alt componentte render edilir. Eğer bir alt commponente props gönderecek ve o fonksiyonun alt componentin **render** nı engellemek sitiyor isek **usecallback** hookunu kullanabilririz.
+
+```tsx title="HeaderCallback.tsx"
+import React from "react";
+
+interface Props {
+  number?: number;
+  user?: {
+    name: string;
+    number?: number;
+  };
+  increase: () => void;
+}
+const Header: React.FC<Props> = ({ number, user, increase }) => {
+  console.log("Render edildi.");
+
+  return (
+    <div>
+      {JSON.stringify(user)}
+      <h1 className="text-3xl">Header</h1>
+      <button onClick={increase} className="border-2">
+        Click
+      </button>
+    </div>
+  );
+};
+
+export default React.memo(Header);
+```
+
+```tsx title="App.tsx"
+"use client";
+
+import HeaderCallback from "@/components/HeaderCallback";
+import React, { useState } from "react";
+
+function page() {
+  const [number, setNumber] = useState(0);
+
+  const increase = () => setNumber(number + 1);
+
+  return (
+    <div className="text-center block">
+      <HeaderCallback number={number < 5 ? 0 : number} increase={increase} />
+      <hr />
+      <span className="text-3xl m-3">{number}</span>
+    </div>
+  );
+}
+
+export default page;
+```
+
+Örnekte bir **increse** fonksiyonu bir alt fonksiyonuna **props** olarak gönderilmiştir. Bu durumda her **onClick** olayında **HeaderCallback.tsx** componentide render edilecektir. Bunu önünde geçmek için **useCallback** hook unu kullanabiliriz.State
+**setNumber(number + 1)** şeklinde değilde **setNumber((prevState)=>prevState + 1)** şeklinde tanımlamamız gerekir. Eğer bu şekilde tanımlanmaz ise **react** stateti normal bir işlem olarak ayıt eder ve işlem sırasına dahil etmez. Beklenmedik sonuçlar doğrur. Eğer state değer olarak verilir sonuç beklenirse **fonksiyon** değerlendirmeye alınıp sıraya konur ve diğer stateler ile uyumlu bir şekilde çalışması sağlanır. \*\*HeaderCallback.tsx" fonksiyonu değişmediğinden aşağıdaki örnekte tekrar yazılmayacaktır.
+
+```tsx title="App.tsx"
+"use client";
+
+import HeaderCallback from "@/components/HeaderCallback";
+import React, { useCallback, useState } from "react";
+
+function page() {
+  const [number, setNumber] = useState(0);
+
+  const increase = useCallback(
+    () => setNumber((prevState) => prevState + 1),
+    []
+  );
+
+  return (
+    <div className="text-center block">
+      <HeaderCallback increase={increase} />
+      <hr />
+      <span className="text-3xl m-3">{number}</span>
+    </div>
+  );
+}
+
+export default page;
+```

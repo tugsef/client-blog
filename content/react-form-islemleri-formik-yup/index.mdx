@@ -1,0 +1,128 @@
+---
+title: "React Form İşlemleri Formik ve Yup"
+description: "React form işlemleri formik ve yup"
+image: "../../public/blogs/reeact.png"
+publishedAt: "2024-02-10"
+updatedAt: "2024-02-10"
+author: "Sefa Demirtaş"
+isPublished: true
+tags:
+  - react
+  - javascript
+---
+
+Form işlemlerinin karmaşıklığını daha kolay anlaşılır hale getirmek için var olan `formik` kütüphanesini ve `validation` yönetim aracı olan `yup` nasıl uygulanır ele alacağım.
+> Bu yazımda `next.js` , `tailwindcss` ve `typescript` kullanılarak çok karmaşık olmadan anlatılmıştır.
+
+
+## Html input elementi için kullanılan bazı proplar ve kullanma amacı
+
+- `type:` Input elementinin türünü belirtir.
+- `name:` Input nesnesini tanımlayan özelliktir.
+- `onChange:` Input değişim değerlerini verir.
+- `onBlur:` Input nesnesi ile kullanıcı arasındaki etkileşimi takip eder.
+- 
+
+## Formik için bilinmesi gereken fonksiyonlar
+
+- `useFormik():` Form kendisine tanımlanan bütün olaylarını takip eder. 
+- `initialValues:` Form `input` elemenlerinin başlangıç değerlerini barındırır ve `Object` içerisine girilen keylerin form `input` props `name` ile aynı olmalıdır.
+- `handlesubmit:` Form `submit` olduğunda yapılacak işlemleri işler
+- `handleChange:`  `input` elementindeki değişimleri yakalar.
+- `values:` Form içerisinde inputlar girilen değerleri tutar.
+- `errors:` Form içerisinde oluşabilecek `validation` hataları yakalar.
+- `handblur` Tanımlandığı `input` daha önce `focus` olundumu olunmadı mı durumlarını tutar.
+- `touched:` Kullanılması için `handblur` fonksiyonunun `input`a props olarak tanımlanması gerekir etkileşim oldu mu olmadı mı değerlerini tutar.
+- `onSubmit:`Form `submit` olunca çalışaçak içerikleri belirler.
+- `validationSchema:` `Formik` Input değerlerini tutar aynı zamanda da `yup` kütüphanesi ile entegre çalışarak `name`ler `formik` de tanımlanan `name` ler ile aynı olmalıdır ve ikisi arasındaki değişimi takip ederek sonucu döner.
+
+```js title="Example.tsx"
+"use client";
+import { useFormik } from "formik";
+import React from "react";
+import { signUpSchema as validationSchema } from "@/components/utils/page";
+function page() {
+  const { handleChange, values, handleSubmit, errors, touched, handleBlur } =
+    useFormik({
+      initialValues: {
+        email: "",
+        password: "",
+        passwordConfirm: "",
+      },
+      onSubmit: (values) => {
+        console.log(values);
+      },
+      validationSchema,
+    });
+
+  return (
+    <div className="flex justify-center items-center h-screen">
+      <form className="flex flex-col" onSubmit={handleSubmit}>
+        <label htmlFor="email" className="pt-2" onChange={handleChange}>
+          İsim
+        </label>
+        <input
+          type="text"
+          name="email"
+          className={`${errors.email &&touched.email&& "border-red-600"} border-2 rounded-md`}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+        {errors.email &&touched.email&& <div>{errors.email}</div>}
+        <label htmlFor="password" className="pt-2">
+          Parola
+        </label>
+        <input
+          type="text"
+          name="password"
+          className="border-2 rounded-md"
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+        {errors.password &&touched.password&& <div>{errors.password}</div>}
+
+        <label htmlFor="passwordConfirm" className="pt-2">
+          Parola Tekrar
+        </label>
+        <input
+          type="text"
+          name="passwordConfirm"
+          className={`${errors.email &&touched.passwordConfirm&& "border-red-600"} border-2 rounded-md`}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+        {errors.passwordConfirm &&touched.passwordConfirm&& <div>{errors.passwordConfirm}</div>}
+
+        <button className="border-2 p-2 rounded-lg mt-2" type="submit">
+          Gönder
+        </button>
+      </form>
+    </div>
+  );
+}
+
+export default page;
+```
+
+## Yup için bilinmesi gereken fonksiyonlar
+
+- `string():` Input içerisine girilen değerlerin `string` türünde olacağını belirtir. `boolean`, `number` da tanımlanabilir.
+- `required:` Inputun boş bırakılamayağını belirtir.
+- `email:` Girilen değerler `email` ad kurallarına uymalıdır.
+- `oneOf:` Input değerleri olan  `password` ve `passwordConfirm` içeriklerinin karşılaştırlmasını sağlar. Diğer inpularda aynı şekilde karşılaştırılabilir.
+
+```js title="validation.ts" 
+import * as yup from "yup";
+export const signUpSchema = yup.object({
+  email: yup
+    .string()
+    .required("Email is a required field")
+    .email("Email must be a valid email")
+    .nullable(),
+  password: yup.string().required("Password is a required field").min(8,"8 characters").nullable(),
+  passwordConfirm: yup
+    .string()
+    .oneOf([yup.ref("password")], "Passwordn't confirm")
+    .required("Confirm Password is a required field"),
+});
+```
