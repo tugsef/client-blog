@@ -1,0 +1,316 @@
+---
+title: "Spring boot projesi nasıl oluşturulur?"
+description: "Spring boot oluşturma?"
+image: "../../public/blogs/springboot/spring-boot.png"
+publishedAt: "2024-02-15"
+updatedAt: "2024-02-15"
+author: "Sefa Demirtaş"
+isPublished: true
+tags:
+  - springboot
+  - java
+---
+
+Bu yazımda temel **spring boot** projesi nasıl ayağa kaldırılır. Aşama aşama anlatmaya çalışacağım.
+
+> Yazımın daha anlaşılır olabilmesi **maven** , **rest api** ve **java** hakkında bilginizin olması avantaj sağlayacaktır. Eğer bu konularda kendinizi eksik hissediyorsanız. İlgili konuları gözden geçirebilirsiniz.
+
+# Spring Initializer
+
+[https://start.spring.io/](https://start.spring.io/) web sitesini üzerinden bir **spring boot** projesi başlata bilirsiniz.
+
+- **Project** kısmından **Maven**
+- **Language** kısmından **Java**
+- **Spring Boot** kısmından ise **3.2.2** kararlı sürümünü seçiyoruz.
+- **Project Metadata**
+  - **Group:** com.example
+  - **Artifact:** demo
+  - **Name:** demo
+  - **Description:** Demo project for Spring Boot
+  - **Package name:** com.example.demo
+  - **Packaging** Jar
+  - **Java:** 17
+- **Dependencies:**Spring Web
+
+Bir **rest api** uygulaması oluşturabilmeniz için **spring-boot-starter-web** dependency(bağımlılık) projenize dahil etmeniz gerekir
+
+<Image
+  src="/blogs/springboot/springboot-initiaalizr.png"
+  width="718"
+  height="404"
+  alt="Image"
+  sizes="100vw"
+/>
+
+# pom.xml
+
+Gerekli **spring boot** uygulama özellikleirnizi sağladıysanız **pom.xml** dosyanız şu şekilde görülecektir.
+
+```xml title="pom.xml"
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.2.2</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.example</groupId>
+	<artifactId>demo</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>demo</name>
+	<description>Demo project for Spring Boot</description>
+	<properties>
+		<java.version>17</java.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
+
+```
+
+# Class Path Dependencies(Sınıf Yolu Bağımlılıkları)
+
+**spring-boot-starter-web**
+
+```xml
+<dependencies>
+   <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+   </dependency>
+</dependencies> 
+```
+
+# Main Metod
+
+- **@SpringBootApplication** spring boot projesi olduğunu belirtir.
+- **src/java/main** dizinin de bulunur.
+
+
+```java title="src/java/main" 
+package com.example.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class DemoApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(DemoApplication.class, args);
+	}
+
+}
+
+```
+
+# Rest Basit Bir Uç Noktası
+
+- **RestController** bir class ın bir rest kontrolü olacağını ve dışarı uç olarak görev yapacağını belirtir.
+- **RequestMapping** istek **URL** nin nerden yapılabileceğini belirtir.
+- **String** **Hello World** isteği gönderen bir method 
+
+
+```java title="src/java/main" 
+package com.example.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@SpringBootApplication
+public class DemoApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(DemoApplication.class, args);
+	}
+
+	@RequestMapping(value="/")
+	public String hello() {
+		return "Hello Word";
+	}
+}
+```
+
+# Jar Dosyası Haline Getirme
+
+```console title="terminal"
+❯ mvn clean install
+```
+
+```console title="terminal"
+❯ mvn clean install
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------------< com.example:demo >--------------------------
+[INFO] Building demo 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ demo ---
+[INFO] Deleting /Users/sefademirtas/Desktop/spring-demo/demo/target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ demo ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ demo ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 1 source file with javac [debug release 17] to target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ demo ---
+[INFO] skip non existing resourceDirectory /Users/sefademirtas/Desktop/spring-demo/demo/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ demo ---
+[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Compiling 1 source file with javac [debug release 17] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.1.2:test (default-test) @ demo ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.demo.DemoApplicationTests
+15:15:49.279 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.demo.DemoApplicationTests]: DemoApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+15:15:49.323 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.demo.DemoApplication for test class com.example.demo.DemoApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.2)
+
+2024-02-15T15:15:49.483+03:00  INFO 55122 --- [           main] com.example.demo.DemoApplicationTests    : Starting DemoApplicationTests using Java 21 with PID 55122 (started by sefademirtas in /Users/sefademirtas/Desktop/spring-demo/demo)
+2024-02-15T15:15:49.483+03:00  INFO 55122 --- [           main] com.example.demo.DemoApplicationTests    : No active profile set, falling back to 1 default profile: "default"
+2024-02-15T15:15:49.962+03:00  INFO 55122 --- [           main] com.example.demo.DemoApplicationTests    : Started DemoApplicationTests in 0.579 seconds (process running for 1.056)
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (/Users/sefademirtas/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.11/byte-buddy-agent-1.14.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.247 s -- in com.example.demo.DemoApplicationTests
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jar:3.3.0:jar (default-jar) @ demo ---
+[INFO] Building jar: /Users/sefademirtas/Desktop/spring-demo/demo/target/demo-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot:3.2.2:repackage (repackage) @ demo ---
+[INFO] Replacing main artifact /Users/sefademirtas/Desktop/spring-demo/demo/target/demo-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to /Users/sefademirtas/Desktop/spring-demo/demo/target/demo-0.0.1-SNAPSHOT.jar.original
+[INFO] 
+[INFO] --- install:3.1.1:install (default-install) @ demo ---
+[INFO] Installing /Users/sefademirtas/Desktop/spring-demo/demo/pom.xml to /Users/sefademirtas/.m2/repository/com/example/demo/0.0.1-SNAPSHOT/demo-0.0.1-SNAPSHOT.pom
+[INFO] Installing /Users/sefademirtas/Desktop/spring-demo/demo/target/demo-0.0.1-SNAPSHOT.jar to /Users/sefademirtas/.m2/repository/com/example/demo/0.0.1-SNAPSHOT/demo-0.0.1-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  2.958 s
+[INFO] Finished at: 2024-02-15T15:15:50+03:00
+[INFO] ------------------------------------------------------------------------
+```
+
+Başarılı bir işlem olduğunu **BUILD SUCCESS** ifadesinden anlayabiliriz.
+
+```console 
+------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+```
+
+- Şimdi ise oluşturduğumuz **jar** dosyasını çalıştıralım
+
+Oluşturduğumuz **jar** dosyası **demo/target** altında bulunur. demo-0.0.1-SNAPSHOT.jar
+
+
+```console title="spring-demo/demo/target"
+~/Desktop/spring-demo/demo/target 
+
+❯ ls -l
+total 38504
+drwxr-xr-x  4 sefademirtas  staff       128 Feb 15 15:15 classes
+-rw-r--r--  1 sefademirtas  staff  19706166 Feb 15 15:15 demo-0.0.1-SNAPSHOT.jar
+-rw-r--r--  1 sefademirtas  staff      2580 Feb 15 15:15 demo-0.0.1-SNAPSHOT.jar.original
+drwxr-xr-x  3 sefademirtas  staff        96 Feb 15 15:15 generated-sources
+drwxr-xr-x  3 sefademirtas  staff        96 Feb 15 15:15 generated-test-sources
+drwxr-xr-x  3 sefademirtas  staff        96 Feb 15 15:15 maven-archiver
+drwxr-xr-x  3 sefademirtas  staff        96 Feb 15 15:15 maven-status
+drwxr-xr-x  4 sefademirtas  staff       128 Feb 15 15:15 surefire-reports
+drwxr-xr-x  3 sefademirtas  staff        96 Feb 15 15:15 test-classes
+
+```
+
+- Jar dosyasını çalıştırma
+
+
+```console title="spring-demo/demo/target"
+~/Desktop/spring-demo/demo/target 
+
+❯ java -jar demo-0.0.1-SNAPSHOT.jar
+````
+
+
+```console title="spring-demo/demo/target"
+~/Desktop/spring-demo/demo/target 
+
+❯ java -jar demo-0.0.1-SNAPSHOT.jar
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.2)
+
+2024-02-15T15:23:53.533+03:00  INFO 58538 --- [           main] com.example.demo.DemoApplication         : Starting DemoApplication v0.0.1-SNAPSHOT using Java 17.0.8 with PID 58538 (/Users/sefademirtas/Desktop/spring-demo/demo/target/demo-0.0.1-SNAPSHOT.jar started by sefademirtas in /Users/sefademirtas/Desktop/spring-demo/demo/target)
+2024-02-15T15:23:53.535+03:00  INFO 58538 --- [           main] com.example.demo.DemoApplication         : No active profile set, falling back to 1 default profile: "default"
+2024-02-15T15:23:53.983+03:00  INFO 58538 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-02-15T15:23:53.989+03:00  INFO 58538 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-02-15T15:23:53.989+03:00  INFO 58538 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.18]
+2024-02-15T15:23:54.006+03:00  INFO 58538 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-02-15T15:23:54.007+03:00  INFO 58538 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 428 ms
+2024-02-15T15:23:54.179+03:00  INFO 58538 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-02-15T15:23:54.186+03:00  INFO 58538 --- [           main] com.example.demo.DemoApplication         : Started DemoApplication in 0.842 seconds (process running for 1.064)
+```
+
+- Şimdi browser [http://localhost:8080](http://localhost:8080) url si ile deneme yapalım ve **Hello World** yazısını görürüz.
+
+<Image
+  src="/blogs/springboot/localhost.png"
+  width="718"
+  height="404"
+  alt="Image"
+  sizes="100vw"
+/>
