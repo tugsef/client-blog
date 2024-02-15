@@ -13,6 +13,7 @@ import { Suspense } from "react";
 import Loading from "./loading";
 import AuthProvider from "@/context/AuthProvider";
 import Information from "@/components/Home/Information";
+import Head from "next/head";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -65,6 +66,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <Head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2524274909258845"
+          crossOrigin="anonymous"
+        ></script>{" "}
+      </Head>
       <body
         className={cx(
           inter.variable,
