@@ -12,7 +12,13 @@ export async function generateStaticParams() {
 export default function Home() {
   return (
     <>
-    
+      <Head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2524274909258845"
+          crossOrigin="anonymous"
+        />
+      </Head>
       <main>
         <TransitionEffect />
         <HomeCoverSection />

@@ -66,13 +66,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Head>
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2524274909258845"
-          crossOrigin="anonymous"
-        ></script>{" "}
-      </Head>
+    
       <body
         className={cx(
           inter.variable,
