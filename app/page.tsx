@@ -4,7 +4,7 @@ import FeaturedPosts from "@/components/Home/FeaturedPosts";
 import HomeCoverSection from "@/components/Home/HomeCoverSection";
 import MostreadSection from "@/components/Home/MostReadSection";
 import data from "@/public/data/news/news.json";
-import Head from "next/head";
+
 
 export async function generateStaticParams() {
   return data;
@@ -12,8 +12,8 @@ export async function generateStaticParams() {
 export default function Home() {
   return (
     <>
-   
-      <main>
+
+      <main >
         <TransitionEffect />
         <HomeCoverSection />
         <FeaturedPosts blogs={allBlogs} />

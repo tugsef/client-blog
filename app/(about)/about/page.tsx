@@ -8,8 +8,8 @@ import profilePic from "@/public/images/profile/developer-pic-1.png";
 import TransitionEffect from "@/components/About/TransitionEffect";
 
 
-export default function About() {
 
+export default function About() {
 
   return (
     <div id="about">

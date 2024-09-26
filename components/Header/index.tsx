@@ -1,13 +1,14 @@
 "use client";
 import  cx  from "@/components/utils";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, {useState } from "react";
 import LoginAuth from "./loginAuth";
 import { useTheme } from "next-themes";
 import OpenSearchModal from "../SearchBar/open-search-model";
 import { motion } from "framer-motion";
 import { BloglogoProps, DarkBloglogoProps } from "../Icons";
 import { IoSearchCircle } from "react-icons/io5";
+import { usePathname } from "next/navigation";
 
 interface SpringProps {
   type: "spring";
@@ -54,42 +55,30 @@ const CustomMobileLink = ({
 };
 
 export default function Header() {
+  const path = usePathname();
   const { theme, setTheme } = useTheme();
 
   const [click, setClick] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const toggleSwitch = async () => {
-    setTheme(theme === "light" ? "dark" : "light");
+    if(theme === "light" ){
+      setTheme("dark" )
+    }else {
+      setTheme("light")
+    }
   };
   const toggle = () => {
     setClick(!click);
   };
-
-  const [local] = React.useState((): string => {
-    if (typeof window !== "undefined") {
-      const from_localStorage = window.localStorage.getItem(
-        "navbar_selected_item"
-      );
-      if (from_localStorage === null || from_localStorage === undefined) {
-        return "home";
-      }
-
-      return `${from_localStorage}` ? from_localStorage : "home";
-    }
-    return "";
-  });
   const onSubmit = ()=>{
     toggle()
     setIsOpen(true)
   }
-  const [selected, setSelected] = React.useState<string>(local);
-  const [selectedOption, setSelectedOption] = React.useState<string>();
 
-  React.useEffect(() => {
-    window.localStorage.setItem("navbar_selected_item", `${selected}`);
 
-    setSelectedOption(`${selected}`);
-  }, [local, selected]);
+
+
+
 
   return (
     <header
@@ -209,17 +198,16 @@ export default function Header() {
       >
         <Link
           href="/"
-          onClick={() => setSelected("home")}
           className={cx(
             "mr-2 relative group hover:text-accent dark:hover:text-accentDark/70 text-sm",
-            selectedOption === "home" && "text-accent dark:text-accentDark"
+            path === "/" && "text-accent dark:text-accentDark"
           )}
         >
           Home
           <span
             className={cx(
               "inline-block h-[1px] bg-light  absolute left-0 -bottom-0.5   ",
-              selectedOption === "home"
+              path === "/"
                 ? "lg:bg-accent dark:lg:bg-accentDark w-full"
                 : " group-hover:w-full  ease duration-300 w-0 lg:bg-accent dark:lg:bg-accentDark/70"
             )}
@@ -229,17 +217,16 @@ export default function Header() {
         </Link>
         <Link
           href="/about"
-          onClick={() => setSelected("about")}
           className={cx(
             "mx-2 relative group hover:text-accent dark:hover:text-accentDark/70 text-sm",
-            selectedOption === "about" && "text-accent dark:text-accentDark"
+            path === "/about" && "text-accent dark:text-accentDark"
           )}
         >
           About
           <span
             className={cx(
               "inline-block h-[1px] bg-light  absolute left-0 -bottom-0.5   ",
-              selectedOption === "about"
+              path === "/about"
                 ? "lg:bg-accent dark:lg:bg-accentDark w-full"
                 : " group-hover:w-full  ease duration-300 w-0 lg:bg-accent dark:lg:bg-accentDark"
             )}

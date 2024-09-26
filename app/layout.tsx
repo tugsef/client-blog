@@ -77,7 +77,7 @@ export default function RootLayout({
         className={cx(
           inter.variable,
           manrope.variable,
-          "font-mr bg-light dark:bg-dark"
+          "font-mr text-xs bg-light dark:bg-dark"
         )}
         suppressHydrationWarning={true}
       >

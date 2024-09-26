@@ -47,10 +47,9 @@ const MovingImg: React.FC<MovingImgProps> = ({ title, img, link }) => {
         >
           <dt className="sr-only">title</dt>
           <dd
-            className="font-semibold text-sm lg:text-lg hover:underline bg-gradient-to-r from-accent to-accent bg-[length:0px_6px] dark:from-accentDark/50 dark:to-accentDark/50
+            className="font-semibold text-xs lg:text-lg hover:underline bg-gradient-to-r from-accent to-accent bg-[length:0px_6px] dark:from-accentDark/50 dark:to-accentDark/50
                 group-hover:bg-[length:100%_6px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500"
           >
-            {" "}
             {title}
           </dd>
         </div>
