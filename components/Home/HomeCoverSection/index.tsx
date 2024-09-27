@@ -3,6 +3,7 @@ import React from "react";
 import HomeCoverItem from "./HomeCoverItem";
 import data from "@/public/data/news/news.json";
 
+
 export interface Source {
   id?: number | string | null;
   name?: number | string | null;
@@ -18,6 +19,7 @@ export interface News {
   url?: string;
   urlToImage?: string;
 }
+
 function HomeCoverSection() {
   //   const { data, isLoading, isError } = useQuery({
   //     queryKey: ["newsPapers"],
