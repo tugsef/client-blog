@@ -14,6 +14,7 @@ import Loading from "./loading";
 import AuthProvider from "@/context/AuthProvider";
 import Information from "@/components/Home/Information";
 import Head from "next/head";
+import SocialComponent from "@/components/SocialComponent/socialComponent";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -77,7 +78,7 @@ export default function RootLayout({
         className={cx(
           inter.variable,
           manrope.variable,
-          "font-mr text-xs bg-light dark:bg-dark"
+          "font-mr text-xs bg-light dark:bg-dark relative"
         )}
         suppressHydrationWarning={true}
       >
@@ -90,6 +91,7 @@ export default function RootLayout({
                 <main>{children}</main>
                 <Footer />
               </AuthProvider>
+              <SocialComponent/>
               <Up />
             </TanstackProvider>
           </NextThemeProvider>

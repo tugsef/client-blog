@@ -32,7 +32,7 @@ const Up: React.FC = () => {
             : "hidden"
         }`}
       >
-        <IoIosArrowDropupCircle className="w-10 h-10 lg:w-20 lg:h-20 dark:text-accent text-accentDark rounded-full shadow-2xl shadow-accentDark dark:shadow-accent" />
+        <IoIosArrowDropupCircle className="w-10 h-10 lg:w-14 lg:h-14 dark:text-accent text-accentDark rounded-full shadow-2xl shadow-accentDark dark:shadow-accent" />
       </Link>
     </div>
   );
